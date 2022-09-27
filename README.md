@@ -2,11 +2,11 @@
 Practical exercises for the course "Hands-on Biomedical Data - Resources and Analysis Tools"
 
 ## Content
-* Day 1: [R programming and visualizations](day1.rmd)
-* Day 2: [Introduction in differential expression analysis](day2.rmd)
-* Day 3: [Differential expression analysis](day3.rmd)
-* Day 4: [Interaction effects](day4.rmd)
-* Day 5: [Assignment - analyze a dataset of your choosing](day5.rmd)
+* Day 1: [R programming and visualizations](day1.md)
+* Day 2: [Introduction in differential expression analysis](day2.md)
+* Day 3: [Differential expression analysis](day3.md)
+* Day 4: [Interaction effects](day4.md)
+* Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
 
 ## The example dataset
