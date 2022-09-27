@@ -3,3 +3,7 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 
 
 <!-- ![Image](x.png) -->
+
+![pdf](Fig1a.pdf)
+
+![svg](Fig1a.svg)
