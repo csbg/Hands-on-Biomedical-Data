@@ -109,3 +109,11 @@ Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
 
 ## Enrichment analysis
+Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
+* First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
+* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
+* Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
+* The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
+* Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
+* Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
+<img src="03_01_simple/Enrichments.png" width="50%" height="100%">
