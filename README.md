@@ -2,4 +2,4 @@
 Practical exercises for the course "Hands-on Biomedical Data - Resources and Analysis Tools"
 
 
-![Image](x.png)
+<!-- ![Image](x.png) -->
