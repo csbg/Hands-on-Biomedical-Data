@@ -106,6 +106,6 @@ Example plot:
 * Next, split the columns based on stimulus: `column_split = design$stimulus`, again in the heatmap function `?Heatmap`.
 
 Example resulting plot:
-<img src="03_01_simple/Top.genes.names.png" width="50%">
+<img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
 
 ## Enrichment analysis
