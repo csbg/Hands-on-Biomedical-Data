@@ -69,9 +69,40 @@ model.matrix(~stimulus, data=design)
 ### Normalize data
 After defining the design matrix, we can use limma voom to normalize the data.
 ```R
-voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
+dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
 ```
 
-
+Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`.
+* What types of objects are those two?
+* Use `?boxplot` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
+	* `boxplot(data[1:30,])`
+	* `boxplot(t(data[1:30,]))`
+* Now use `dataVoom$E` to plot a boxplot of the first 30 genes.
+* Now lot's look at the density of one gene using three approaches. What's the difference?
+	* plot(density(data[8,]))
+	* plot(density(dataVoom$E[8,]))
+	* plot(density(log2(data[8,])))
 
 ### Perform differential expression
+After having normalized the data we can fit the differential expression model. 
+```R
+limmaFit <- lmFit(dataVoom, design=model)
+limmaFit <- eBayes(limmaFit)
+```
+
+Now let's look at which coefficients we get
+```R
+head(coef(limmaFit))
+```
+
+Next, we extract the results from these models.
+```R
+limmaRes <- list() # start an empty list
+for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
+  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) # topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
+}
+limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results and stores the name of the coefficient in the column "coef"
+limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results except for the intercept
+```
+
+### Analyze results
