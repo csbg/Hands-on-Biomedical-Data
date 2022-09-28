@@ -64,7 +64,7 @@ model.matrix(~stimulus, data=design)
 ```
 * Make a heatmap of the resulting model.matrix
 * Now figure out which condition is taken as the control / reference / intercept. This should be PBS. 
-* If the reference is not the right one, use `factor`, `?relevel`, and `?mutate` to change the  factor levels.
+* If the reference is not the right one, use `factor`, `?relevel`, and `?mutate` to change the  factor levels. Then make another heatmap to see if it fits now.
 
 ### Normalize data
 After defining the design matrix, we can use limma voom to normalize the data.
@@ -79,9 +79,9 @@ Now let's look at the data before and after normalization. The original data is 
 	* `boxplot(t(data[1:30,]))`
 * Now use `dataVoom$E` to plot a boxplot of the first 30 genes.
 * Now lot's look at the density of one gene using three approaches. What's the difference?
-	* plot(density(data[8,]))
-	* plot(density(dataVoom$E[8,]))
-	* plot(density(log2(data[8,])))
+	* `plot(density(data[8,]))`
+	* `plot(density(dataVoom$E[8,]))`
+	* `plot(density(log2(data[8,])))`
 
 ### Perform differential expression
 After having normalized the data we can fit the differential expression model. 
@@ -105,4 +105,46 @@ limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results a
 limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results except for the intercept
 ```
 
-### Analyze results
+## Data interpretation
+
+### Vulcano plot
+The [vulcano plot]("https://en.wikipedia.org/wiki/Volcano_plot_(statistics)") can be created by plotting the `-log10(P.Value)` on the y-axis against the `logFC` on the x-axis. The plot gets its characteristic shape since those genes that are highly significant (large value on y-axis) also have large effects (differences between groups) in both directions (negative and positive log fold changes).
+* draw a vulcano plot from the `limmaRes` object using a scatterplot `geom_point`. The point has many thousand points (genes). Can you overcome this overplotting by using transparency (e.g. `alpha=0.3`) or binning (e.g. `geom_hex`)?
+
+### P-value distribution
+The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model. Draw a p-value distribution using `geom_histogram`.
+
+### Number of hits
+Now, count the number of genes that are tested `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
+
+## Visualizing results
+A key element of any statistical analysis is to visualize results (differential genes) to assess whether the statistics obtained match the data. 
+
+### Visualizing one gene
+* Pick one gene with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
+* Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
+* Generate a plot, where the x-axis is the stimulus (IFNa or PBS) and the y-axis is the expression of the gene.
+* Does the observed difference on this plot fit to the log fold change?
+
+Example plot:
+<img src="03_01_simple/One.gene.png" width="50%">
+
+### Visualizing multiple genes
+* From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `?top_n` and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `?row.names`.
+* Generate a heatmap of their gene expression from `dataVoom$E` using `?Heatmap`.
+* This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `?t` and `?scale` for details.
+* Now let's refine this plot a bit more. Split the rows into up- and down-regulated genes using `row_split=ifelse(limmaRes[goi,]$logFC > 0, "up", "down")` in the heatmap function `?Heatmap`.
+* Next, split the columns based on stimulus: `column_split = design$stimulus`, again in the heatmap function `?Heatmap`.
+
+Example resulting plot:
+<img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
+
+## Enrichment analysis
+Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
+* First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
+* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
+* Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
+* The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
+* Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
+* Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
+<img src="03_01_simple/Enrichments.png" width="50%" height="100%">
