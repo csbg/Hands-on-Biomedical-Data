@@ -4,28 +4,32 @@
 ## Setup
 First load packages.
 ```R
+.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/") # we will load packages installed in the directory of user "handson"
 require(tidyverse)
 require(limma)
-require(ComplexHeatmap)
-require(enrichR)
+require(pheatmap)
+<!-- require(ComplexHeatmap)
+require(enrichR) -->
 ```
 
-Then load the data.
+Then load the data. This is stored in the directory of user "handson".
 ```R
-data <- readRDS("data.RDS")
-design <- readRDS("design.RDS")
-gmap <- readRDS("gmap.RDS")
+data <- readRDS("/home/handson/data/data.RDS")
+design <- readRDS("/home/handson/data/design.RDS")
+gmap <- readRDS("/home/handson/data/gmap.RDS")
 ```
 
 For all three objects above, answer the following questions:
 * What type of object is it?
 * How many rows and columns are this object?
 * What information is contained in rows and columns?
+Remember functions: `str`, `head`, `dim`, and similar.
 
 ## Subset data
-In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline. To subset the dataset accordingly we need the following steps:
+In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
+* Use `?stopifnot` to make sure the data matrix has as many columns as the design table.
 
 After subsetting, the design table should only contain 6 rows and the data matrix only 6 columns.
 

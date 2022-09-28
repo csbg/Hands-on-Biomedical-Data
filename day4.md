@@ -1,5 +1,8 @@
-# A more complex example
-In this exercise, we will repeat the analysis from the introductory exercise, but analyze all six stimuli compared to PBS controls.
+# Interaction effects
+In this exercise, we will test differences along two axes:
+* interferon alpha and PBS
+* spleen and liver
+We will thus be able if there is an interaction between those two effects, i.e. whether the effect of interferon treatment (stimulated versus unstimulated) differs between the two organs spleen and liver.
 
 ## Setup
 First load packages.
@@ -21,7 +24,7 @@ gmap <- readRDS("/home/handson/data/gmap.RDS")
 ```
 
 ## Subset data
-We will only work with liver fibroblasts (Gp38 positive) but use all stimuli.
+We will only work with liver and spleen fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline..
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
 * How many samples do we end up with?
@@ -36,7 +39,7 @@ We will only work with liver fibroblasts (Gp38 positive) but use all stimuli.
 * Next, generate a heatmap of the resulting correlation heatmap using the function `?pheatmap`
 
 ### MDS projection
-Finally, use MDS projection, using the same code from the last exercise:
+Finally, use MDS projection, modify the code from the last exercise, to also show the organ of each sample using the `shape` aesthetic in ggplot.
 ```R
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
@@ -49,12 +52,12 @@ data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
 ```
 
 ## Differential expression and data normalization
-In the next step we will compare stimulated to PBS control samples.
+In the next step we will compare stimulated to PBS control samples, liver to spleen, and the interaction of both effects.
 
 ### Setup up the model matrix
-Just like yesterday, we compare stimulated to unstimulated samples. Make sure the correct reference (PBS) is used by generating a heatmap of the model matrix.
+Make sure the correct references (PBS for stimulus and Liver. for the organ) are used by generating a heatmap of the model matrix. Then setup the model matrix as follows:
 ```R
-model.matrix(~stimulus, data=design)
+model.matrix(~stimulus*organ, data=design)
 ```
 
 ### Normalize data
@@ -86,7 +89,41 @@ limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results a
 limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results except for the intercept
 ```
 
+### Fit contrast
+The above model has four coefficients:
+* Intercept
+* stimulusIFNa: interferon alpha versus PBS (based on liver samples)
+* organSpleen: spleen versus liver (based on PBS samples)
+* Interaction effect ("stimulusIFNa:organSpleen")
+Now, we want to also quantify the IFNa stimulus effect in spleen. To do so we fit a contrast, specifically summing up the IFNa effect PLUS the interaction:
+```R
+colnames(coef(limmaFit))
+stopifnot(all(colnames(coef(limmaFit)) == c("(Intercept)", "stimulusIFNa", "organSpleen", "stimulusIFNa:organSpleen"))) # make sure we have the right names, otherwise we have to adapt the next line
+contrast.mt <- cbind(IFNa_Spleen = c(0,1,0,1)) # we add the 2nd and 4th coefficient.
+row.names(contrast.mt) <- colnames(coef(limmaFit))
+contrast.mt
+limmaFit.contrast <- contrasts.fit(limmaFit,contrast.mt)
+limmaFit.contrast <- eBayes(limmaFit.contrast)
+limmaRes.contrast <- topTable(limmaFit.contrast, coef=colnames(contrast.mt),number = Inf) %>%
+  rownames_to_column("ensg") %>%
+  mutate(coef=colnames(contrast.mt))
+limmaRes <- rbind(limmaRes.contrast, limmaRes) # add this coefficient to the result table
+table(limmaRes$coef)
+```
+
+Now, we will clean up the table using regular expressions:
+```R
+limmaRes$gene <- gmap[limmaRes$ensg,]$external_gene_name # here we add the gene symbol
+limmaRes <- limmaRes %>%
+  mutate(coef = str_replace(coef, "organ", "")) %>% # remove "organ"
+  mutate(coef = str_replace(coef, "stimulus", "")) %>% # remove "stimulus"
+  mutate(coef = str_replace(coef, "^IFNa$", "IFNa_Liver")) %>% # rename "IFNa" to "IFNa_Liver"
+  mutate(coef = str_replace(coef, "^IFNa\\:Spleen$", "Interaction")) # Name interaction
+table(limmaRes$coef)
+```
+
 ## Data interpretation
+The steps below are identical in terms of code to the example from yesterday. 
 
 ### Vulcano plot
 Draw a vulcano plot from the `limmaRes` object. Use `?facet_wrap` or `?facet_grid` to separate the plots by the stimulus (coefficient).
@@ -102,25 +139,26 @@ Now, count the number of genes that are tested `?count`. Then, create a new tabl
 A key element of any statistical analysis is to visualize results (differential genes) to assess whether the statistics obtained match the data. 
 
 ### Visualizing one gene
-* Pick one gene from one comparison with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
+* Pick one gene with significant interaction effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
 * Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
-* Generate a plot, where the x-axis is the stimulus (six stimuli and PBS) and the y-axis is the expression of the gene.
-* Look at the log fold changes for all six stimuli. Do the observed differences on this plot fit to the log fold change?
+* Generate a plot, where the x-axis is the stimulus (IFNa or PBS) and the y-axis is the expression of the gene.
+* Add facets to separate the two organs
+* Look at the log fold changes for all coefficients. Do the observed differences on this plot fit to the log fold change?
 
 Example plot:
-<img src="03_02_Complex/One.gene.png" width="50%">
+<img src="03_03_Interaction/One.gene.png" width="50%">
 
 ### Visualizing multiple genes
 Now let's make the following plot, which shows the expression data (left) and the statistical results (right) for the top 5 genes from each comparison.
-<img src="03_02_Complex/Coef_HM.png" width="100%">
+<img src="03_03_Interaction/Coef_HM.png" width="100%">
 
-The steps below are outlined in detail. Make sure you understand the code, as you will have to modify it tomorrow.
+The steps below are outlined in detail. 
 
 #### get the genes of interest
 Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`top_n`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. 
 
 #### plot statistical results
-Next plot all statistical results for the genes above.
+Next plot all statistical results for the genes above. This plot is the same as yesterday.
 ```R
 (p.coef <- limmaRes %>%
   filter(ensg %in% goi.all) %>%
@@ -143,7 +181,7 @@ for(gg in goi.all){
 }
 ```
 
-Next, we combine the above list of data.frame into one data.frame using `?bind_rows`, and then plot this data as a heatmap.
+Next, we combine the above list of data.frame into one data.frame using `?bind_rows`, and then plot this data as a heatmap. The code below is the same as yesterday. Now, also separate samples by the organ.
 ```R
 (p.vals <- bind_rows(dat.list, .id="ensg") %>%
   mutate(gene = gmap[ensg,]$external_gene_name) %>%
@@ -159,14 +197,3 @@ Finally, we combine the two plots as below, using the "patchwork" package. This 
 ```R
 p.vals + p.coef
 ```
-
-
-<!-- ## Enrichment analysis
-Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
-* First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
-* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
-* Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
-* The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
-* Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
-* Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
-<img src="03_01_simple/Enrichments.png" width="50%" height="100%"> -->
