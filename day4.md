@@ -144,6 +144,7 @@ A key element of any statistical analysis is to visualize results (differential 
 * Generate a plot, where the x-axis is the stimulus (IFNa or PBS) and the y-axis is the expression of the gene.
 * Add facets to separate the two organs
 * Look at the log fold changes for all coefficients. Do the observed differences on this plot fit to the log fold change?
+* Note: You don't have to write the log fold change on the plot.
 
 Example plot:
 <img src="03_03_Interaction/One.gene.png" width="50%">
