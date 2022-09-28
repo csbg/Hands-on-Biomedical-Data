@@ -106,6 +106,7 @@ A key element of any statistical analysis is to visualize results (differential 
 * Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (six stimuli and PBS) and the y-axis is the expression of the gene.
 * Look at the log fold changes for all six stimuli. Do the observed differences on this plot fit to the log fold change?
+* Note: You don't have to write the log fold change on the plot.
 
 Example plot:
 <img src="03_02_Complex/One.gene.png" width="50%">
