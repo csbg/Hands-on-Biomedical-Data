@@ -113,6 +113,8 @@ The [vulcano plot]("https://en.wikipedia.org/wiki/Volcano_plot_(statistics)") ca
 
 ### P-value distribution
 The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model. Draw a p-value distribution using `geom_histogram`.
+* Is this distribution as expected?
+* Use `fill=factor(floor(AveExpr)` to better understand the distribution. What can you conclude from this?
 
 ### Number of hits
 Now, count the number of genes that are tested `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
