@@ -41,7 +41,7 @@ Finally, use MDS projection, using the same code from the last exercise:
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
   rownames_to_column("sample") %>%
-  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%
+  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>% # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +

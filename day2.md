@@ -51,7 +51,7 @@ Finally, we will use the calculated correlations to project the samples on 2 dim
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
   rownames_to_column("sample") %>%
-  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%
+  mutate(sn = str_replace("^.+?_(\\d)$", "\\1", sample)) %>%  # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -99,7 +99,12 @@ Now let's look at which coefficients we get
 head(coef(limmaFit))
 ```
 
-Next, we extract the results from these models.
+Next, we extract the results from these models. The following code does the following:
+* creates an empty list
+* loops through all coefficients estimated by the model
+* stores results (log fold changes, p-values,...) as a table across all 20k genes for each coefficient into the list, using the name of the coefficient for the list entry (`limmaRes[[coefx]]`)
+* then combines all tables from this list into one large table, that gets one extra column which is called `coef`
+* finally remove the `(Intercept)`, which we are not interested in as it does not measure the difference between groups
 ```R
 limmaRes <- list() # start an empty list
 for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
