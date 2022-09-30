@@ -29,7 +29,10 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * You can also clear objects from your environment (also called "workspace") by clicking the small yellow broom icon on the top right under "Environment"
 * Plots and help packages appear in the bottom right
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
-> While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!
+* Save **one R script for each day**.
+***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
+
+<img src="img/RStudio.png" width="100%">
 
 
 ## R Markdown
