@@ -3,10 +3,9 @@
 Function name | ---
  --- | ---
 abs  |
-across |
 add_column |
 aes |
-anno_text |
+<!-- anno_text | -->
 arrange |
 as.character |
 as.data.frame |
@@ -22,17 +21,16 @@ column_to_rownames |
 contrasts.fit |
 cor |
 count |
-data[,row.names |
-dev.off |
+<!-- dev.off | -->
 eBayes |
-element_text |
+<!-- element_text | -->
 facet_grid |
 facet_wrap |
 factor |
 fct_reorder |
 filter |
 floor |
-format |
+<!-- format | -->
 function |
 geom_bar |
 geom_hex |
@@ -41,17 +39,17 @@ geom_point |
 geom_smooth |
 geom_text |
 geom_tile |
-getBM |
-getGEO |
+<!-- getBM | -->
+<!-- getGEO | -->
 ggplot |
 ggtitle |
-grobWidth |
+<!-- grobWidth | -->
 group_by |
 group_by_all |
 gsub |
 Heatmap |
 if |
-invoke |
+<!-- invoke | -->
 is.list |
 list |
 lmFit |
@@ -66,10 +64,8 @@ nrow |
 out |
 paste |
 paste0 |
-pheatmap |
-png |
-png.hm |
-png2 |
+<!-- pheatmap | -->
+<!-- png | -->
 position_dodge2 |
 print |
 pull |
@@ -100,14 +96,13 @@ str_split |
 sum |
 t |
 table |
-textGrob |
+<!-- textGrob | -->
 theme_bw |
 topTable |
 top_n |
 toupper |
 unique |
 unlist |
-useMart |
 voom |
 xlab |
 ylab |
