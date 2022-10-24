@@ -5,7 +5,6 @@ Function name | ---
 abs |
 add_column |
 aes |
-<!-- anno_text | -->
 arrange |
 as.character |
 as.data.frame |
@@ -21,16 +20,13 @@ column_to_rownames |
 contrasts.fit |
 cor |
 count |
-<!-- dev.off | -->
 eBayes |
-<!-- element_text | -->
 facet_grid |
 facet_wrap |
 factor |
 fct_reorder |
 filter |
 floor |
-<!-- format | -->
 function |
 geom_bar |
 geom_hex |
@@ -39,17 +35,13 @@ geom_point |
 geom_smooth |
 geom_text |
 geom_tile |
-<!-- getBM | -->
-<!-- getGEO | -->
 ggplot |
 ggtitle |
-<!-- grobWidth | -->
 group_by |
 group_by_all |
 gsub |
 Heatmap |
 if |
-<!-- invoke | -->
 is.list |
 list |
 lmFit |
@@ -64,8 +56,6 @@ nrow |
 out |
 paste |
 paste0 |
-<!-- pheatmap | -->
-<!-- png | -->
 position_dodge2 |
 print |
 pull |
@@ -96,7 +86,6 @@ str_split |
 sum |
 t |
 table |
-<!-- textGrob | -->
 theme_bw |
 topTable |
 top_n |
@@ -106,3 +95,16 @@ unlist |
 voom |
 xlab |
 ylab |
+
+
+<!-- anno_text | -->
+<!-- dev.off | -->
+<!-- element_text | -->
+<!-- format | -->
+<!-- getBM | -->
+<!-- getGEO | -->
+<!-- grobWidth | -->
+<!-- invoke | -->
+<!-- pheatmap | -->
+<!-- png | -->
+<!-- textGrob | -->
