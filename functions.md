@@ -12,15 +12,12 @@ as.character |
 as.data.frame |
 as.matrix |
 as_factor |
-attributes=c |
 bind_rows |
 c |
 clean_names |
 coef |
-coef=colnames |
 colSums |
 colnames |
-color=log2 |
 column_to_rownames |
 contrasts.fit |
 cor |
@@ -33,7 +30,6 @@ facet_grid |
 facet_wrap |
 factor |
 fct_reorder |
-fill=factor |
 filter |
 floor |
 format |
@@ -57,7 +53,6 @@ Heatmap |
 if |
 invoke |
 is.list |
-limits=c |
 list |
 lmFit |
 log10 |
@@ -68,7 +63,6 @@ model.matrix |
 mutate |
 ncol |
 nrow |
-organ=relevel |
 out |
 paste |
 paste0 |
