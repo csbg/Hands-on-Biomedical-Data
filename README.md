@@ -24,3 +24,9 @@ In this part of the practical, we will study transcriptomics data of structural 
 * Plotting of results
 * Interpretation of top genes
 * Gene set enrichment analysis
+
+## How to get help?
+* Most commands should be explained in this practical.
+* If you do not understand certain functions, type the question mark plus the function name in R, e.g.: "?median".
+* If you need additional commands, Google is your friend. 
+* Also consult this [list of function names](functions.md), which contains key functions relevant for this course.
