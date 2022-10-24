@@ -2,7 +2,7 @@
 
 Function name | ---
  --- | ---
-abs  |
+abs |
 add_column |
 aes |
 <!-- anno_text | -->
