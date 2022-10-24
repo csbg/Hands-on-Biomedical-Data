@@ -8,8 +8,8 @@ First load packages.
 require(tidyverse)
 require(limma)
 require(pheatmap)
-<!-- require(ComplexHeatmap)
-require(enrichR) -->
+require(ComplexHeatmap)
+require(enrichR)
 ```
 
 Then load the data. This is stored in the directory of user "handson".

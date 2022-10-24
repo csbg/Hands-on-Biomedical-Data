@@ -9,8 +9,8 @@ require(tidyverse)
 require(limma)
 require(patchwork)
 require(pheatmap)
-<!-- require(ComplexHeatmap)
-require(enrichR) -->
+require(ComplexHeatmap)
+require(enrichR)
 ```
 
 Load the data.

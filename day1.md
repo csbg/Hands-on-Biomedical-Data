@@ -20,7 +20,7 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * Plots and help packages appear in the bottom right. There is also a file browser that you can use to open files.
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
 * Save **one R script for each day** to not mix exercises and R sessions from different days. Only exception is today, where we will generate two scripts, one to explore R Markdown (next exercise) and one to learn R.
-***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
+* ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
 
 ### R Markdown

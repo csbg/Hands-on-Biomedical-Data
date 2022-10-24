@@ -12,8 +12,8 @@ require(tidyverse)
 require(limma)
 require(patchwork)
 require(pheatmap)
-<!-- require(ComplexHeatmap)
-require(enrichR) -->
+require(ComplexHeatmap)
+require(enrichR)
 ```
 
 Load the data.
@@ -97,16 +97,29 @@ The above model has four coefficients:
 * Interaction effect ("stimulusIFNa:organSpleen")
 Now, we want to also quantify the IFNa stimulus effect in spleen. To do so we fit a contrast, specifically summing up the IFNa effect PLUS the interaction:
 ```R
+# look at the coefficient names
 colnames(coef(limmaFit))
-stopifnot(all(colnames(coef(limmaFit)) == c("(Intercept)", "stimulusIFNa", "organSpleen", "stimulusIFNa:organSpleen"))) # make sure we have the right names, otherwise we have to adapt the next line
+
+# make sure we have the right names, otherwise we have to adapt the next line
+stopifnot(all(colnames(coef(limmaFit)) == c("(Intercept)", "stimulusIFNa", "organSpleen", "stimulusIFNa:organSpleen")))
+
+# now create a contrast matrix
 contrast.mt <- cbind(IFNa_Spleen = c(0,1,0,1)) # we add the 2nd and 4th coefficient.
 row.names(contrast.mt) <- colnames(coef(limmaFit))
+
+# look at the matrix
 contrast.mt
+
+# Contrast fit similar to the original limma fit
 limmaFit.contrast <- contrasts.fit(limmaFit,contrast.mt)
 limmaFit.contrast <- eBayes(limmaFit.contrast)
+
+# Extract results for this contrast coefficient
 limmaRes.contrast <- topTable(limmaFit.contrast, coef=colnames(contrast.mt),number = Inf) %>%
   rownames_to_column("ensg") %>%
   mutate(coef=colnames(contrast.mt))
+	
+# add them to the full table
 limmaRes <- rbind(limmaRes.contrast, limmaRes) # add this coefficient to the result table
 table(limmaRes$coef)
 ```
