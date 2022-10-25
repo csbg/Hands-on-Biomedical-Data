@@ -211,3 +211,10 @@ Finally, we combine the two plots as below, using the "patchwork" package. This 
 ```R
 p.vals + p.coef
 ```
+
+## Final questions
+* Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
+* Does it make sense to filter lowly expressed genes?
+* Do you trust the results of differential expression?
+* Did you identify interaction effects?
+* Are treatment effects on average stronger in the liver or spleen? Is there a clear difference?

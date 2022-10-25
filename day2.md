@@ -160,3 +160,9 @@ Enrichment analysis help in interpreting long lists of genes. By measuring wheth
 * Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
 * Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
 <img src="03_01_simple/Enrichments.png" width="50%" height="100%">
+
+## Final questions
+* Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
+* Does it make sense to filter lowly expressed genes?
+* Do you trust the results of differential expression?
+* Looking at the enriched genes and pathways - are the results expected?

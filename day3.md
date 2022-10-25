@@ -226,3 +226,11 @@ limmaRes %>%
 Finall, generate the following plot:
 
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
+
+
+## Final questions
+* Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
+* Does it make sense to filter lowly expressed genes?
+* Which treatment has the largest effects?
+* Do you trust the results of differential expression?
+* Looking at the enriched genes and pathways - are the results expected?
