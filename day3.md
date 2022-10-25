@@ -200,7 +200,9 @@ enr.res.all <- bind_rows(enr.res.list, .id="coef")
 #### Plot enrichments
 
 Now generate the following plot:
+
 <img src="03_02_Complex/Enrichments.png" width="50%" height="100%">
+
 Note: The plot only includes entries with: `Adjusted.P.value < 0.01` and `Odds.Ratio > 6`
 
 
@@ -222,4 +224,5 @@ limmaRes %>%
 ```
 
 Finall, generate the following plot:
+
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
