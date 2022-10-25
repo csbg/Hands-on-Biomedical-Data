@@ -56,7 +56,6 @@ nrow |
 out |
 paste |
 paste0 |
-position_dodge2 |
 print |
 pull |
 rbind |
@@ -108,3 +107,4 @@ ylab |
 <!-- pheatmap | -->
 <!-- png | -->
 <!-- textGrob | -->
+<!-- position_dodge2 | -->

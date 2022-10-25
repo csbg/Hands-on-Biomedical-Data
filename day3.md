@@ -162,12 +162,64 @@ p.vals + p.coef
 ```
 
 
-<!-- ## Enrichment analysis
+## Enrichment analysis
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
+
+#### Perform enrichment analysis for each coefficient
+Below is a loop over the individual coefficients. Within each iteration of this loop, perform enrichment analysis for each coefficient. 
+
+As a reminder, this were the instructions from yesterday:
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
 * Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
-* Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
-* Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
-<img src="03_01_simple/Enrichments.png" width="50%" height="100%"> -->
+
+``` R
+enr.res.list <- list()
+for(coefx in unique(limmaResSig$coef)){
+
+	# Extract genes of interests (GOI) for a given coefficient (see yesterday's example)
+	goi <- ....
+	
+	# Add code here to perform enrichment analysis (see yesterday's example)
+	enr.res <- enrichr(...)
+	
+	# The results will be a list, where each entry is one database. We will combine those into one long table
+	enr.res <- bind_rows(enr.res, .id="db")
+
+  # Store results in the list
+  enr.res.list[[coefx]] <- bind_rows(enr.res, .id="db")
+}
+```
+
+Finally, we combine the list (each entry is one coefficient) into one long table:
+```R
+enr.res.all <- bind_rows(enr.res.list, .id="coef")
+```
+
+#### Plot enrichments
+
+Now generate the following plot:
+<img src="03_02_Complex/Enrichments.png" width="50%" height="100%">
+Note: The plot only includes entries with: `Adjusted.P.value < 0.01` and `Odds.Ratio > 6`
+
+
+#### Plot genes related to the enrichments
+Now we will extract the genes underlying the above enrichments:
+```
+goi.enr <- enr.res.all %>%
+  filter(Adjusted.P.value < 0.01 & Odds.Ratio > 6) %>%
+  pull("Genes") %>%
+  str_split(";") %>%
+  invoke(.f = c) %>%
+  unique()
+```
+
+Then we will extract the statistics for these genes:
+```R
+limmaRes %>%
+  filter(toupper(gene) %in% goi.enr)
+```
+
+Finall, generate the following plot:
+<img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
