@@ -6,6 +6,8 @@
 * Under this [link](https://gemma.msl.ubc.ca/expressionExperiment/showAllExpressionExperiments.html), we can search the available expression datasets.
 * To access datasets with R, see the [Gemma Tutorial on day1](day1.md#downloading-a-dataset).
 
+<img src="img/Gemma.png" width="50%">
+
 ## Instructions
 * For the final exercise of this (R) part of the practical, explore a dataset from Gemma using the function taught in this course.
 * Be aware that based on the design table of the dataset, you will have to modify the design matrix (`model.matrix`) accordingly to correctly interpret the coefficients (for example, think about batch and interaction coefficients in addition to the main comparisons).
