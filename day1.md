@@ -383,3 +383,5 @@ boxplot(dataMT, las=2)
 ```
 
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713).
+
+For more details on the final assignment see the [instructions for day 5](day5.md).
