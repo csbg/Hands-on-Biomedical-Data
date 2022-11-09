@@ -30,9 +30,9 @@ a <- 1
 b <- 3
 a + b
 ```
-* Now go to `File > Knit Document` (top right). This will generate a HTML file (you may be asked whet)
-* Now go to `Files` (bottom right) and open the HTML file in the Web Browser.
-* Now let's format the markdown a little bit, write the following in your Markdown file:
+* Now go to `File > Knit Document` (top right). This will generate a HTML file (this may raise an error). In this case, you can just press "Cancel" and follow the next step.
+* Now go to `Files` (bottom right) and open the HTML file ("Markdown_intro.html") in the Web Browser.
+* Now let's format the markdown a little bit, write the following in your Markdown file and then again generate the HTML file ("Knit Document").
 ```R
 # This is a "normal" comment inside of code blocks 
 str(a)
