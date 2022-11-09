@@ -14,7 +14,7 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 In this part of the practical, we will study transcriptomics data of structural cells in mice upon cytokine stimulation from [Krausgruber & Fortelny et al., Nature, 2020](https://doi.org/10.1038/s41586-020-2424-4).
 <br/>
 <br/>
-<img src="StructuralImmunity.png" width="50%">
+<img src="img/StructuralImmunity.png" width="50%">
 
 ## Basic analyses steps covered
 * Quality control using sample correlations and dimensionality reduction
@@ -30,3 +30,4 @@ In this part of the practical, we will study transcriptomics data of structural 
 * If you do not understand certain functions, type the question mark plus the function name in R, e.g.: "?median".
 * If you need additional commands, Google is your friend. 
 * Also consult this [list of function names](functions.md), which contains key functions relevant for this course.
+* **Don't forget to raise you hand if lost!**

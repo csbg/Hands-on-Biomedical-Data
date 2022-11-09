@@ -1,6 +1,7 @@
 # R programming and visualizations
 In this part, we will get started with R and Rstudio. Throughout this course, you will run R commands from these files in Rstudio. You can type them but you can also copy/paste them. One way is to open this window on side of your screen, and open you R studio in a different window, on the other side of the screen. If you can use another browser, you may be able to use `Strg + TAB` to switch bettween the two windows using your keyboard (and don't have to click between tabs).
 
+
 ## Getting R studio setup
 * Visit ricarda.came.sbg.ac.at
 * Enter your username and password
@@ -19,9 +20,14 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * You can also clear objects from your environment (also called "workspace") by clicking the small yellow broom icon on the top right under "Environment"
 * Plots and help packages appear in the bottom right. There is also a file browser that you can use to open files.
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
-* Save **one R script for each day** to not mix exercises and R sessions from different days. Only exception is today, where we will generate two scripts, one to explore R Markdown (next exercise) and one to learn R.
 * ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
+
+## Evaluation with R Markdown
+* For the evaluation, we will consider the R Markdown HTML files that you will generate from your script.
+* Save **one R script for each day** to not mix exercises and R sessions from different days. (Only exception is today, where we will generate two scripts, one to explore R Markdown (see below) and one to learn R.)
+* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* After running R Markdown this will generatethe following HTML files: `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation. 
 
 ### R Markdown
 For this course, you will create reports of your R code and session using R Markdown. Create an R script, save it ("Markdown_intro.R"), and then write the following:
@@ -179,6 +185,7 @@ for(x in 1:6){
 m <- readRDS("/home/handson/data/data.RDS")
 str(m)
 dim(m)
+head(m)
 m <- m[1:20, grepl("Liver_Fibroblasts", colnames(m))]
 colnames(m) <- gsub("^Liver_Fibroblasts_(.+)_RNA_(\\d)$", "\\1_\\2", colnames(m))
 row.names(m) <- paste0("g", 1:nrow(m))
@@ -376,3 +383,5 @@ boxplot(dataMT, las=2)
 ```
 
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713).
+
+For more details on the final assignment see the [instructions for day 5](day5.md).
