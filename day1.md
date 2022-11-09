@@ -91,8 +91,8 @@ b
 ```
 
 ## Functions
+The sum function can be applied to numbers 
 ```R
-#' The sum function can be applied to numbers 
 sum(a,b)
 a + b
 sum(5,6)
@@ -100,8 +100,11 @@ c <- sum(a,b)
 (c <- sum(a,b))
 str(c)
 sum(a,c)
+```
 
-#' The sum function cannot be applied to characters
+The sum function cannot be applied to characters. The following code will create an error. We thus put `#+ error=TRUE` in the field so that the generation of the markdown file does not get interrupted.
+```R
+#+ error=TRUE
 a <- "abc"
 b <- "hello"
 sum(a,b)
@@ -109,8 +112,10 @@ typeof(a)
 typeof(b)
 str(a)
 str(b)
+```
 
-#' Caution: Some data structures can be automatically interpreted
+Caution: Some data structures can be automatically interpreted
+```R
 a <- TRUE
 b <- FALSE
 sum(a,b)

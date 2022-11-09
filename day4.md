@@ -44,7 +44,7 @@ Finally, use MDS projection, modify the code from the last exercise, to also sho
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
   rownames_to_column("sample") %>%
-  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%
+  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) %>%
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -78,12 +78,14 @@ Now let's look at which coefficients we get
 head(coef(limmaFit))
 ```
 
-Next, we extract the results from these models.
+Next, we extract the results from these coefficients.
 ```R
 limmaRes <- list() # start an empty list
 for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
 	print(coefx)
-  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) # topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
+	# topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
+  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) %>%
+		rownames_to_column("ensg")
 }
 limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results and stores the name of the coefficient in the column "coef"
 limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results except for the intercept
@@ -136,7 +138,7 @@ table(limmaRes$coef)
 ```
 
 ## Data interpretation
-The steps below are identical in terms of code to the example from yesterday. 
+The steps below are identical (in terms of the code) to the example from yesterday. 
 
 ### Vulcano plot
 Draw a vulcano plot from the `limmaRes` object. Use `?facet_wrap` or `?facet_grid` to separate the plots by the stimulus (coefficient).
@@ -177,7 +179,7 @@ Next plot all statistical results for the genes above. This plot is the same as 
 (p.coef <- limmaRes %>%
   filter(ensg %in% goi.all) %>%
   mutate(gene = gmap[ensg,]$external_gene_name) %>%
-  ggplot(aes(y=gene, x=gsub("stimulus", "", coef), color=logFC, size=-log10(adj.P.Val))) + 
+  ggplot(aes(y=gene, x=str_remove(coef, "stimulus"), color=logFC, size=-log10(adj.P.Val))) + 
   geom_point() +
   scale_color_gradient2(high="red", low="blue") +
   theme_bw())

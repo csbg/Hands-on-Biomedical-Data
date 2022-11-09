@@ -41,7 +41,7 @@ Finally, use MDS projection, using the same code from the last exercise:
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
   rownames_to_column("sample") %>%
-  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>% # This shortens the sample names to just the number at the end
+  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) %>% # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -80,7 +80,10 @@ Next, we extract the results from these models.
 limmaRes <- list() # start an empty list
 for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
 	print(coefx)
-  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) # topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
+	# topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
+	# The rownames (ENSEMBL Gene IDs) are stored in the column with the name "ensg"
+  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) %>%
+		rownames_to_column("ensg")
 }
 limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results and stores the name of the coefficient in the column "coef"
 limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results except for the intercept
@@ -126,7 +129,7 @@ Next plot all statistical results for the genes above.
 (p.coef <- limmaRes %>%
   filter(ensg %in% goi.all) %>%
   mutate(gene = gmap[ensg,]$external_gene_name) %>%
-  ggplot(aes(y=gene, x=gsub("stimulus", "", coef), color=logFC, size=-log10(adj.P.Val))) + 
+  ggplot(aes(y=gene, x=str_remove(coef, "stimulus"), color=logFC, size=-log10(adj.P.Val))) + 
   geom_point() +
   scale_color_gradient2(high="red", low="blue") +
   theme_bw())
@@ -188,7 +191,7 @@ for(coefx in unique(limmaResSig$coef)){
 	enr.res <- bind_rows(enr.res, .id="db")
 
   # Store results in the list
-  enr.res.list[[coefx]] <- bind_rows(enr.res, .id="db")
+  enr.res.list[[coefx]] <- enr.res
 }
 ```
 
@@ -213,7 +216,7 @@ goi.enr <- enr.res.all %>%
   filter(Adjusted.P.value < 0.01 & Odds.Ratio > 6) %>%
   pull("Genes") %>%
   str_split(";") %>%
-  invoke(.f = c) %>%
+  unlist() %>%
   unique()
 ```
 

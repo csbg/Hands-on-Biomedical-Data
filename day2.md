@@ -29,7 +29,7 @@ Remember functions: `str`, `head`, `dim`, and similar.
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
-* Use `?stopifnot` to make sure the data matrix has as many columns as the design table.
+* Use `?stopifnot` to make sure the data matrix has as many columns as the design table as rows.
 
 After subsetting, the design table should only contain 6 rows and the data matrix only 6 columns.
 
@@ -51,7 +51,7 @@ Finally, we will use the calculated correlations to project the samples on 2 dim
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
   add_column(stimulus = design$stimulus) %>%
   rownames_to_column("sample") %>%
-  mutate(sn = str_replace("^.+?_(\\d)$", "\\1", sample)) %>%  # This shortens the sample names to just the number at the end
+  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%  # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
