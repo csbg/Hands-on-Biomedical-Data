@@ -22,6 +22,10 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
 * ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
+## Evaluation with R Markdown
+* For the evaluation, we will use R Scripts files that you will generate.
+* Save **one R script for each day** to not mix exercises and R sessions from different days.
+* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 
 <!-- ## Evaluation with R Markdown
 * For the evaluation, we will consider the R Markdown HTML files that you will generate from your script.
