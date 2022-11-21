@@ -23,11 +23,11 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
 
-## Evaluation with R Markdown
+<!-- ## Evaluation with R Markdown
 * For the evaluation, we will consider the R Markdown HTML files that you will generate from your script.
 * Save **one R script for each day** to not mix exercises and R sessions from different days. (Only exception is today, where we will generate two scripts, one to explore R Markdown (see below) and one to learn R.)
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* After running R Markdown this will generatethe following HTML files: `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation. 
+* After running R Markdown this will generatethe following HTML files: `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation.
 * In order to be able to create HTML files this way, you first have to run `.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")` in your console.
 
 ### R Markdown
@@ -41,7 +41,7 @@ a + b
 * Now go to `Files` (bottom right) and open the HTML file ("Markdown_intro.html") in the Web Browser.
 * Now let's format the markdown a little bit, write the following in your Markdown file and then again generate the HTML file (using `File > Knit Document`).
 ```R
-# This is a "normal" comment inside of code blocks 
+# This is a "normal" comment inside of code blocks
 str(a)
 
 #' this is a comment that will be shown outside of code blocks
@@ -61,7 +61,7 @@ plot(1:10)
 #' Let's change the size of the plot again
 #+ plot2, fig.width=5, fig.height=10
 plot(1:10)
-```
+``` -->
 
 
 ## Loading packages
