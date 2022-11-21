@@ -15,7 +15,9 @@ Ideally you can run the practicals on your own machine, see here for [installati
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 * If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
-* While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from an empty environment!
+* While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
+* Use comments `#` to answer questions and comment on your code and results.
+* We will evaluate all scripts a week after Day 5 has finished (Dec 2nd, 2022).
 
 ## The example dataset
 
