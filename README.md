@@ -8,6 +8,14 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 * Day 4: [Interaction effects](day4.md)
 * Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
+Ideally you can run the practicals on your own machine, see here for [installation instructions](setup.md). If you do so, please see the [Markdown instructions](markdown.md).
+
+## Evaluation
+* For the evaluation, we will use R Scripts files that you will generate.
+* Save **one R script for each day** to not mix exercises and R sessions from different days.
+* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
+* While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from an empty environment!
 
 ## The example dataset
 
