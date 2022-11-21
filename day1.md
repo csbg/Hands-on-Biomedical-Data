@@ -26,6 +26,7 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * For the evaluation, we will use R Scripts files that you will generate.
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* If you work on your own machine, create HTML files using `File > Knit Document` in R
 
 <!-- ## Evaluation with R Markdown
 * For the evaluation, we will consider the R Markdown HTML files that you will generate from your script.
