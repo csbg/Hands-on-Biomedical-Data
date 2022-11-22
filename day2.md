@@ -38,7 +38,8 @@ After subsetting, the design table should only contain 6 rows and the data matri
 ### Correlation heatmap
 
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
-* Next, generate a heatmap of the resulting correlation heatmap using the function `?Heatmap`
+* Save the resulting correlation heatmap under the variable `corMT`
+* Next, generate a heatmap of the correlation heatmap using the function `?Heatmap`
 
 ### MDS projection
 Finally, we will use the calculated correlations to project the samples on 2 dimensions. The entire code for this step is shown below. This will:
