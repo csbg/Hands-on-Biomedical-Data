@@ -19,6 +19,7 @@ BiocManager::install("limma")
 BiocManager::install("ComplexHeatmap")
 BiocManager::install("gemma.R")
 ```
+When you install packages with `BiocManager::install`, you may be asked whether you want to `Update packages all/some/none [a/s/n]`. You can put `n` in the console, to not update packages.
 
 ## Download data
 Download the data using the following code

@@ -77,7 +77,7 @@ After defining the design matrix, we can use limma voom to normalize the data.
 dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
 ```
 
-Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`.
+Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`, which is part of the object return by running `voom(...)`.
 * What types of objects are those two?
 * Use `?boxplot` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
 	* `boxplot(data[1:30,])`
