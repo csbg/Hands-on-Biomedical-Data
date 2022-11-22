@@ -10,6 +10,7 @@ install.packages("tidyverse")
 install.packages("pheatmap")
 install.packages("enrichR")
 install.packages("devtools")
+install.packages("knitr")
 
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
