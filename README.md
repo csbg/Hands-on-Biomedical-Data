@@ -6,7 +6,7 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 * Day 2: [Introduction in differential expression analysis](day2.md)
 * Day 3: [A more complex example](day3.md)
 * Day 4: [Interaction effects](day4.md)
-* Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
+* Day 5: [Assignment - analyze a dataset of your choosing](day5.md) (The exercises for day 5 will not be part of the course in 2022.)
 
 Ideally you can run the practicals on your own machine, see here for [installation instructions](setup.md). If you do so, please see the [Markdown instructions](markdown.md).
 
