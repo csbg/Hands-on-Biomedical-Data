@@ -166,6 +166,7 @@ p.vals + p.coef
 
 
 ## Enrichment analysis
+**This part is optional / not required for the grade but wil give bonus points**
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
