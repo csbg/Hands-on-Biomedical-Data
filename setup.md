@@ -11,6 +11,7 @@ install.packages("pheatmap")
 install.packages("enrichR")
 install.packages("devtools")
 install.packages("knitr")
+install.packages("patchwork")
 
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
