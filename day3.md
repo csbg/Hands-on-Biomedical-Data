@@ -224,10 +224,11 @@ goi.enr <- enr.res.all %>%
 Then we will extract the statistics for these genes:
 ```R
 limmaRes %>%
+  mutate(gene = gmap[ensg,]$external_gene_name) %>%
   filter(toupper(gene) %in% goi.enr)
 ```
 
-Finall, generate the following plot:
+From this table, generate the following plot:
 
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
 
