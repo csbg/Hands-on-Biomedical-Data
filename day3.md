@@ -23,14 +23,16 @@ gmap <- readRDS("gmap.RDS")
 We will only work with liver fibroblasts (Gp38 positive) but use all stimuli.
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
-* How many samples do we end up with?
 * Use `?stopifnot` to make sure the data matrix has as many columns as the design table.
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.1:`
+How many samples do we end up with?
 
 ## Correlation analysis
 
 ### Correlation heatmap
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.2:`
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
 * Next, generate a heatmap of the resulting correlation heatmap using the function `?pheatmap`
 
@@ -91,19 +93,29 @@ limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results e
 ## Data interpretation
 
 ### Vulcano plot
-Draw a vulcano plot from the `limmaRes` object. Use `?facet_wrap` or `?facet_grid` to separate the plots by the stimulus (coefficient).
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.3:`
+Draw a vulcano plot from the `limmaRes` object.
+Use `?facet_wrap` or `?facet_grid` to separate the plots by the stimulus (coefficient).
 
 ### P-value distribution
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.4:`
 Draw a p-value distribution using `geom_histogram`, separate the plot using facets, and again look at the `AveExpr`.
 
 ### Number of hits
-Now, count the number of genes that are tested `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
+Now, count the number of genes that are tested using `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.5:`
+Report the number of tested and significant genes.
 
 
 ## Visualizing results
 A key element of any statistical analysis is to visualize results (differential genes) to assess whether the statistics obtained match the data. 
 
 ### Visualizing one gene
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.6:`
 * Pick one gene from one comparison with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
 * Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (six stimuli and PBS) and the y-axis is the expression of the gene.
@@ -163,6 +175,8 @@ Finally, we combine the two plots as below, using the "patchwork" package. This 
 p.vals + p.coef
 ```
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.7:`
+Report this plot in your protocol.
 
 ## Enrichment analysis
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
@@ -201,6 +215,7 @@ enr.res.all <- bind_rows(enr.res.list, .id="coef")
 
 #### Plot enrichments
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.8:`
 Now generate the following plot:
 
 <img src="03_02_Complex/Enrichments.png" width="50%" height="100%">
@@ -226,12 +241,15 @@ limmaRes %>%
   filter(toupper(gene) %in% goi.enr)
 ```
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.9:`
 From this table, generate the following plot:
 
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
 
 
 ## Final questions
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.10:`
 * Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
 * Does it make sense to filter lowly expressed genes?
 * Which treatment has the largest effects?

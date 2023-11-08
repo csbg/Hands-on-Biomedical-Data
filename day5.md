@@ -1,5 +1,7 @@
 # Assignment - analyze a dataset of your choosing
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5:` All of the results here should be reported in your protocol.
+
 ## Gemma
 * As seen on day 1, the Gemma database contains expression datasets with curated expression and meta-data. 
 * The database can also be browsed using this [link](https://gemma.msl.ubc.ca/).
