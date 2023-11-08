@@ -195,6 +195,8 @@ sw <- sw %>%
 
 <p style='color:red'>This is some red text.</p>
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `#1589F0`
+
 Assess the gender balance of this table, using `?count` and `gender`
 
 Count the number of characters by their `skin_color`.
