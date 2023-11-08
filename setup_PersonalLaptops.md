@@ -30,8 +30,10 @@ download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/de
 download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/gmap.RDS", "gmap.RDS")
 ```
 
-## Differences to Ricarda-based instructions
-- Do not define `.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")`, which is the path on Ricarda where packages are installed.
-- Define the paths for data (like `readRDS("/home/handson/data/data.RDS")`) based on the path on your machine. On your machine, you have to specify a the path `/home/handson/data/` to the path on your computer.
-- If you the files can be found but not read by `readRDS()`, you may need to install them manyally from this link: https://github.com/csbg/Hands-on-Biomedical-Data/tree/main/data.
-- Specific commands may differ, based on which packages you install. This will likely only affect more recent packages (like `gemma.R`).
+## Notes
+- Define the paths for data (like `readRDS("data.RDS")`) based on the path on your computer (for example: readRDS("/home/nfortelny/Desktop/HandsOn/data.RDS")).
+- If you the files can be found but not read by `readRDS()`, you may need to download them manually from this link: https://github.com/csbg/Hands-on-Biomedical-Data/tree/main/data. (Manually means to click on them and then click on "download".)
+- Specific commands may differ, based on which packages you install. This will most likely only affect very recent packages (like `gemma.R`) - if at all.
+
+## Start exercises
+You are now ready to start the exercises.
