@@ -209,8 +209,8 @@ sw %>%
 * `table` is simlar to `count` and counts the occurances
 * `sort` orders a vector
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
-Execute parts of the code below, what is the difference?.
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.2:`
+What is the difference between the two approaches?
 
 Print the names of everyone over 2m (height greater than 200) by fixing the following code (replace `???` with the correct code).
 ```R
@@ -218,6 +218,9 @@ sw %>%
   filter(???) %>%
   pull(???)
 ```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.3:`
+Who is taller than 2m?
 
 In the data.frame `sw`, use the function `?mutate` to calculate the body mass index (BMI) for all characters using the formula `mass/(height/100)^2`, storing this in the new column `bmi` .
 
@@ -253,6 +256,9 @@ Add points to this plot:
 ```R
 px + geom_point()
 ```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.4:`
+Insert the obtained plot and the following modifications (until the next section) in your protocol.
 
 Add `?geom_hex` to the plot.
 
@@ -335,6 +341,7 @@ In the examples from day 2-5, we need to voom transform data (log2CPM). In GEMMA
 boxplot(dataMT, las=2)
 ```
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713).
 
 For more details on the final assignment see the [instructions for day 5](day5.md).
