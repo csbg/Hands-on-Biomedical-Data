@@ -166,6 +166,7 @@ p.vals + p.coef
 
 
 ## Enrichment analysis
+**This part is optional / not required for the grade but wil give bonus points**
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
@@ -223,10 +224,11 @@ goi.enr <- enr.res.all %>%
 Then we will extract the statistics for these genes:
 ```R
 limmaRes %>%
+  mutate(gene = gmap[ensg,]$external_gene_name) %>%
   filter(toupper(gene) %in% goi.enr)
 ```
 
-Finall, generate the following plot:
+From this table, generate the following plot:
 
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
 

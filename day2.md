@@ -38,7 +38,8 @@ After subsetting, the design table should only contain 6 rows and the data matri
 ### Correlation heatmap
 
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
-* Next, generate a heatmap of the resulting correlation heatmap using the function `?Heatmap`
+* Save the resulting correlation heatmap under the variable `corMT`
+* Next, generate a heatmap of the correlation heatmap using the function `?Heatmap`
 
 ### MDS projection
 Finally, we will use the calculated correlations to project the samples on 2 dimensions. The entire code for this step is shown below. This will:
@@ -76,7 +77,7 @@ After defining the design matrix, we can use limma voom to normalize the data.
 dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
 ```
 
-Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`.
+Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`, which is part of the object return by running `voom(...)`.
 * What types of objects are those two?
 * Use `?boxplot` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
 	* `boxplot(data[1:30,])`
@@ -152,6 +153,7 @@ Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
 
 ## Enrichment analysis
+**This part is optional / not required for the grade but wil give bonus points**
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`

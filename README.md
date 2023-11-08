@@ -6,8 +6,18 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 * Day 2: [Introduction in differential expression analysis](day2.md)
 * Day 3: [A more complex example](day3.md)
 * Day 4: [Interaction effects](day4.md)
-* Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
+* Day 5: [Assignment - analyze a dataset of your choosing](day5.md) (The exercises for day 5 are not be part of the course in 2022. Only the first 4 days need to be completed.)
 
+Ideally you can run the practicals on your own machine, see here for [installation instructions](setup.md). If you do so, please see the [Markdown instructions](markdown.md).
+
+## Evaluation
+* For the evaluation, we will use R Scripts files that you will generate.
+* Save **one R script for each day** to not mix exercises and R sessions from different days.
+* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
+* While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
+* Use comments `#` to answer questions and comment on your code and results.
+* We will evaluate all scripts a week after Day 5 has finished (Dec 2nd, 2022).
 
 ## The example dataset
 

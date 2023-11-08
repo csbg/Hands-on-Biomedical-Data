@@ -22,45 +22,11 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
 * ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
-
-## Evaluation with R Markdown
-* For the evaluation, we will consider the R Markdown HTML files that you will generate from your script.
-* Save **one R script for each day** to not mix exercises and R sessions from different days. (Only exception is today, where we will generate two scripts, one to explore R Markdown (see below) and one to learn R.)
+## Evaluation with R Scripts
+* For the evaluation, we will use R Scripts files that you will generate.
+* Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* After running R Markdown this will generatethe following HTML files: `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation. 
-
-### R Markdown
-For this course, you will create reports of your R code and session using R Markdown. Create an R script, save it ("Markdown_intro.R"), and then write the following:
-```R
-a <- 1
-b <- 3
-a + b
-```
-* Now go to `File > Knit Document` (top right). This will generate a HTML file (this may raise an error). In this case, you can just press "Cancel" and follow the next step.
-* Now go to `Files` (bottom right) and open the HTML file ("Markdown_intro.html") in the Web Browser.
-* Now let's format the markdown a little bit, write the following in your Markdown file and then again generate the HTML file ("Knit Document").
-```R
-# This is a "normal" comment inside of code blocks 
-str(a)
-
-#' this is a comment that will be shown outside of code blocks
-str(b)
-
-#'# This is a major heading (level 1)
-#'## This is a heading of level 2
-#'### This is a heading of level 3
-
-#' Now let's plot something
-plot(1:10)
-
-#' Let's change the size of the plot
-#+ plot1, fig.width=10
-plot(1:10)
-
-#' Let's change the size of the plot again
-#+ plot2, fig.width=5, fig.height=10
-plot(1:10)
-```
+* If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
 
 
 ## Loading packages
