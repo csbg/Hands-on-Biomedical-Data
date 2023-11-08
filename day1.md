@@ -191,8 +191,8 @@ sw <- sw %>%
   mutate(firstname = str_remove(name, " .+$")) 
 ```
 
+$${\color{blue}Excercise 1.1}$$
 Assess the gender balance of this table, using `?count` and `gender`
-
 
 Count the number of characters by their `skin_color`.
 
@@ -282,8 +282,6 @@ For this practical, on day 5, you will analyze a gene expression dataset of your
 
 Let's load the required packages:
 ```
-# we will load packages installed in the directory of user "handson"
-
 require(gemma.R)
 require(tidyverse)
 ```

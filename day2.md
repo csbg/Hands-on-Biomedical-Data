@@ -11,7 +11,7 @@ require(ComplexHeatmap)
 require(enrichR)
 ```
 
-Then load the data. This is stored in the directory of user "handson".
+Then load the data. 
 ```R
 data <- readRDS("data.RDS") # update
 design <- readRDS("design.RDS") # update
@@ -152,7 +152,6 @@ Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
 
 ## Enrichment analysis
-**This part is optional / not required for the grade but wil give bonus points**
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`

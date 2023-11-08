@@ -4,7 +4,6 @@ In this exercise, we will repeat the analysis from the introductory exercise, bu
 ## Setup
 First load packages.
 ```R
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")
 require(tidyverse)
 require(limma)
 require(patchwork)
@@ -15,9 +14,9 @@ require(enrichR)
 
 Load the data.
 ```R
-data <- readRDS("/home/handson/data/data.RDS")
-design <- readRDS("/home/handson/data/design.RDS")
-gmap <- readRDS("/home/handson/data/gmap.RDS")
+data <- readRDS("data.RDS")
+design <- readRDS("design.RDS")
+gmap <- readRDS("gmap.RDS")
 ```
 
 ## Subset data
@@ -166,7 +165,6 @@ p.vals + p.coef
 
 
 ## Enrichment analysis
-**This part is optional / not required for the grade but wil give bonus points**
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient

@@ -7,7 +7,6 @@ We will thus be able if there is an interaction between those two effects, i.e. 
 ## Setup
 First load packages.
 ```R
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")
 require(tidyverse)
 require(limma)
 require(patchwork)
@@ -18,9 +17,9 @@ require(enrichR)
 
 Load the data.
 ```R
-data <- readRDS("/home/handson/data/data.RDS")
-design <- readRDS("/home/handson/data/design.RDS")
-gmap <- readRDS("/home/handson/data/gmap.RDS")
+data <- readRDS("data.RDS")
+design <- readRDS("design.RDS")
+gmap <- readRDS("gmap.RDS")
 ```
 
 ## Subset data
