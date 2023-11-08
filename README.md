@@ -9,7 +9,7 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 * Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
 You can run the practicals on:
-* (ideal case)[your own machine](setup_PersonalLaptops.md)
+* [Your personal computer](setup_PersonalLaptops.md)(ideal case)
 * [Within Galaxy](setup_GALAXY.md)
 * [On the PLUS Server RICARDA](setup_RICARDA.md)
 
