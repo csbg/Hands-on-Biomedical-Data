@@ -191,17 +191,10 @@ sw <- sw %>%
   mutate(firstname = str_remove(name, " .+$")) 
 ```
 
-{\color{blue}Excercise 1.1}
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
+Assess the gender balance of this table, using `?count` and `gender`.
 
-<p style='color:red'>This is some red text.</p>
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `xxx`
-
-Assess the gender balance of this table, using `?count` and `gender`
-
-Count the number of characters by their `skin_color`.
-
-How is the above different from the code below? Execute parts of the code below, what is the difference?
+Count the number of characters by their `skin_color`. How is your result different from the code below? 
 ```R
 sw %>%
   pull("skin_color") %>%
@@ -215,6 +208,9 @@ sw %>%
 * `unlist` transforms a list into a vector
 * `table` is simlar to `count` and counts the occurances
 * `sort` orders a vector
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
+Execute parts of the code below, what is the difference?.
 
 Print the names of everyone over 2m (height greater than 200) by fixing the following code (replace `???` with the correct code).
 ```R
