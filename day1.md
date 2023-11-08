@@ -342,6 +342,6 @@ boxplot(dataMT, las=2)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713).
+Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report what you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).

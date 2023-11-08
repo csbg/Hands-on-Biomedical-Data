@@ -15,8 +15,9 @@ You can run the practicals on:
 
 ## Evaluation
 For the evaluation, we will use:
-* R Scripts files that you will generate and which document your progress
-* A text file (for example generated with Word) that answers questions from the practicals
+* Your code in R Scripts files that you will generate and which document your progress
+* Your exercises and findings in a protocol (text file, for example generated with Word) that answers questions from the practicals
+* These can be two separate files, or they can be combined using Markdown (see below)
 
 Note:
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
