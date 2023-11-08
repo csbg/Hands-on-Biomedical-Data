@@ -191,7 +191,7 @@ sw <- sw %>%
   mutate(firstname = str_remove(name, " .+$")) 
 ```
 
-$${\color{blue}Excercise 1.1}$$
+{\color{blue}Excercise 1.1}
 Assess the gender balance of this table, using `?count` and `gender`
 
 Count the number of characters by their `skin_color`.
