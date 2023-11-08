@@ -1,17 +1,12 @@
 # R programming and visualizations
-In this part, we will get started with R and Rstudio. Throughout this course, you will run R commands from these files in Rstudio. You can type them but you can also copy/paste them. One way is to open this window on side of your screen, and open you R studio in a different window, on the other side of the screen. If you can use another browser, you may be able to use `Strg + TAB` to switch bettween the two windows using your keyboard (and don't have to click between tabs).
+In this part, we will get started with R and Rstudio. Throughout this course, you will run R commands from these files in Rstudio. You can type them but you can also copy/paste them. 
 
-
-## Getting R studio setup
-* Visit ricarda.came.sbg.ac.at
-* Enter your username and password
-* Click on the top left `File > R Script` to create a new R script (see image below)
-* Write `print("hello world")` in the R script
-* Press `Strg + ENTER`, then the code should get executed in the console
-
-<img src="img/RStudio.png" width="100%">
+If you run RStudio in a browser (RICARDA or Galaxy), one way is to open this window on side of your screen, and open you R studio in a different window on the other side of the screen.
+If you can use another browser, you may be able to use `Strg + TAB` to switch bettween the two windows using your keyboard (and don't have to click between tabs).
 
 ### R studio basics
+<img src="img/RStudio.png" width="100%">
+
 For this part of the practical (next 5 days), you will be writing R code in R scripts:
 * When you log in you have started an `R session`
 * When you execute commands in the  console (bottom left) the output and potential error or warning messages will appear in the console 
@@ -22,21 +17,9 @@ For this part of the practical (next 5 days), you will be writing R code in R sc
 * We will almost always work with R scripts (top left) and use `Strg + ENTER` to "send" individual commands or sections of commands (marking them with the mouse) to the console, where they will be executed
 * ***While you can execute commands from your script in any order, make sure your script runs through from top to bottom if started from scratch - so do not use variables before you define them!***
 
-## Evaluation with R Scripts
-* For the evaluation, we will use R Scripts files that you will generate.
-* Save **one R script for each day** to not mix exercises and R sessions from different days.
-* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
-
-
 ## Loading packages
 
-Type (copy/paste) the following into your R script. This will enable you to load packages from the HOME directory of user "handson", where the packages required for this course are installed. In your research, you will want (and have) to install your own packages, which in R just requires the command `install.packages(PACKAGE_NAME)`. For this course we chose to install packages centrally in order to (1) not duplicated installations and (2) make sure everyone uses the same packages
-```R
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")
-```
-
-Once packages are installed (which they are already), you only need to load them in your current session, load the following packages:
+Once packages are installed, you only need to load them in your current session, load the following packages:
 ```R
 require(tidyverse)
 require(pheatmap)
@@ -152,8 +135,9 @@ for(x in 1:6){
 ```
 
 ## Matrices
+For this exercise, first load the 'data.RDS'. See [setup instructions](README.md) for details.
 ```R
-m <- readRDS("/home/handson/data/data.RDS")
+m <- readRDS("data.RDS") # you probably will have to modify this line
 str(m)
 dim(m)
 head(m)
@@ -299,7 +283,6 @@ For this practical, on day 5, you will analyze a gene expression dataset of your
 Let's load the required packages:
 ```
 # we will load packages installed in the directory of user "handson"
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")
 
 require(gemma.R)
 require(tidyverse)

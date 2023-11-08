@@ -4,7 +4,6 @@
 ## Setup
 First load packages.
 ```R
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/") # we will load packages installed in the directory of user "handson"
 require(tidyverse)
 require(limma)
 require(pheatmap)
@@ -14,9 +13,9 @@ require(enrichR)
 
 Then load the data. This is stored in the directory of user "handson".
 ```R
-data <- readRDS("/home/handson/data/data.RDS")
-design <- readRDS("/home/handson/data/design.RDS")
-gmap <- readRDS("/home/handson/data/gmap.RDS")
+data <- readRDS("data.RDS") # update
+design <- readRDS("design.RDS") # update
+gmap <- readRDS("gmap.RDS") # update
 ```
 
 For all three objects above, answer the following questions:

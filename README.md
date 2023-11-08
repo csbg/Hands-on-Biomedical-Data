@@ -2,22 +2,33 @@
 Practical exercises for the course "Hands-on Biomedical Data - Resources and Analysis Tools"
 
 ## Content
-* Day 1: [R programming and visualizations](day1.md)
+* Day 1: [Basic R programming and visualizations](day1.md)
 * Day 2: [Introduction in differential expression analysis](day2.md)
 * Day 3: [A more complex example](day3.md)
 * Day 4: [Interaction effects](day4.md)
-* Day 5: [Assignment - analyze a dataset of your choosing](day5.md) (The exercises for day 5 are not be part of the course in 2022. Only the first 4 days need to be completed.)
+* Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
-Ideally you can run the practicals on your own machine, see here for [installation instructions](setup.md). If you do so, please see the [Markdown instructions](markdown.md).
+You can run the practicals on:
+* (ideal case)[your own machine](setup_PersonalLaptops.md)
+* [Within Galaxy](setup_GALAXY.md)
+* [On the PLUS Server RICARDA](setup_RICARDA.md)
 
 ## Evaluation
-* For the evaluation, we will use R Scripts files that you will generate.
+For the evaluation, we will use:
+* R Scripts files that you will generate and which document your progress
+* A text file (for example generated with Word) that answers questions from the practicals
+
+Note:
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* If you work on your own machine, create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
 * While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
-* Use comments `#` to answer questions and comment on your code and results.
-* We will evaluate all scripts a week after Day 5 has finished (Dec 2nd, 2022).
+* We will send you an email and you should send your files by replying to this email.
+* The deadline is (Dec 10th, 2022).
+
+Markdown:
+* If you work on your personal computer, you can combine code and answers to questions using Markdown. See the following: [Markdown instructions](markdown.md)
+* If you do use Markdown (on your personal computer), create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
+
 
 ## The example dataset
 
