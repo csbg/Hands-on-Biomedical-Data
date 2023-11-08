@@ -18,6 +18,7 @@ design <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
 ```
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.1:`
 For all three objects above, answer the following questions:
 * What type of object is it?
 * How many rows and columns are this object?
@@ -35,10 +36,11 @@ After subsetting, the design table should only contain 6 rows and the data matri
 ## Correlation analysis
 
 ### Correlation heatmap
-
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
 * Save the resulting correlation heatmap under the variable `corMT`
-* Next, generate a heatmap of the correlation heatmap using the function `?Heatmap`
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.2:`
+Generate a heatmap of the correlation heatmap using the function `?Heatmap`
 
 ### MDS projection
 Finally, we will use the calculated correlations to project the samples on 2 dimensions. The entire code for this step is shown below. This will:
@@ -66,9 +68,12 @@ The model matrix, also called "design matrix", defines which group will be set a
 ```R
 model.matrix(~stimulus, data=design)
 ```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
 * Make a heatmap of the resulting model.matrix
-* Now figure out which condition is taken as the control / reference / intercept. This should be PBS. 
-* If the reference is not the right one, use `factor`, `?relevel`, and `?mutate` to change the  factor levels. Then make another heatmap to see if it fits now.
+* Describe which condition is taken as the control / reference / intercept. This should be PBS. 
+* If the reference is not the right one, use `factor`, `?relevel`, and `?mutate` to change the  factor levels.
+* Then make another heatmap to see if it fits now.
 
 ### Normalize data
 After defining the design matrix, we can use limma voom to normalize the data.
@@ -77,6 +82,8 @@ dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix wit
 ```
 
 Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`, which is part of the object return by running `voom(...)`.
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
 * What types of objects are those two?
 * Use `?boxplot` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
 	* `boxplot(data[1:30,])`
@@ -117,21 +124,29 @@ limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results e
 ## Data interpretation
 
 ### Vulcano plot
-The [vulcano plot]("https://en.wikipedia.org/wiki/Volcano_plot_(statistics)") can be created by plotting the `-log10(P.Value)` on the y-axis against the `logFC` on the x-axis. The plot gets its characteristic shape since those genes that are highly significant (large value on y-axis) also have large effects (differences between groups) in both directions (negative and positive log fold changes).
-* draw a vulcano plot from the `limmaRes` object using a scatterplot `geom_point`. The point has many thousand points (genes). Can you overcome this overplotting by using transparency (e.g. `alpha=0.3`) or binning (e.g. `geom_hex`)?
+The [vulcano plot]("https://en.wikipedia.org/wiki/Volcano_plot_(statistics)") can be created by plotting the `-log10(P.Value)` on the y-axis against the `logFC` on the x-axis.
+The plot gets its characteristic shape since those genes that are highly significant (large value on y-axis) also have large effects (differences between groups) in both directions (negative and positive log fold changes).
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.4:` draw a vulcano plot from the `limmaRes` object using a scatterplot `geom_point`. The point has many thousand points (genes). Can you overcome this overplotting by using transparency (e.g. `alpha=0.3`) or binning (e.g. `geom_hex`)?
 
 ### P-value distribution
-The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model. Draw a p-value distribution using `geom_histogram`.
+The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model. 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.5:`
+* Draw a p-value distribution using `geom_histogram`.
 * Is this distribution as expected?
 * Use `fill=factor(floor(AveExpr)` to better understand the distribution. What can you conclude from this?
 
 ### Number of hits
-Now, count the number of genes that are tested `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
+Now, count the number of genes that are tested `?count`. 
+Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.6:`
+Report the number of tested and significant genes.
 
 ## Visualizing results
 A key element of any statistical analysis is to visualize results (differential genes) to assess whether the statistics obtained match the data. 
 
 ### Visualizing one gene
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.7:`
 * Pick one gene with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
 * Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (IFNa or PBS) and the y-axis is the expression of the gene.
@@ -142,6 +157,7 @@ Example plot:
 <img src="03_01_simple/One.gene.png" width="50%">
 
 ### Visualizing multiple genes
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.8:`
 * From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `?top_n` and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `?row.names`.
 * Generate a heatmap of their gene expression from `dataVoom$E` using `?Heatmap`.
 * This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `?t` and `?scale` for details.
@@ -157,11 +173,14 @@ Enrichment analysis help in interpreting long lists of genes. By measuring wheth
 * Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
 * Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.9:`
 * Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
 * Did the interferon alpha treatment result in the up-regulation of the expected gene sets?
 <img src="03_01_simple/Enrichments.png" width="50%" height="100%">
 
 ## Final questions
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.10:`
 * Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
 * Does it make sense to filter lowly expressed genes?
 * Do you trust the results of differential expression?
