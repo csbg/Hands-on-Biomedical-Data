@@ -192,6 +192,9 @@ sw <- sw %>%
 ```
 
 {\color{blue}Excercise 1.1}
+
+<p style='color:red'>This is some red text.</p>
+
 Assess the gender balance of this table, using `?count` and `gender`
 
 Count the number of characters by their `skin_color`.
