@@ -126,10 +126,12 @@ limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results e
 ### Vulcano plot
 The [vulcano plot]("https://en.wikipedia.org/wiki/Volcano_plot_(statistics)") can be created by plotting the `-log10(P.Value)` on the y-axis against the `logFC` on the x-axis.
 The plot gets its characteristic shape since those genes that are highly significant (large value on y-axis) also have large effects (differences between groups) in both directions (negative and positive log fold changes).
+
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.4:` draw a vulcano plot from the `limmaRes` object using a scatterplot `geom_point`. The point has many thousand points (genes). Can you overcome this overplotting by using transparency (e.g. `alpha=0.3`) or binning (e.g. `geom_hex`)?
 
 ### P-value distribution
 The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model. 
+
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.5:`
 * Draw a p-value distribution using `geom_histogram`.
 * Is this distribution as expected?
