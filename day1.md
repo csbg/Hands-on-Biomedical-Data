@@ -93,6 +93,12 @@ vec <- 10:1
 vec[2:3]
 ```
 
+Now create a vector of the letters B,C,D by replacing `???` with the right code. The `stopifnot()` statement will test if this worked correctly.
+```R
+your.vector <- LETTERS[???]
+stopifnot(your.vector == c("B", "C", "D"))
+```
+
 ## Lists
 ```R
 list_x <- list("a", 1, "b", "xyz", TRUE)
@@ -138,27 +144,72 @@ for(x in 1:6){
 For this exercise, first load the 'data.RDS'. See [setup instructions](README.md) for details.
 ```R
 m <- readRDS("data.RDS") # you probably will have to modify this line
+```
+
+The following functions summarize the matrix
+```R 
 str(m)
 dim(m)
 head(m)
+row.names(m)
+colnames(m)
+```
+
+We can subset the matrix by defining the rows or the columns: `matrix[ROWS,COLUMNS]`. The following code yields the first 20 rows of the matrix. We create a vector of numbers 1 to 20 `1:20` and then get those rows from the matrix `m[1:20,]`.
+```R
+1:20
+dim(m)
+dim(m[1:20,])
+```
+
+The next code yields all columns that match the string `"Liver_Fibroblasts"`. We first get a boolean `TRUE` and `FALSE` vector matching the string to the column names, and then get those columns from the matrix.
+```R
+colnames(m)
+grepl("Liver_Fibroblasts", colnames(m))
+dim(m)
+dim(m[, grepl("Liver_Fibroblasts", colnames(m))])
+```
+
+Now we will subset the matrix in both the rows and columns:
+```R
 m <- m[1:20, grepl("Liver_Fibroblasts", colnames(m))]
+```
+
+Then we will rename the columns and the rows.
+```R
 colnames(m) <- gsub("^Liver_Fibroblasts_(.+)_RNA_(\\d)$", "\\1_\\2", colnames(m))
 row.names(m) <- paste0("g", 1:nrow(m))
 str(m)
 m
+```
+
+The `t()` command transposes the matrix (switches rows and columns).
+```R
 t(m)
-str(m)
 dim(m)
 dim(t(m))
-row.names(m)
-colnames(m)
+```
+
+To calculate correlation, we only need to run the function `cor()`. Next, we will make a heatmap of the data.
+```R
 cor(m, method="spearman")
 pheatmap(cor(m, method="spearman"))
+```
 
+This looks nicer if the diagnole is converted to NAs.
+```R
 cMT <- cor(m, method="spearman")
 diag(cMT) <- NA
 pheatmap(cMT)
 ```
+
+Now subset the matrix to the first 30 rows and the first 10 columns by replacing `???` for the correct code. The `stopifnot()` statement will test if this worked correctly.
+```R
+matrix.check <- m[???,???]
+dim(matrix.check)
+stopifnot(all(dim(matrix.check) == c(30,10)))
+```
+
 
 ## Data frames and dplyr
 
@@ -168,7 +219,7 @@ starwars
 str(starwars$name)
 ```
 
-Useing `?stopifnot` to see if the results are what we expect. Here we test whether each name occurs only once, if the number of unique names is the same as the number of rows of the table.
+Useing `stopifnot()` to see if the results are what we expect. Here we test whether each name occurs only once, if the number of unique names is the same as the number of rows of the table.
 ```R
 stopifnot(length(unique(starwars$name))==nrow(starwars))
 ```
@@ -180,7 +231,7 @@ sw <- starwars %>%
   as.data.frame()
 ```
 
-Use the function `?count` to count the number of rows (characters) by their `homeworld`.
+Use the function `count()` to count the number of rows (characters) by their `homeworld`.
 ```R
 sw %>% count(homeworld)
 ```
@@ -192,9 +243,9 @@ sw <- sw %>%
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
-Assess the gender balance of this table, using `?count` and `gender`.
+Assess the gender balance of this table, using `count()` and `gender`.
 
-Count the number of characters by their `skin_color`. How is your result different from the code below? 
+Count the number of characters by their `skin_color`. Next, run this code:
 ```R
 sw %>%
   pull("skin_color") %>%
@@ -210,7 +261,7 @@ sw %>%
 * `sort` orders a vector
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.2:`
-What is the difference between the two approaches?
+What is the difference between the two approaches to count by skin color?
 
 Print the names of everyone over 2m (height greater than 200) by fixing the following code (replace `???` with the correct code).
 ```R
@@ -222,7 +273,22 @@ sw %>%
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.3:`
 Who is taller than 2m?
 
-In the data.frame `sw`, use the function `?mutate` to calculate the body mass index (BMI) for all characters using the formula `mass/(height/100)^2`, storing this in the new column `bmi` .
+Now let's take a detailed look at filters and conditions.
+```R
+starwars %>%
+	filter(hair_color == "blond") %>%
+	filter(sex == "male")
+
+starwars %>%
+	filter(hair_color == "blond" & sex == "male")
+	
+starwars %>%
+	filter(hair_color == "blond" | sex == "male")
+```
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
+What is the difference between these 3 approaches?
+
+In the data.frame `sw`, use the function `mutate()` to calculate the body mass index (BMI) for all characters using the formula `mass/(height/100)^2`, storing this in the new column `bmi` .
 
 Look at the distribution of these values. Note, below are three ways of extracting a column from a `data.frame`
 ```R
@@ -257,19 +323,19 @@ Add points to this plot:
 px + geom_point()
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.4:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
 Insert the obtained plot and the following modifications (until the next section) in your protocol.
 
-Add `?geom_hex` to the plot.
+Add `geom_hex()` to the plot.
 
 In addition to the points above, add labels to the points:
-* Add `?geom_text` to the plot, in addition to `?geom_point`. To do so, you will have to choose which text will be displayed. Do so by using `firstname` in the `label` aesthetic.
-* Modify to only plot `?geom_text` for characters with mass greater than 1000. You can do this by setting the `data` parameter in `geom_text`
+* Add `geom_text()` to the plot, in addition to `geom_point()`. To do so, you will have to choose which text will be displayed. Do so by using `firstname` in the `label` aesthetic.
+* Modify to only plot `geom_text()` for characters with mass greater than 1000. You can do this by setting the `data` parameter in `geom_text`
 * Modify the `color` and `shape` in `geom_point`
 
-Use `?geom_histogram` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
+Use `geom_histogram()` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
 
-Modify the plot to show the density `?geom_density` and the empirical cumulative distribution function `?stat_ecdf` instead.
+Modify the plot to show the density `geom_density()` and the empirical cumulative distribution function `stat_ecdf()` instead.
 
 Now let's plot the BMI of some individuals:
 ```R
@@ -280,8 +346,53 @@ sw %>%
   geom_bar(stat="identity")
 ```
 
-Modify the above plot to add facets with `?facet_grid`. There is a lot of white space. Remove white space by change the `space` and `scales` parameters.
+Modify the above plot to add facets with `facet_grid()`. There is a lot of white space. Remove white space by change the `space` and `scales` parameters.
 
+
+## Factors
+
+We will make a simple plot to compare the hight between sexes:
+```R
+ggplot(sw, aes(x=sex,y =height)) + geom_violin()
+```
+
+What if you only want to show males and females? Filter accordingly. Note: the `%in%` statement tests whether the values in the column `sex` are *in* the vector `c("male", "female")`. This is similar to using an "or" statement with `|` like this `sex == "male" | sex == "female"`.
+```R
+sw %>%
+  filter(sex %in% c("male", "female")) %>%
+  ggplot(aes(x=sex,y =height)) + geom_violin()
+```
+
+Now, assume we want to show the males first. For this, we will need to use a factor. Factors are vectors with an order, so-called *levels*. 
+```R
+str(sw$sex)
+
+sw %>%
+	filter(sex %in% c("male", "female")) %>%
+	pull(sex) %>%
+	str()
+
+sw %>%
+	filter(sex %in% c("male", "female")) %>%
+	mutate(sex = factor(sex)) %>%
+	pull(sex) %>%
+	str()
+
+sw %>%
+	filter(sex %in% c("male", "female")) %>%
+	mutate(sex = factor(sex, levels=c("male", "female"))) %>%
+	pull(sex) %>%
+	str()
+```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
+Update the code below to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
+```R
+sw %>%
+  filter(sex %in% c("male", "female")) %>%
+	mutate(sex = factor(???)) %>%
+  ggplot(aes(x=sex,y =height)) + geom_violin()
+```
 
 
 # Downloading a dataset
@@ -341,7 +452,7 @@ In the examples from day 2-5, we need to voom transform data (log2CPM). In GEMMA
 boxplot(dataMT, las=2)
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report what you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).

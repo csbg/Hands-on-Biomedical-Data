@@ -34,7 +34,7 @@ How many samples do we end up with?
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.2:`
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
-* Next, generate a heatmap of the resulting correlation heatmap using the function `?pheatmap`
+* Generate and discuss the heatmap of the correlation heatmap using the function `?Heatmap`
 
 ### MDS projection
 Finally, use MDS projection, using the same code from the last exercise:
@@ -182,7 +182,7 @@ Report this plot in your protocol.
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
-Below is a loop over the individual coefficients. Within each iteration of this loop, perform enrichment analysis for each coefficient. 
+Below is a loop over the individual coefficients. Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
 
 As a reminder, this were the instructions from yesterday:
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
@@ -252,6 +252,6 @@ From this table, generate the following plot:
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.10:`
 * Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
 * Does it make sense to filter lowly expressed genes?
-* Which treatment has the largest effects?
+* Which treatment has the largest effects? Most significant genes? Biggest differences (log fold changes)?
 * Do you trust the results of differential expression?
 * Looking at the enriched genes and pathways - are the results expected?

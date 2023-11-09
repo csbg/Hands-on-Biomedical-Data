@@ -37,7 +37,7 @@ How many samples do we end up with?
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 4.2:`
 * Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
-* Next, generate a heatmap of the resulting correlation heatmap using the function `?pheatmap`
+* Generate and discuss the heatmap of the correlation heatmap using the function `?Heatmap`
 
 ### MDS projection
 Finally, use MDS projection, modify the code from the last exercise, to also show the organ of each sample using the `shape` aesthetic in ggplot.

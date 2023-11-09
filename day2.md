@@ -29,23 +29,24 @@ Remember functions: `str`, `head`, `dim`, and similar.
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
-* Use `?stopifnot` to make sure the data matrix has as many columns as the design table as rows.
+* Use `stopifnot()` to make sure the data matrix has as many columns as the design table as rows.
 
 After subsetting, the design table should only contain 6 rows and the data matrix only 6 columns.
 
 ## Correlation analysis
 
 ### Correlation heatmap
-* Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
+* THe correlation heatmap can inform us on the signal (difference between groups) to noise (variability within groups) ratio, as well as outliers, batch effect,... as discussed in the lecture.
+* Use the correlation function in R `cor()` to correlate the samples in the data matrix. Use Spearman correlation instead of the default Pearson correlation. Type `?cor` if you need help with the function.
 * Save the resulting correlation heatmap under the variable `corMT`
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.2:`
-Generate a heatmap of the correlation heatmap using the function `?Heatmap`
+Generate and discuss the heatmap of the correlation heatmap using the function `Heatmap()`
 
 ### MDS projection
 Finally, we will use the calculated correlations to project the samples on 2 dimensions. The entire code for this step is shown below. This will:
 * Transform correlations into distance measures by calculating `2-correlation`
-* Run the function `?cmdscale` to get a 2-dimensional projection
+* Run the function `cmdscale()` to get a 2-dimensional projection
 * Modify the table to add information relevant for plotting
 * Plot the samples on two dimensions
 * --> don't forget: You can execute parts of the code to better understand what it does!
@@ -64,7 +65,7 @@ data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
 In the next step we will compare interferon-treated to PBS control samples.
 
 ### Setup up the model matrix
-The model matrix, also called "design matrix", defines which group will be set as the intercept and which comparisons will be performed. In R, the function `?model.matrix` is used for this purpose. In our case, we only compare stimulated to unstimulated samples, so we can use:
+The model matrix, also called "design matrix", defines which group will be set as the intercept and which comparisons will be performed. In R, the function `model.matrix()` is used for this purpose. In our case, we only compare stimulated to unstimulated samples, so we can use:
 ```R
 model.matrix(~stimulus, data=design)
 ```
@@ -72,11 +73,11 @@ model.matrix(~stimulus, data=design)
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
 * Make a heatmap of the resulting model.matrix
 * Describe which condition is taken as the control / reference / intercept. This should be PBS. 
-* If the reference is not the right one, use `factor`, `?relevel`, and `?mutate` to change the  factor levels.
+* If the reference is not the right one, use `factor()`, `relevel()`, and `mutate()` to change the  factor levels.
 * Then make another heatmap to see if it fits now.
 
 ### Normalize data
-After defining the design matrix, we can use limma voom to normalize the data.
+After defining the design matrix, we can use limma voom to normalize the data (by library size and log normalize).
 ```R
 dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
 ```
@@ -85,7 +86,7 @@ Now let's look at the data before and after normalization. The original data is 
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
 * What types of objects are those two?
-* Use `?boxplot` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
+* Use `boxplot()` to plot the distributions of the first few (30) genes of the original matrix. Try both of the following approaches. What's the difference?
 	* `boxplot(data[1:30,])`
 	* `boxplot(t(data[1:30,]))`
 * Now use `dataVoom$E` to plot a boxplot of the first 30 genes.
@@ -95,7 +96,7 @@ Now let's look at the data before and after normalization. The original data is 
 	* `plot(density(log2(data[8,])))`
 
 ### Perform differential expression
-After having normalized the data we can fit the differential expression model. 
+After having normalized the data we can fit the differential expression model. This calculates the log fold changes and p-values.
 ```R
 limmaFit <- lmFit(dataVoom, design=model)
 limmaFit <- eBayes(limmaFit)
@@ -135,10 +136,10 @@ The [p-value distribution]("http://varianceexplained.org/statistics/interpreting
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.5:`
 * Draw a p-value distribution using `geom_histogram`.
 * Is this distribution as expected?
-* Use `fill=factor(floor(AveExpr)` to better understand the distribution. What can you conclude from this?
+* Use `fill=factor(floor(AveExpr)` to color the bins by the average expression level of each gene. What can you conclude from this?
 
 ### Number of hits
-Now, count the number of genes that are tested `?count`. 
+Now, count the number of genes that are tested `count()`. 
 Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.6:`
@@ -160,11 +161,11 @@ Example plot:
 
 ### Visualizing multiple genes
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.8:`
-* From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `?top_n` and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `?row.names`.
-* Generate a heatmap of their gene expression from `dataVoom$E` using `?Heatmap`.
-* This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `?t` and `?scale` for details.
-* Now let's refine this plot a bit more. Split the rows into up- and down-regulated genes using `row_split=ifelse(limmaRes[goi,]$logFC > 0, "up", "down")` in the heatmap function `?Heatmap`.
-* Next, split the columns based on stimulus: `column_split = design$stimulus`, again in the heatmap function `?Heatmap`.
+* From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `top_n()` and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `row.names()`.
+* Generate a heatmap of their gene expression from `dataVoom$E` using `Heatmap()`.
+* This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `t()` and `scale()` for details.
+* Now let's refine this plot a bit more. Split the rows into up- and down-regulated genes using `row_split=ifelse(limmaRes[goi,]$logFC > 0, "up", "down")` in the heatmap function `Heatmap()`.
+* Next, split the columns based on stimulus: `column_split = design$stimulus`, again in the heatmap function `Heatmap()`.
 
 Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
@@ -173,7 +174,7 @@ Example resulting plot:
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
-* Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
+* Next perform enrichment analysis using the function `enrichr()` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.9:`
