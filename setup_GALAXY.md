@@ -2,26 +2,45 @@
 
 ## Getting R studio setup
 * Rstudio and R are already installed
-* Visit ricarda.came.sbg.ac.at
-* Enter your username and password
-* Click on the top left `File > R Script` to create a new R script (see image below)
+* Visit https://usegalaxy.eu/
+* Sign-up and activate your account (email) if you haven't done already
+* Login to your account
+* Click on Shared data --> Histories --> type in  **Hands_on_data** (owner-aarathy)-->![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/32dac7c2-904d-494e-97ea-454aee0f80bf)
+-->click on it-->import this history (on the top left corner)
+* Click on the Galaxy icon to get back to home. You will now have the data in your history. Notice that each data set in your history has a number.
+
+  ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/ce98f67a-7a33-4401-9103-6d6dcb4d0f63)
+
+
+* To open Rstudio, on the top-left corner, search for Rstudio
+--> run tool -->open or click on the eye icon
+  ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/e5fc5127-2597-4522-9d57-77f2dadca9dc)
+
 * Write `print("hello world")` in the R script
 * Press `Strg + ENTER`, then the code should get executed in the console
 
 
 ## Install packages
-Packages are already installed. Type (copy/paste) the following in the beginning of each of your R scripts.
-This will enable you to then load packages from the HOME directory of user "handson", where the packages required for this course are installed.
+* Many packages are already installed. 
+* If not installed, to install packages try
 ```R
-.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")
+install.packages("package name")
 ```
-
+* If it doesn't work with install.packages command, change to the Tab "Terminal", next to Console and Background Jobs.
+* Now you type in "conda install r-tidyverse" or "conda install bioconductor-limma" etc to install the respective packages.
+```R
+#type in the Rscript and press `Strg + ENTER`
+library("package name") #to load the packages that are already installed
+```
 ## Access data
 To load the data needed, type (copy/paste) the following in the beginning of each of your R scripts.
+
+name_to_be_stored <- readRDS(get_gx(**number associated to the respective dataset in your history**))
 ```R
-data <- readRDS("/home/handson/data/data.RDS")
-design <- readRDS("/home/handson/data/design.RDS")
-gmap <- readRDS("/home/handson/data/gmap.RDS")
+# In this case
+data<-readRDS(gx_get(3))
+design <- readRDS(gx_get(2))
+gmap <- readRDS(gx_get(1))
 ```
 
 ## Start exercises
