@@ -367,17 +367,20 @@ Now, assume we want to show the males first. For this, we will need to use a fac
 ```R
 str(sw$sex)
 
+# Here we just look at the column 'sex' and see that it is a vector of characters.
 sw %>%
 	filter(sex %in% c("male", "female")) %>%
 	pull(sex) %>%
 	str()
 
+# Now it is converted to a factor with the levels 'female' and then 'male'
 sw %>%
 	filter(sex %in% c("male", "female")) %>%
 	mutate(sex = factor(sex)) %>%
 	pull(sex) %>%
 	str()
 
+# You can choose the order of levels, which has effects on plots and other functions (design matrices)
 sw %>%
 	filter(sex %in% c("male", "female")) %>%
 	mutate(sex = factor(sex, levels=c("male", "female"))) %>%
@@ -386,7 +389,7 @@ sw %>%
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
-Update the code below to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
+Update the `???` in the code below to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
 ```R
 sw %>%
   filter(sex %in% c("male", "female")) %>%
