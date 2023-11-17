@@ -2,7 +2,12 @@
 
 ## Getting R studio setup
 * Rstudio and R are already installed
-* Visit https://usegalaxy.eu/
+* Visit 
+https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fusegalaxy.eu%2Fjoin-training%2Fplus-course-r&data=05%7C01%7Caarathy.ravisundarjosegeetha%40plus.ac.at%7Ceeb033492e0c4826baa108dbe6b22b1b%7C158a941a576e4e87993db2eab8526e50%7C1%7C0%7C638357425131951475%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=U4uhYkF0iVDtbGP3jpv3ZUm1Vev%2FmfBZ57YPDF6da7s%3D&reserved=0
+
+This URL is active during your training (from 2023-11-20 to 2023-12-12). Once it is over, the link will not be usable
+anymore but the users can still access their data at usegalaxy.eu.
+
 * Sign-up and activate your account (email) if you haven't done already
 * Login to your account
 * Click on Shared data --> Histories --> type in  **Hands_on_data** (owner-aarathy)-->![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/32dac7c2-904d-494e-97ea-454aee0f80bf)
