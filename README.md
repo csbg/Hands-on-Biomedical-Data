@@ -24,7 +24,7 @@ Note:
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 * While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
 * We will send you an email and you should send your files by replying to this email.
-* The deadline is (Dec 10th, 2022).
+* The deadline is (Dec 10th, 2023).
 
 Markdown:
 * If you work on your personal computer, you can combine code and answers to questions using Markdown. See the following: [Markdown instructions](markdown.md)
