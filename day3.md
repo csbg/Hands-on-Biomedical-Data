@@ -23,7 +23,7 @@ gmap <- readRDS("gmap.RDS")
 We will only work with liver fibroblasts (Gp38 positive) but use all stimuli.
 * Filter the design table accordingly
 * Subset the data matrix by selecting only the columns that are in the filtered design table
-* Use `?stopifnot` to make sure the data matrix has as many columns as the design table.
+* Use `?stopifnot` to make sure the data matrix has as many columns as the design table has rows.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.1:`
 How many samples do we end up with?
