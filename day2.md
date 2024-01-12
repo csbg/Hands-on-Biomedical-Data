@@ -85,7 +85,7 @@ dataVoom <- voom(data, design=your_model_matrix, plot = TRUE) # insert your mode
 
 *Side note: We now used the word "design" twice in different ways:*
 1. The metadata contains the `experimental design`, which defines which samples are from which conditions.
-2. The model.matrix contains the `model design`, which defines which samples and conditions will be compared, what will be the intercept, and so on.
+2. The model matrix contains the `model design`, which defines which samples and conditions will be compared, what will be the intercept, and so on.
 
 Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`, which is part of the object return by running `voom(...)`.
 
