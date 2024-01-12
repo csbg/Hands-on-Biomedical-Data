@@ -38,10 +38,10 @@ Generate the heatmap of the correlation matrix as discussed on day 2.
 ### MDS projection
 Finally, use MDS projection, modify the code from the last exercise, to also show the organ of each sample using the `shape` aesthetic in ggplot.
 ```R
-data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
-  add_column(stimulus = metadata$stimulus) %>%
-  rownames_to_column("sample") %>%
-  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) %>%
+data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) |>
+  add_column(stimulus = metadata$stimulus) |>
+  rownames_to_column("sample") |>
+  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) |>
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -84,7 +84,7 @@ limmaRes <- list() # start an empty list
 for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
 	print(coefx)
 	# topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
-  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) %>%
+  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) |>
 		rownames_to_column("ensg")
 }
 limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results and stores the name of the coefficient in the column "coef"
@@ -117,8 +117,8 @@ limmaFit.contrast <- contrasts.fit(limmaFit,contrast.mt)
 limmaFit.contrast <- eBayes(limmaFit.contrast)
 
 # Extract results for this contrast coefficient
-limmaRes.contrast <- topTable(limmaFit.contrast, coef=colnames(contrast.mt),number = Inf) %>%
-  rownames_to_column("ensg") %>%
+limmaRes.contrast <- topTable(limmaFit.contrast, coef=colnames(contrast.mt),number = Inf) |>
+  rownames_to_column("ensg") |>
   mutate(coef=colnames(contrast.mt))
 	
 # add them to the full table
@@ -129,10 +129,10 @@ table(limmaRes$coef)
 Now, we will clean up the table using regular expressions:
 ```R
 limmaRes$gene <- gmap[limmaRes$ensg,]$external_gene_name # here we add the gene symbol
-limmaRes <- limmaRes %>%
-  mutate(coef = str_replace(coef, "organ", "")) %>% # remove "organ"
-  mutate(coef = str_replace(coef, "stimulus", "")) %>% # remove "stimulus"
-  mutate(coef = str_replace(coef, "^IFNa$", "IFNa_Liver")) %>% # rename "IFNa" to "IFNa_Liver"
+limmaRes <- limmaRes |>
+  mutate(coef = str_replace(coef, "organ", "")) |> # remove "organ"
+  mutate(coef = str_replace(coef, "stimulus", "")) |> # remove "stimulus"
+  mutate(coef = str_replace(coef, "^IFNa$", "IFNa_Liver")) |> # rename "IFNa" to "IFNa_Liver"
   mutate(coef = str_replace(coef, "^IFNa\\:Spleen$", "Interaction")) # Name interaction
 table(limmaRes$coef)
 ```
@@ -178,14 +178,14 @@ Now let's make the following plot, which shows the expression data (left) and th
 The steps below are outlined in detail. 
 
 #### get the genes of interest
-Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`top_n`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. 
+Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`slice_max()`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. 
 
 #### plot statistical results
 Next plot all statistical results for the genes above. This plot is the same as yesterday.
 ```R
-(p.coef <- limmaRes %>%
-  filter(ensg %in% goi.all) %>%
-  mutate(gene = gmap[ensg,]$external_gene_name) %>%
+(p.coef <- limmaRes |>
+  filter(ensg %in% goi.all) |>
+  mutate(gene = gmap[ensg,]$external_gene_name) |>
   ggplot(aes(y=gene, x=str_remove(coef, "stimulus"), color=logFC, size=-log10(adj.P.Val))) + 
   geom_point() +
   scale_color_gradient2(high="red", low="blue") +
@@ -197,18 +197,18 @@ First we will collect the expression data of each gene, writing a for loop over 
 ```R
 dat.list <- list()
 for(gg in goi.all){
-  dat.list[[gg]] <- metadata %>%
-    mutate(E=scale(dataVoom$E[gg,])) %>%
-    rownames_to_column("sample") %>%
+  dat.list[[gg]] <- metadata |>
+    mutate(E=scale(dataVoom$E[gg,])) |>
+    rownames_to_column("sample") |>
     remove_rownames()
 }
 ```
 
 Next, we combine the above list of data.frame into one data.frame using `?bind_rows`, and then plot this data as a heatmap. The code below is the same as yesterday. Now, also separate samples by the organ.
 ```R
-(p.vals <- bind_rows(dat.list, .id="ensg") %>%
-  mutate(gene = gmap[ensg,]$external_gene_name) %>%
-  mutate(stimulus = as.character(stimulus)) %>%
+(p.vals <- bind_rows(dat.list, .id="ensg") |>
+  mutate(gene = gmap[ensg,]$external_gene_name) |>
+  mutate(stimulus = as.character(stimulus)) |>
   ggplot(aes(x=sample, y=gene, fill=E)) + 
   geom_tile() +
   facet_grid(. ~ stimulus, space ="free", scales = "free") +

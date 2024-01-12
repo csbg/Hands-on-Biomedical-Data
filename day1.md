@@ -226,19 +226,19 @@ stopifnot(length(unique(starwars$name))==nrow(starwars))
 
 Let's keep only columns that are not of type `list`, then we can convert the table to a `data.frame`:
 ```R
-sw <- starwars %>%
-  select(where(function(x) !is.list(x))) %>%
+sw <- starwars |>
+  select(where(function(x) !is.list(x))) |>
   as.data.frame()
 ```
 
 Use the function `count()` to count the number of rows (characters) by their `homeworld`.
 ```R
-sw %>% count(homeworld)
+sw |> count(homeworld)
 ```
 
 Now we will add a new column called `firstname`
 ```R
-sw <- sw %>% 
+sw <- sw |> 
   mutate(firstname = str_remove(name, " .+$")) 
 ```
 
@@ -247,11 +247,11 @@ Assess the gender balance of this table, using `count()` and `gender`. Report th
 
 Count the number of characters by their `skin_color`. Next, run this code:
 ```R
-sw %>%
-  pull("skin_color") %>%
-  str_split(", ") %>%
-  unlist() %>%
-  table() %>%
+sw |>
+  pull("skin_color") |>
+  str_split(", ") |>
+  unlist() |>
+  table() |>
   sort()
 ```
 * `pull` extracts a column from the `data.frame`
@@ -265,8 +265,8 @@ What is the difference between the two approaches to count by skin color?
 
 Print the names of everyone over 2m (height greater than 200) by fixing the following code (replace `???` with the correct code).
 ```R
-sw %>%
-  filter(???) %>%
+sw |>
+  filter(???) |>
   pull(???)
 ```
 
@@ -275,14 +275,14 @@ Who is taller than 2m?
 
 Now let's take a detailed look at filters and conditions.
 ```R
-starwars %>%
-	filter(hair_color == "blond") %>%
+starwars |>
+	filter(hair_color == "blond") |>
 	filter(sex == "male")
 
-starwars %>%
+starwars |>
 	filter(hair_color == "blond" & sex == "male")
 	
-starwars %>%
+starwars |>
 	filter(hair_color == "blond" | sex == "male")
 ```
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.4:`
@@ -339,9 +339,9 @@ Modify the plot to show the density `geom_density()` and the empirical cumulativ
 
 Now let's plot the BMI of some individuals:
 ```R
-sw %>% 
-  group_by(gender) %>%
-  top_n(3, bmi) %>%
+sw |> 
+  group_by(gender) |>
+  slice_max(bmi, n = 3) |>
   ggplot(aes(x=fct_reorder(firstname, bmi), y=bmi, fill=gender)) + 
   geom_bar(stat="identity")
 ```
@@ -358,8 +358,8 @@ ggplot(sw, aes(x=sex,y =height)) + geom_violin()
 
 What if you only want to show males and females? Filter accordingly. Note: the `%in%` statement tests whether the values in the column `sex` are *in* the vector `c("male", "female")`. This is similar to using an "or" statement with `|` like this `sex == "male" | sex == "female"`.
 ```R
-sw %>%
-  filter(sex %in% c("male", "female")) %>%
+sw |>
+  filter(sex %in% c("male", "female")) |>
   ggplot(aes(x=sex,y =height)) + geom_violin()
 ```
 
@@ -368,37 +368,37 @@ Now, assume we want to show the males first. For this, we will need to use a fac
 str(sw$sex)
 
 # Here we just look at the column 'sex' and see that it is a vector of characters.
-sw %>%
-	filter(sex %in% c("male", "female")) %>%
-	pull(sex) %>%
+sw |>
+	filter(sex %in% c("male", "female")) |>
+	pull(sex) |>
 	str()
 
 # Now it is converted to a factor with the levels 'female' and then 'male'
-sw %>%
-	filter(sex %in% c("male", "female")) %>%
-	mutate(sex = factor(sex)) %>%
-	pull(sex) %>%
+sw |>
+	filter(sex %in% c("male", "female")) |>
+	mutate(sex = factor(sex)) |>
+	pull(sex) |>
 	str()
 
 # You can choose the order of levels, which has effects on plots and other functions (design matrices)
-sw %>%
-	filter(sex %in% c("male", "female")) %>%
-	mutate(sex = factor(sex, levels=c("male", "female"))) %>%
-	pull(sex) %>%
+sw |>
+	filter(sex %in% c("male", "female")) |>
+	mutate(sex = factor(sex, levels=c("male", "female"))) |>
+	pull(sex) |>
 	str()
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
 Replace the `???` below by the correct code to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
 ```R
-sw %>%
-  filter(sex %in% c("male", "female")) %>%
-	mutate(sex = factor(???)) %>%
+sw |>
+  filter(sex %in% c("male", "female")) |>
+	mutate(sex = factor(???)) |>
   ggplot(aes(x=sex,y =height)) + geom_violin()
 ```
 
 
-# Downloading a dataset (current GEMMA)
+# Downloading a dataset
 For this practical, on day 5, you will analyze a gene expression dataset of your choosing using R, based on the examples from days 2-4. In the following, we will use the Gemma.R package that enables us to easily download datasets from GEMMA, a database where datasets have been manually curated.
 
 Let's load the required packages:
@@ -412,8 +412,8 @@ The following commands are for the current versions of `gemma.R`, which is 2.0.0
 
 First, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
 ```R
-get_datasets("neuroblastoma", limit = 100, taxa = "human") %>%
-  filter(geeq.batchCorrected == TRUE) %>%
+get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
+  filter(geeq.batchCorrected == TRUE) |>
   select(taxon.Name, taxon.ID, experiment.Accession, experiment.SampleCount)
 ```
 
@@ -421,7 +421,7 @@ Next, pick on dataset and explore the description.
 ```R
 gse <- "GSE21713"
 
-get_datasets(gse)%>%
+get_datasets(gse)|>
   select(experiment.ShortName, experiment.Name, experiment.ID, experiment.Description)
 ```
 
@@ -464,70 +464,7 @@ Now, explore another term (other than "neuroblastoma") and another dataset (othe
 For more details on the final assignment see the [instructions for day 5](day5.md).
 
 
-
-
-# Downloading a dataset (RICARDA)
-For this practical, on day 5, you will analyze a gene expression dataset of your choosing using R, based on the examples from days 2-4. In the following, we will use the Gemma.R package that enables us to easily download datasets from GEMMA, a database where datasets have been manually curated.
-
-Let's load the required packages:
-```
-require(gemma.R)
-require(tidyverse)
-```
-
-First, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
-```R
-searchDatasets("neuroblastoma", limit = 100, taxon = "human") %>%
-  filter(geeq.batchCorrected == TRUE) %>%
-  select(ee.ShortName, ee.Name, ee.ID, ee.Accession, ee.Samples)
-```
-
-Next, pick on dataset and explore the description.
-```R
-gse <- "GSE21713"
-
-getDatasetsInfo(gse) %>%
-  select(ee.ShortName, ee.Name, ee.ID, ee.Description)
-```
-
-Next, have a look at the metadata table for this dataset.
-```R
-metadata <- getDatasetDesign(gse)
-str(metadata)
-head(metadata)
-with(metadata, table(batch, genotype))
-```
-
-Download the expression data.
-```R
-e <- getDatasetExpression(gse)
-str(e)
-colnames(e)
-e <- as.data.frame(e)
-```
-
-The expression data is a data.frame / data.table object. We want to convert this to a matrix.
-```R
-# row.names of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
-stopifnot(all(row.names(metadata) %in% colnames(e)))
-
-# Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
-dataMT <- as.matrix(e[,row.names(metadata)])
-str(dataMT)
-row.names(dataMT) <- e$GeneSymbol
-str(dataMT)
-```
-
-In the examples from day 2-5, we need to voom transform data (log2CPM). In GEMMA, this has already been done.
-```R
-boxplot(dataMT, las=2)
-```
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
-
-For more details on the final assignment see the [instructions for day 5](day5.md).
-
+## Naming issues?
 
 Note: If the command `stopifnot(all(row.names(metadata) %in% colnames(e)))` fails, it could be that the names slightly differ between the expression data matrix and the modelmatrix. You then may need to transform these names beforehand. The following should be sufficient:
 

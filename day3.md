@@ -35,10 +35,10 @@ Generate the heatmap of the correlation matrix as discussed on day 2.
 ### MDS projection
 Finally, use MDS projection, using the same code from the last exercise:
 ```R
-data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
-  add_column(stimulus = metadata$stimulus) %>%
-  rownames_to_column("sample") %>%
-  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) %>% # This shortens the sample names to just the number at the end
+data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) |>
+  add_column(stimulus = metadata$stimulus) |>
+  rownames_to_column("sample") |>
+  mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) |> # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -82,7 +82,7 @@ for(coefx in colnames(coef(limmaFit))){ # run a loop for each coefficient
 	print(coefx)
 	# topTable returns the statistics of our genes. We then store the result of each coefficient in a list.
 	# The rownames (ENSEMBL Gene IDs) are stored in the column with the name "ensg"
-  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) %>%
+  limmaRes[[coefx]] <- topTable(limmaFit, coef=coefx,number = Inf) |>
 		rownames_to_column("ensg")
 }
 limmaRes <- bind_rows(limmaRes, .id = "coef") # bind_rows combines the results and stores the name of the coefficient in the column "coef"
@@ -130,14 +130,14 @@ Now let's make the following plot, which shows the expression data (left) and th
 The steps below are outlined in detail. Make sure you understand the code, as you will have to modify it tomorrow.
 
 #### get the genes of interest
-Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`top_n`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. What is the content of `goi.all`?
+Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`slice_max()`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. What is the content of `goi.all`?
 
 #### plot statistical results
 Next plot all statistical results for the genes above.
 ```R
-(p.coef <- limmaRes %>%
-  filter(ensg %in% goi.all) %>%
-  mutate(gene = gmap[ensg,]$external_gene_name) %>%
+(p.coef <- limmaRes |>
+  filter(ensg %in% goi.all) |>
+  mutate(gene = gmap[ensg,]$external_gene_name) |>
   ggplot(aes(y=gene, x=str_remove(coef, "stimulus"), color=logFC, size=-log10(adj.P.Val))) + 
   geom_point() +
   scale_color_gradient2(high="red", low="blue") +
@@ -149,18 +149,18 @@ First we will collect the expression data of each gene, writing a for loop over 
 ```R
 dat.list <- list()
 for(gg in goi.all){
-  dat.list[[gg]] <- metadata %>%
-    mutate(E=scale(dataVoom$E[gg,])) %>%
-    rownames_to_column("sample") %>%
+  dat.list[[gg]] <- metadata |>
+    mutate(E=scale(dataVoom$E[gg,])) |>
+    rownames_to_column("sample") |>
     remove_rownames()
 }
 ```
 
 Next, we combine the above list of data.frame into one data.frame using `?bind_rows`, and then plot this data as a heatmap.
 ```R
-(p.vals <- bind_rows(dat.list, .id="ensg") %>%
-  mutate(gene = gmap[ensg,]$external_gene_name) %>%
-  mutate(stimulus = as.character(stimulus)) %>%
+(p.vals <- bind_rows(dat.list, .id="ensg") |>
+  mutate(gene = gmap[ensg,]$external_gene_name) |>
+  mutate(stimulus = as.character(stimulus)) |>
   ggplot(aes(x=sample, y=gene, fill=E)) + 
   geom_tile() +
   facet_grid(. ~ stimulus, space ="free", scales = "free") +
@@ -184,7 +184,7 @@ Below is a loop over the individual coefficients. Within each iteration of this 
 
 As a reminder, this were the instructions from yesterday:
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
-* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`
+* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name |> unique()`
 * Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
 
@@ -232,18 +232,18 @@ Note: The plot only includes entries with: `Adjusted.P.value < 0.01` and `Odds.R
 #### Plot genes related to the enrichments
 Now we will extract the genes underlying the above enrichments:
 ```
-goi.enr <- enr.res.all %>%
-  filter(Adjusted.P.value < 0.01 & Odds.Ratio > 6) %>%
-  pull("Genes") %>%
-  str_split(";") %>%
-  unlist() %>%
+goi.enr <- enr.res.all |>
+  filter(Adjusted.P.value < 0.01 & Odds.Ratio > 6) |>
+  pull("Genes") |>
+  str_split(";") |>
+  unlist() |>
   unique()
 ```
 
 Then we will extract the statistics for these genes:
 ```R
-limmaRes %>%
-  mutate(gene = gmap[ensg,]$external_gene_name) %>%
+limmaRes |>
+  mutate(gene = gmap[ensg,]$external_gene_name) |>
   filter(toupper(gene) %in% goi.enr)
 ```
 

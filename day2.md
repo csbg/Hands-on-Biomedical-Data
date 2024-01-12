@@ -57,10 +57,10 @@ Finally, we will use the calculated correlations to project the samples on 2 dim
 * Plot the samples on two dimensions
 * --> don't forget: You can execute parts of the code to better understand what it does!
 ```R
-data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
-  add_column(stimulus = metadata$stimulus) %>%
-  rownames_to_column("sample") %>%
-  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%  # This shortens the sample names to just the number at the end
+data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) |>
+  add_column(stimulus = metadata$stimulus) |>
+  rownames_to_column("sample") |>
+  mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) |>  # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
   geom_point(aes(color=stimulus)) +
   geom_text(aes(label=sn)) +
@@ -79,7 +79,7 @@ model.matrix(~stimulus, data=metadata)
 * Store the model matrix under a variable
 * Make a heatmap of the resulting model matrix
 * Describe which condition is taken as the control / reference / intercept. This should be PBS. 
-* If the reference is not the right one, use `factor()`, `relevel()`, and `mutate()` to change the factor levels in the metadata.
+* If the reference is not the right one, use `factor()`, `fct_relevel()`, and `mutate()` to change the factor levels in the metadata.
 * Then make another model matrix, store it in your variable, and make another heatmap to see if it works correctly now.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
@@ -178,7 +178,8 @@ Example plot:
 
 ### Visualizing multiple genes
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.11:`
-* From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `top_n()` and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `row.names()`.
+* From `limmaResSig`, get the 30 genes with the greatest absolute `logFC` using the command `slice_max()`, which we saw on day 1, and save their ENSEMBL IDs, which are the row names of the table, in the object `goi` (genes of interest) using the function `row.names()`.
+* What is the content of `goi`?
 * Generate a heatmap of their gene expression from `dataVoom$E` using `Heatmap()`.
 * This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `t()` and `scale()` for details.
 * Now let's refine this plot a bit more. Split the rows into up- and down-regulated genes using `row_split=ifelse(limmaRes[goi,]$logFC > 0, "up", "down")` in the heatmap function `Heatmap()`.
@@ -191,7 +192,7 @@ Example resulting plot:
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
 * First, filter all genes with `logFC > 0` from the table of significant genes and store their Ensembl IDs (as a vector) in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Note: look at the object `goi` - what does it contain now?
-* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name %>% unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices.
+* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name |> unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices.
 * Note: look at the object `goi` - what does it contain now?
 * Next perform enrichment analysis using the function `enrichr()` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
