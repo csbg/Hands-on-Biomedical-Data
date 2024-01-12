@@ -141,7 +141,7 @@ for(x in 1:6){
 ```
 
 ## Matrices
-For this exercise, first load the 'data.RDS'. See [setup instructions](README.md) for details.
+For this exercise, first load the 'data.RDS'. See [setup instructions](README.md) for details on this dataset.
 ```R
 m <- readRDS("data.RDS") # you probably will have to modify this line
 ```
@@ -160,6 +160,13 @@ We can subset the matrix by defining the rows or the columns: `matrix[ROWS,COLUM
 1:20
 dim(m)
 dim(m[1:20,])
+```
+
+Now subset the matrix to the first 30 rows and the first 10 columns by replacing `???` for the correct code. The `stopifnot()` statement will test if this worked correctly.
+```R
+matrix.check <- m[???,???]
+dim(matrix.check)
+stopifnot(all(dim(matrix.check) == c(30,10)))
 ```
 
 The next code yields all columns that match the string `"Liver_Fibroblasts"`. We first get a boolean `TRUE` and `FALSE` vector matching the string to the column names, and then get those columns from the matrix.
@@ -203,13 +210,6 @@ diag(cMT) <- NA
 pheatmap(cMT)
 ```
 
-Now subset the matrix to the first 30 rows and the first 10 columns by replacing `???` for the correct code. The `stopifnot()` statement will test if this worked correctly.
-```R
-matrix.check <- m[???,???]
-dim(matrix.check)
-stopifnot(all(dim(matrix.check) == c(30,10)))
-```
-
 
 ## Data frames and dplyr
 
@@ -243,7 +243,7 @@ sw <- sw %>%
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
-Assess the gender balance of this table, using `count()` and `gender`.
+Assess the gender balance of this table, using `count()` and `gender`. Report the code and result in your protocol.
 
 Count the number of characters by their `skin_color`. Next, run this code:
 ```R
@@ -335,7 +335,7 @@ In addition to the points above, add labels to the points:
 
 Use `geom_histogram()` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
 
-Modify the plot to show the density `geom_density()` and the empirical cumulative distribution function `stat_ecdf()` instead.
+Modify the plot to show the density `geom_density()` and the empirical cumulative distribution function `stat_ecdf()` instead. Should they be on the same plot or on different ones?
 
 Now let's plot the BMI of some individuals:
 ```R
@@ -389,7 +389,7 @@ sw %>%
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
-Update the `???` in the code below to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
+Replace the `???` below by the correct code to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
 ```R
 sw %>%
   filter(sex %in% c("male", "female")) %>%
@@ -459,7 +459,7 @@ boxplot(dataMT, las=2)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report what you find in your protocol.
+Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).
 
@@ -524,6 +524,6 @@ boxplot(dataMT, las=2)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report what you find in your protocol.
+Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).

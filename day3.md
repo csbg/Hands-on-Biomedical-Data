@@ -7,7 +7,6 @@ First load packages.
 require(tidyverse)
 require(limma)
 require(patchwork)
-require(pheatmap)
 require(ComplexHeatmap)
 require(enrichR)
 ```
@@ -15,15 +14,15 @@ require(enrichR)
 Load the data.
 ```R
 data <- readRDS("data.RDS")
-design <- readRDS("design.RDS")
+metadata <- readRDS("design.RDS")
 gmap <- readRDS("gmap.RDS")
 ```
 
 ## Subset data
 We will only work with liver fibroblasts (Gp38 positive) but use all stimuli.
-* Filter the design table accordingly
-* Subset the data matrix by selecting only the columns that are in the filtered design table
-* Use `?stopifnot` to make sure the data matrix has as many columns as the design table has rows.
+* Filter the metadata table accordingly
+* Subset the data matrix by selecting only the columns that are in the filtered metadata table
+* Use `?stopifnot` to make sure the data matrix has as many columns as the metadata table has rows.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.1:`
 How many samples do we end up with?
@@ -31,16 +30,13 @@ How many samples do we end up with?
 ## Correlation analysis
 
 ### Correlation heatmap
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.2:`
-* Use the correlation function in R `?cor` to correlate the samples in the data matrix. 
-* Generate and discuss the heatmap of the correlation heatmap using the function `?Heatmap`
+Generate the heatmap of the correlation matrix as discussed on day 2.
 
 ### MDS projection
 Finally, use MDS projection, using the same code from the last exercise:
 ```R
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
-  add_column(stimulus = design$stimulus) %>%
+  add_column(stimulus = metadata$stimulus) %>%
   rownames_to_column("sample") %>%
   mutate(sn = str_replace(sample, "^.+?_(\\d)$", "\\1")) %>% # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
@@ -55,19 +51,22 @@ In the next step we will compare stimulated to PBS control samples.
 ### Setup up the model matrix
 Just like yesterday, we compare stimulated to unstimulated samples. Make sure the correct reference (PBS) is used by generating a heatmap of the model matrix.
 ```R
-model.matrix(~stimulus, data=design)
+model.matrix(~stimulus, data=metadata)
 ```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.2:`
+Provide the heatmap of the model matrix.
 
 ### Normalize data
 Now use limma voom to normalize the data.
 ```R
-dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
+dataVoom <- voom(data, design=your_model_matrix, plot = TRUE) # insert your model matrix
 ```
 
 ### Perform differential expression
 After having normalized the data we can fit the differential expression model. 
 ```R
-limmaFit <- lmFit(dataVoom, design=model)
+limmaFit <- lmFit(dataVoom, design=your_model_matrix)
 limmaFit <- eBayes(limmaFit)
 ```
 
@@ -93,21 +92,20 @@ limmaRes <- filter(limmaRes, coef != "(Intercept)") # then we keep all results e
 ## Data interpretation
 
 ### Vulcano plot
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.3:`
 Draw a vulcano plot from the `limmaRes` object.
 Use `?facet_wrap` or `?facet_grid` to separate the plots by the stimulus (coefficient).
 
 ### P-value distribution
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.4:`
 Draw a p-value distribution using `geom_histogram`, separate the plot using facets, and again look at the `AveExpr`.
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.3:`
+Provide the vulcano plots and p-value distributions in your protocol.
 
 ### Number of hits
 Now, count the number of genes that are tested using `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.5:`
-Report the number of tested and significant genes.
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.4:`
+Report the number of tested and significant genes for each comparison. Report the code (should just be a few lines) you use to answer the questions.
 
 
 ## Visualizing results
@@ -115,12 +113,12 @@ A key element of any statistical analysis is to visualize results (differential 
 
 ### Visualizing one gene
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.6:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.5:`
 * Pick one gene from one comparison with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
-* Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
+* Now create a table that we can use to plot this gene. To this end, modify the table `metadata` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (six stimuli and PBS) and the y-axis is the expression of the gene.
 * Look at the log fold changes for all six stimuli. Do the observed differences on this plot fit to the log fold change?
-* Note: You don't have to write the log fold change on the plot.
+* Note: You don't have to write the log fold changes on the plot but you should provide them in your protocol.
 
 Example plot:
 <img src="03_02_Complex/One.gene.png" width="50%">
@@ -132,7 +130,7 @@ Now let's make the following plot, which shows the expression data (left) and th
 The steps below are outlined in detail. Make sure you understand the code, as you will have to modify it tomorrow.
 
 #### get the genes of interest
-Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`top_n`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. 
+Based on the significant hits in `limmaResSig`, group (`?group_by`) the hits by the coefficient `coef`, then get the top 5 genes by logFC (`top_n`), extract the ENSEMBL IDs from the column `ensg` using `?pull`, and store the result in a new object `goi.all`. What is the content of `goi.all`?
 
 #### plot statistical results
 Next plot all statistical results for the genes above.
@@ -151,7 +149,7 @@ First we will collect the expression data of each gene, writing a for loop over 
 ```R
 dat.list <- list()
 for(gg in goi.all){
-  dat.list[[gg]] <- design %>%
+  dat.list[[gg]] <- metadata %>%
     mutate(E=scale(dataVoom$E[gg,])) %>%
     rownames_to_column("sample") %>%
     remove_rownames()
@@ -175,7 +173,7 @@ Finally, we combine the two plots as below, using the "patchwork" package. This 
 p.vals + p.coef
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.7:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.6:`
 Report this plot in your protocol.
 
 ## Enrichment analysis
@@ -190,21 +188,29 @@ As a reminder, this were the instructions from yesterday:
 * Next perform enrichment analysis using the function `?enrichr` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
 * The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
 
+Now you will run this in a loop, with one iteration for each comparison (coefficient)
+* Note: you will have to use the variable `coefx` INSIDE of the loop to get the right genes for each iteration.
+* Look at the value of `unique(limmaResSig$coef)`
+* Run the loop below once to see what it does. Then you have to edit the code as described to make it work
+
 ``` R
 enr.res.list <- list()
 for(coefx in unique(limmaResSig$coef)){
+    
+    # What is coefx now?
+    print(coefx)
 
 	# Extract genes of interests (GOI) for a given coefficient (see yesterday's example)
-	goi <- ....
+	# goi <- .... # YOUR INPUT NEEDED HERE
 	
 	# Add code here to perform enrichment analysis (see yesterday's example)
-	enr.res <- enrichr(...)
+	# enr.res <- enrichr(...) # YOUR INPUT NEEDED HERE
 	
 	# The results will be a list, where each entry is one database. We will combine those into one long table
-	enr.res <- bind_rows(enr.res, .id="db")
+	# enr.res <- bind_rows(enr.res, .id="db") # JUST UNCOMMENT HERE
 
   # Store results in the list
-  enr.res.list[[coefx]] <- enr.res
+  # enr.res.list[[coefx]] <- enr.res # JUST UNCOMMENT HERE
 }
 ```
 
@@ -215,7 +221,7 @@ enr.res.all <- bind_rows(enr.res.list, .id="coef")
 
 #### Plot enrichments
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.8:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.7:`
 Now generate the following plot:
 
 <img src="03_02_Complex/Enrichments.png" width="50%" height="100%">
@@ -241,17 +247,17 @@ limmaRes %>%
   filter(toupper(gene) %in% goi.enr)
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.9:`
-From this table, generate the following plot:
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.8:`
+From this table, generate the following plot and discuss whether the pathways are expected.
 
 <img src="03_02_Complex/Enrichments.genes.png" width="50%" height="100%">
 
 
 ## Final questions
+Answer the questions below by again showing the relevant plots from the exercises above.
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.9:`
+Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.10:`
-* Looking at the correlation heatmap and MDS plot - do you see strong effects and clear differences between groups?
-* Does it make sense to filter lowly expressed genes?
-* Which treatment has the largest effects? Most significant genes? Biggest differences (log fold changes)?
-* Do you trust the results of differential expression?
-* Looking at the enriched genes and pathways - are the results expected?
+Which treatment has the largest effects? How do you judge this? Which treatment effects most genes? Which treatment has the largest (positive or negative) log fold changes? Are those two consistent?

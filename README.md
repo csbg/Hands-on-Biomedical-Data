@@ -1,7 +1,10 @@
 # Hands-on-Biomedical-Data
 Practical exercises for the course "Hands-on Biomedical Data - Resources and Analysis Tools"
 
-## Content
+## Comments up front
+Make sure you read instructions in detail. Especially getting the Setup right.
+
+## Exercises
 * Prelearning: [R 4 Data Science](day0_prelearning.md)
 * Day 1: [Basic R programming and visualizations](day1.md)
 * Day 2: [Introduction in differential expression analysis](day2.md)
@@ -9,25 +12,30 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 * Day 4: [Interaction effects](day4.md)
 * Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
+## Setup
 You can run the practicals on:
 * [Your personal computer](setup_PersonalLaptops.md)(ideal case)
 * [Within Galaxy](setup_GALAXY.md)
 * [On the PLUS Server RICARDA](setup_RICARDA.md)
 
 ## Evaluation
-For the evaluation, we will use:
-* Your code in R Scripts files that you will generate and which document your progress
-* Your exercises and findings in a protocol (text file, for example generated with Word) that answers questions from the practicals
-* These can be two separate files, or they can be combined using Markdown (see below)
+For the evaluation, you will get points based on the exercises indicated like this:
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise X:`
 
-Note:
+* The evaluation is based on a protocol that you will prepare.
+* In this protocol your should address all exercises. Each exercise counts for 1 point unless otherwise stated.
+* Usually exercises are just one or two plots. If you are asked to respond to questions, max. 2-3 sentences per exercise should be sufficient.
+* You can should ideally use Markdown (see instructions below) to create the protocol. This contains code and plots together and makes it very easy to track and evaluate your progress.
+* Alternatively, you can copy/paste plots and write answers in Powerpoint, Word or similar (convert and submit a PDF file). In this case, you also have to submit R Scripts which document your code.
+
+## Instructions
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 * While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
-* We will send you an email and you should send your files by replying to this email.
-* The deadline is (Dec 10th, 2023).
+* Submit all files through Blackboard.
+* The deadline is (XXX).
 
-Markdown:
+## Markdown
 * If you work on your personal computer, you can combine code and answers to questions using Markdown. See the following: [Markdown instructions](markdown.md)
 * If you do use Markdown (on your personal computer), create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
 
