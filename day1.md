@@ -425,12 +425,12 @@ get_datasets(gse)%>%
   select(experiment.ShortName, experiment.Name, experiment.ID, experiment.Description)
 ```
 
-Next, have a look at the design table for this dataset.
+Next, have a look at the metadata for this dataset.
 ```R
-d <- get_dataset_design(gse)
-str(d)
-head(d)
-with(d, table(batch, genotype))
+metadata <- get_dataset_design(gse)
+str(metadata)
+head(metadata)
+with(metadata, table(batch, genotype))
 ```
 
 Download the expression data.
@@ -443,8 +443,8 @@ e <- as.data.frame(e)
 
 The expression data is a data.frame / data.table object. We want to convert this to a matrix.
 ```R
-# row.names of the design table are the sample names. Here we check whether they are all present in the expression matrix.
-stopifnot(all(row.names(d) %in% colnames(e)))
+# row.names of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
+stopifnot(all(row.names(metadata) %in% colnames(e)))
 
 # Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
 dataMT <- as.matrix(e[,row.names(d)])
@@ -490,12 +490,12 @@ getDatasetsInfo(gse) %>%
   select(ee.ShortName, ee.Name, ee.ID, ee.Description)
 ```
 
-Next, have a look at the design table for this dataset.
+Next, have a look at the metadata table for this dataset.
 ```R
-d <- getDatasetDesign(gse)
-str(d)
-head(d)
-with(d, table(batch, genotype))
+metadata <- getDatasetDesign(gse)
+str(metadata)
+head(metadata)
+with(metadata, table(batch, genotype))
 ```
 
 Download the expression data.
@@ -508,7 +508,7 @@ e <- as.data.frame(e)
 
 The expression data is a data.frame / data.table object. We want to convert this to a matrix.
 ```R
-# row.names of the design table are the sample names. Here we check whether they are all present in the expression matrix.
+# row.names of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
 stopifnot(all(row.names(d) %in% colnames(e)))
 
 # Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.

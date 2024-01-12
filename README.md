@@ -2,6 +2,7 @@
 Practical exercises for the course "Hands-on Biomedical Data - Resources and Analysis Tools"
 
 ## Content
+* Prelearning: [R 4 Data Science](day0_prelearning.md)
 * Day 1: [Basic R programming and visualizations](day1.md)
 * Day 2: [Introduction in differential expression analysis](day2.md)
 * Day 3: [A more complex example](day3.md)

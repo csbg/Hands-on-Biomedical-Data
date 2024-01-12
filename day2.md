@@ -14,7 +14,7 @@ require(enrichR)
 Then load the data. 
 ```R
 data <- readRDS("data.RDS") # update
-design <- readRDS("design.RDS") # update
+metadata <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
 ```
 
@@ -27,11 +27,10 @@ Remember functions: `str`, `head`, `dim`, and similar.
 
 ## Subset data
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
-* Filter the design table accordingly
-* Subset the data matrix by selecting only the columns that are in the filtered design table
-* Use `stopifnot()` to make sure the data matrix has as many columns as the design table as rows.
-
-After subsetting, the design table should only contain 6 rows and the data matrix only 6 columns.
+* Filter the metadata table accordingly
+* Subset the data matrix by selecting only the columns that are in the filtered metadata table
+* Use `stopifnot()` to make sure the data matrix has as many columns as the metadata table as rows.
+* After subsetting, the metadata table should only contain 6 rows and the data matrix only 6 columns.
 
 ## Correlation analysis
 
@@ -52,7 +51,7 @@ Finally, we will use the calculated correlations to project the samples on 2 dim
 * --> don't forget: You can execute parts of the code to better understand what it does!
 ```R
 data.frame(cmdscale(dist(2-corMT),eig=TRUE, k=2)$points) %>%
-  add_column(stimulus = design$stimulus) %>%
+  add_column(stimulus = metadata$stimulus) %>%
   rownames_to_column("sample") %>%
   mutate(sn = gsub("^.+?_(\\d)$", "\\1", sample)) %>%  # This shortens the sample names to just the number at the end
   ggplot(aes(x=X1,y=X2)) + 
@@ -67,20 +66,26 @@ In the next step we will compare interferon-treated to PBS control samples.
 ### Setup up the model matrix
 The model matrix, also called "design matrix", defines which group will be set as the intercept and which comparisons will be performed. In R, the function `model.matrix()` is used for this purpose. In our case, we only compare stimulated to unstimulated samples, so we can use:
 ```R
-model.matrix(~stimulus, data=design)
+model.matrix(~stimulus, data=metadata)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
-* Make a heatmap of the resulting model.matrix
+* Store the model matrix under a variable
+* Make a heatmap of the resulting model matrix
 * Describe which condition is taken as the control / reference / intercept. This should be PBS. 
-* If the reference is not the right one, use `factor()`, `relevel()`, and `mutate()` to change the  factor levels.
-* Then make another heatmap to see if it fits now.
+* If the reference is not the right one, use `factor()`, `relevel()`, and `mutate()` to change the factor levels in the metadata.
+* Then make another model matrix, store it in your variable, and make another heatmap to see if it works correctly now.
+
 
 ### Normalize data
 After defining the design matrix, we can use limma voom to normalize the data (by library size and log normalize).
 ```R
-dataVoom <- voom(data, design=model, plot = TRUE) # insert your model matrix with design=model
+dataVoom <- voom(data, design=your_model_matrix, plot = TRUE) # insert your model matrix
 ```
+
+*Side note: We now used the word "design" twice in different ways:*
+1. The metadata contains the `experimental design`, which defines which samples are from which conditions.
+2. The model.matrix contains the `model design`, which defines which samples and conditions will be compared, what will be the intercept, and so on.
 
 Now let's look at the data before and after normalization. The original data is in the object `data`, the normalized data is in `dataVoom$E`, which is part of the object return by running `voom(...)`.
 
@@ -98,7 +103,7 @@ Now let's look at the data before and after normalization. The original data is 
 ### Perform differential expression
 After having normalized the data we can fit the differential expression model. This calculates the log fold changes and p-values.
 ```R
-limmaFit <- lmFit(dataVoom, design=model)
+limmaFit <- lmFit(dataVoom, design=your_model_matrix)
 limmaFit <- eBayes(limmaFit)
 ```
 
@@ -151,7 +156,7 @@ A key element of any statistical analysis is to visualize results (differential 
 ### Visualizing one gene
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.7:`
 * Pick one gene with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
-* Now create a table that we can use to plot this gene. To this end, modify the table `design` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
+* Now create a table that we can use to plot this gene. To this end, modify the table `metadata` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (IFNa or PBS) and the y-axis is the expression of the gene.
 * Does the observed difference on this plot fit to the log fold change?
 * Note: You don't have to write the log fold change on the plot.
@@ -165,7 +170,7 @@ Example plot:
 * Generate a heatmap of their gene expression from `dataVoom$E` using `Heatmap()`.
 * This unnormalized gene expression can show strong differences between genes, which may hide differences between groups. To solve this issue, scale the expression of all genes (rows of your matrix) using `t(scale(t(HM)))`, where `HM` is the matrix. See `t()` and `scale()` for details.
 * Now let's refine this plot a bit more. Split the rows into up- and down-regulated genes using `row_split=ifelse(limmaRes[goi,]$logFC > 0, "up", "down")` in the heatmap function `Heatmap()`.
-* Next, split the columns based on stimulus: `column_split = design$stimulus`, again in the heatmap function `Heatmap()`.
+* Next, split the columns based on stimulus: `column_split = metadata$stimulus`, again in the heatmap function `Heatmap()`.
 
 Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">

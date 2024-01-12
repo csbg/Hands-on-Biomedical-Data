@@ -1,4 +1,4 @@
-# Setup on your own machine
+# Setup on GALAXY
 
 ## Getting R studio setup
 * Rstudio and R are already installed
