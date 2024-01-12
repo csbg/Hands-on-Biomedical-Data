@@ -16,10 +16,6 @@
 * Also - make sure you define an appropriate intercept term.
 * While it is more elegant to analyze the full dataset, you can also subset the dataset if it is too large and/or complex.
 
-#TODO 
-colnames(data) vs rowlnames(metadata)
-Gemma names --> "." "-" " "
-
 ## Exercise details:
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5.1` (2 point)

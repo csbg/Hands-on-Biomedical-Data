@@ -447,7 +447,7 @@ The expression data is a data.frame / data.table object. We want to convert this
 stopifnot(all(row.names(metadata) %in% colnames(e)))
 
 # Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
-dataMT <- as.matrix(e[,row.names(d)])
+dataMT <- as.matrix(e[,row.names(metadata)])
 str(dataMT)
 row.names(dataMT) <- e$GeneSymbol
 str(dataMT)
@@ -509,10 +509,10 @@ e <- as.data.frame(e)
 The expression data is a data.frame / data.table object. We want to convert this to a matrix.
 ```R
 # row.names of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
-stopifnot(all(row.names(d) %in% colnames(e)))
+stopifnot(all(row.names(metadata) %in% colnames(e)))
 
 # Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
-dataMT <- as.matrix(e[,row.names(d)])
+dataMT <- as.matrix(e[,row.names(metadata)])
 str(dataMT)
 row.names(dataMT) <- e$GeneSymbol
 str(dataMT)
@@ -527,3 +527,29 @@ boxplot(dataMT, las=2)
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).
+
+
+Note: If the command `stopifnot(all(row.names(metadata) %in% colnames(e)))` fails, it could be that the names slightly differ between the expression data matrix and the modelmatrix. You then may need to transform these names beforehand. The following should be sufficient:
+
+For the metadata `metadata`, we run the function `make.names()`, which removes uncommon symbols.
+```R
+row.names(metadata) # This will show you the current row.names
+make.names(row.names(metadata)) # This will "clean" the row.names
+row.names(metadata) <- make.names(row.names(metadata)) # This will overwrite the row.names
+row.names(metadata) # Now this should show you the clean row.names
+``` 
+
+For the expression data matrix `e`, we first remove empty spaces `" "` with the function `gsub()` and then run `make.names()`.
+```R
+colnames(e) # original colnames
+gsub(" ", "", colnames(e))  # removed spaces (if there were any)
+make.names(gsub(" ", "", colnames(e))) # otherwise "clean" colnames
+colnames(e) <- make.names(gsub(" ", "", colnames(e))) # Overwrite
+colnames(e) # clean names
+``` 
+
+* Of course, you won't need to run the above if the names already match.
+* If the names are well designed (only use normal letters and digits), nothing will change
+* Run the above BEFORE the `stopifnot()` statement
+* You should not have to run the `gsub()` command on the row names of `metadata` because row names of a `data.frame` are not allowed to have spaces in the first place.
+
