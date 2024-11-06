@@ -2,7 +2,7 @@
 In this part, we will get started with R and Rstudio. Throughout this course, you will run R commands from these files in Rstudio. You can type them but you can also copy/paste them. 
 
 If you run RStudio in a browser (RICARDA or Galaxy), one way is to open this window on side of your screen, and open you R studio in a different window on the other side of the screen.
-If you can use another browser, you may be able to use `Strg + TAB` to switch bettween the two windows using your keyboard (and don't have to click between tabs).
+If you can use another browser, you may be able to use `Strg + TAB` to switch between the two windows using your keyboard (and don't have to click between tabs).
 
 ### R studio basics
 <img src="img/RStudio.png" width="100%">
