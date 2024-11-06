@@ -32,8 +32,7 @@ For the evaluation, you will get points based on the exercises indicated like th
 * Save **one R script for each day** to not mix exercises and R sessions from different days.
 * Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 * While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
-* Submit all files through Blackboard.
-* The deadline is (XXX).
+* Submit all files through Blackboard (see deadline there).
 
 ## Markdown
 * If you work on your personal computer, you can combine code and answers to questions using Markdown. See the following: [Markdown instructions](markdown.md)

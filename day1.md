@@ -143,7 +143,7 @@ for(x in 1:6){
 ## Matrices
 For this exercise, first load the 'data.RDS'. See [setup instructions](README.md) for details on this dataset.
 ```R
-m <- readRDS("data.RDS") # you probably will have to modify this line
+m <- readRDS("data.RDS") # you probably will have to modify this line with the correct path
 ```
 
 The following functions summarize the matrix
@@ -162,6 +162,7 @@ dim(m)
 dim(m[1:20,])
 ```
 
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
 Now subset the matrix to the first 30 rows and the first 10 columns by replacing `???` for the correct code. The `stopifnot()` statement will test if this worked correctly.
 ```R
 matrix.check <- m[???,???]
@@ -179,33 +180,33 @@ dim(m[, grepl("Liver_Fibroblasts", colnames(m))])
 
 Now we will subset the matrix in both the rows and columns:
 ```R
-m <- m[1:20, grepl("Liver_Fibroblasts", colnames(m))]
+matrix2plot <- m[1:20, grepl("Liver_Fibroblasts", colnames(m))]
 ```
 
 Then we will rename the columns and the rows.
 ```R
-colnames(m) <- gsub("^Liver_Fibroblasts_(.+)_RNA_(\\d)$", "\\1_\\2", colnames(m))
-row.names(m) <- paste0("g", 1:nrow(m))
-str(m)
-m
+colnames(matrix2plot) <- gsub("^Liver_Fibroblasts_(.+)_RNA_(\\d)$", "\\1_\\2", colnames(matrix2plot))
+row.names(matrix2plot) <- paste0("g", 1:nrow(matrix2plot))
+str(matrix2plot)
+matrix2plot
 ```
 
 The `t()` command transposes the matrix (switches rows and columns).
 ```R
-t(m)
-dim(m)
-dim(t(m))
+t(matrix2plot)
+dim(matrix2plot)
+dim(t(matrix2plot))
 ```
 
-To calculate correlation, we only need to run the function `cor()`. Next, we will make a heatmap of the data.
+To calculate correlation, we need the function `cor()`. Next, we will make a heatmap of the data.
 ```R
-cor(m, method="spearman")
-pheatmap(cor(m, method="spearman"))
+cor(matrix2plot, method="spearman")
+pheatmap(cor(matrix2plot, method="spearman"))
 ```
 
 This looks nicer if the diagnole is converted to NAs.
 ```R
-cMT <- cor(m, method="spearman")
+cMT <- cor(matrix2plot, method="spearman")
 diag(cMT) <- NA
 pheatmap(cMT)
 ```
@@ -242,7 +243,7 @@ sw <- sw |>
   mutate(firstname = str_remove(name, " .+$")) 
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.1:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.2:`
 Assess the gender balance of this table, using `count()` and `gender`. Report the code and result in your protocol.
 
 Count the number of characters by their `skin_color`. Next, run this code:
@@ -260,7 +261,7 @@ sw |>
 * `table` is simlar to `count` and counts the occurances
 * `sort` orders a vector
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.2:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.3:`
 What is the difference between the two approaches to count by skin color?
 
 Print the names of everyone over 2m (height greater than 200) by fixing the following code (replace `???` with the correct code).
@@ -270,7 +271,7 @@ sw |>
   pull(???)
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.3:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.4:`
 Who is taller than 2m?
 
 Now let's take a detailed look at filters and conditions.
@@ -285,7 +286,7 @@ starwars |>
 starwars |>
 	filter(hair_color == "blond" | sex == "male")
 ```
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.4:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
 What is the difference between these 3 approaches?
 
 In the data.frame `sw`, use the function `mutate()` to calculate the body mass index (BMI) for all characters using the formula `mass/(height/100)^2`, storing this in the new column `bmi` .
@@ -323,19 +324,26 @@ Add points to this plot:
 px + geom_point()
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.5:`
+Now let's instead use hexagonal binning to avoid overplotting:
+```R
+px + geom_hex()
+```
+Note: you might be asked to install another package. If prompted, do so.
+
 Insert the obtained plot and the following modifications (until the next section) in your protocol.
 
-Add `geom_hex()` to the plot.
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
+In addition to the points, add text labels to the points:
+* Add `geom_text()` to the plot in addition to `geom_point()`. To do so, you will have to choose which text will be displayed: Do so by using `firstname` in the `label` aesthetic.
+* Modify `geom_text()` to only plot label characters with a mass greater than 1000. You can do this by setting the `data` parameter in `geom_text`.
+* Modify the `color` and `shape` of `geom_point`
 
-In addition to the points above, add labels to the points:
-* Add `geom_text()` to the plot, in addition to `geom_point()`. To do so, you will have to choose which text will be displayed. Do so by using `firstname` in the `label` aesthetic.
-* Modify to only plot `geom_text()` for characters with mass greater than 1000. You can do this by setting the `data` parameter in `geom_text`
-* Modify the `color` and `shape` in `geom_point`
-
-Use `geom_histogram()` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
-
-Modify the plot to show the density `geom_density()` and the empirical cumulative distribution function `stat_ecdf()` instead. Should they be on the same plot or on different ones?
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
+Plot the distribution of height using the following plots:
+- First use `geom_histogram()` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
+- Second use `geom_density()`
+- Third use the empirical cumulative distribution function `stat_ecdf()`.
+What happens if you plot `geom_density()` and `stat_ecdf()` on the same plot?
 
 Now let's plot the BMI of some individuals:
 ```R
@@ -345,7 +353,7 @@ sw |>
   ggplot(aes(x=fct_reorder(firstname, bmi), y=bmi, fill=gender)) + 
   geom_bar(stat="identity")
 ```
-
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.8:`
 Modify the above plot to add facets with `facet_grid()`. There is a lot of white space. Remove white space by change the `space` and `scales` parameters.
 
 
@@ -388,7 +396,7 @@ sw |>
 	str()
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.6:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.9:`
 Replace the `???` below by the correct code to show the violin plot with the males in the first violin and the females in the second one. Copy it in your protocol.
 ```R
 sw |>
@@ -407,7 +415,7 @@ require(gemma.R)
 require(tidyverse)
 ```
 
-The following commands are for the current versions of `gemma.R`, which is 2.0.0. If you use RICARDA, see below for older syntax.
+The following commands are for the current version of `gemma.R`, which is 2.0.0. If you use an older version, see [here](day1_OldGemma.md) for older syntax.
 
 
 First, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
@@ -458,7 +466,7 @@ In the examples from day 2-5, we need to voom transform data (log2CPM). In GEMMA
 boxplot(dataMT, las=2)
 ```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.10:`
 Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
 
 For more details on the final assignment see the [instructions for day 5](day5.md).
@@ -472,7 +480,7 @@ For the metadata `metadata`, we run the function `make.names()`, which removes u
 ```R
 row.names(metadata) # This will show you the current row.names
 make.names(row.names(metadata)) # This will "clean" the row.names
-row.names(metadata) <- make.names(row.names(metadata)) # This will overwrite the row.names
+row.names(metadata) <- make.names(row.names(metadata)) # This will overwrite the row.names with the "cleaned" ones
 row.names(metadata) # Now this should show you the clean row.names
 ``` 
 
@@ -485,8 +493,7 @@ colnames(e) <- make.names(gsub(" ", "", colnames(e))) # Overwrite
 colnames(e) # clean names
 ``` 
 
-* Of course, you won't need to run the above if the names already match.
-* If the names are well designed (only use normal letters and digits), nothing will change
-* Run the above BEFORE the `stopifnot()` statement
-* You should not have to run the `gsub()` command on the row names of `metadata` because row names of a `data.frame` are not allowed to have spaces in the first place.
-
+* You don't need to run the above if the names already match.
+* If the names are well designed (only use normal letters and digits) the above code will not change them and no change is required
+* Use the `stopifnot()` statement after renaming to make sure the issue is solved
+* The `gsub()` command is not required for the row names of `metadata` because row names of a `data.frame` are not allowed to have spaces
