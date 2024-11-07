@@ -35,7 +35,7 @@ read_enrichR_database <- function(path){
 
 We start with the Hallmark DB:
 ```R
-db <- read_enrichR_database("~/Downloads/MSigDB_Hallmark_2020.txt") # here you have to enter the path.
+db <- read_enrichR_database("~/Downloads/MSigDB_Hallmark_2020.txt") # here you have to update the path.
 ```
 
 Now we need to format our results to perform enrichment analysis. The following code assums that your limma results are in the table `degRes`. As it does not require a cutoff, for `fgsea` you can use either the whole list of genes or the only the signicant ones.
