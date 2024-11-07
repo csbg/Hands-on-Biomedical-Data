@@ -13,7 +13,7 @@ Then we load the package
 require(fgsea)
 ```
 
-Then we download gene sets from the EnrichR database (https://maayanlab.cloud/Enrichr/). If you click on `Libraries` you should get to this (page)[https://maayanlab.cloud/Enrichr/#libraries].
+Then we download gene sets from the EnrichR database (https://maayanlab.cloud/Enrichr/). If you click on `Libraries` you should get to this [page](https://maayanlab.cloud/Enrichr/#libraries).
 
 Now download two databases. Click on the red download symbol on the right.
 - MSigDB Hallmark DB `MSigDB_Hallmark_2020`
@@ -63,6 +63,7 @@ res <- fgsea(
 ```
 
 Now create the following plot:
+
 <img src="03_01_simple/FGSEA.png" width="50%" height="100%">
 
 Note:
