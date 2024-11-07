@@ -1,5 +1,6 @@
-# Downloading a dataset (RICARDA)
-For this practical, on day 5, you will analyze a gene expression dataset of your choosing using R, based on the examples from days 2-4. In the following, we will use the Gemma.R package that enables us to easily download datasets from GEMMA, a database where datasets have been manually curated.
+
+
+# Old Gemma commands (older versions of Gemma)
 
 Let's load the required packages:
 ```
@@ -54,8 +55,3 @@ In the examples from day 2-5, we need to voom transform data (log2CPM). In GEMMA
 ```R
 boxplot(dataMT, las=2)
 ```
-
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.7:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
-
-For more details on the final assignment see the [instructions for day 5](day5.md).
