@@ -76,3 +76,12 @@ plotEnrichment(db[["Interferon Alpha Response"]],
                degRankedList) +
 			   labs(title="Interferon Alpha Response")
 ```
+
+To extract genes that "caused" the observed enrichment (relevant for day 3 exercises), extract them from the column `leadingEdge`:
+```R
+goi.enr <- res |>
+  filter(padj < 0.05 & abs(NES) > 1) |>
+  pull("leadingEdge") |>
+  unlist() |>
+  unique()
+```
