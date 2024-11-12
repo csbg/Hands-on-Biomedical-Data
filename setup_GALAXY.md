@@ -5,7 +5,7 @@ https://usegalaxy.eu/login/start?redirect=None
 
 Create an account/login
 
-Follow the instructions from Step 3 onwards from below
+Follow the instructions from Step 3 onwards from below (Please note that the getting the shared data mentioned below is not important for the pre-learning exercise, but only during the course)
 
 ## Getting R studio setup
 * Rstudio and R are already installed
