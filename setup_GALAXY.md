@@ -5,7 +5,7 @@ https://usegalaxy.eu/login/start?redirect=None
 
 Create an account/login
 
-Follow the instructions from step 3 onwards from below
+Follow the instructions from Step 3 onwards from below
 
 ## Getting R studio setup
 * Rstudio and R are already installed
@@ -16,16 +16,16 @@ Will be updated soon!!
 This URL is active during your training (from 2023-11-20 to 2023-12-12). Once it is over, the link will not be usable
 anymore but the users can still access their data at usegalaxy.eu.
 
- 1. Sign-up and activate your account (email) if you haven't done already
- 2. Login to your account
+ Step 1. Sign-up and activate your account (email) if you haven't done already
+ Step 2. Login to your account
  Click on Shared data --> Histories --> type in  **Hands_on_data** (owner-aarathy)-->![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/32dac7c2-904d-494e-97ea-454aee0f80bf)
 -->click on it-->import this history (on the top left corner)
- 3. Click on the Galaxy icon to get back to home. You will now have the data in your history. Notice that each data set in your history has a number.
+ Step 3. Click on the Galaxy icon to get back to home. You will now have the data in your history. Notice that each data set in your history has a number.
 
   ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/ce98f67a-7a33-4401-9103-6d6dcb4d0f63)
 
 
-4. To open Rstudio, on the top-left corner, search for Rstudio
+Step 4. To open Rstudio, on the top-left corner, search for Rstudio
 --> run tool -->open or click on the eye icon
   ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/e5fc5127-2597-4522-9d57-77f2dadca9dc)
 
