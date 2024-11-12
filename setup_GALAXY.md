@@ -2,8 +2,10 @@
 # Galaxy for prelearning exercises
 * If you want to use galaxy for pre-learning exercise, you could go to this link
 https://usegalaxy.eu/login/start?redirect=None
-*Create an account/login
-*Follow the instructions from step 3 onwards from below
+
+Create an account/login
+
+Follow the instructions from step 3 onwards from below
 
 ## Getting R studio setup
 * Rstudio and R are already installed
