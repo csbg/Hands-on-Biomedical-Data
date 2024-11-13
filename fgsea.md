@@ -1,4 +1,3 @@
-## If you use Galaxy, see the section [**On Galaxy**](https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/fgsea.md#on-galaxy)
 
 # rank-based fgsea analysis (alternative to EnrichR)
 
@@ -14,7 +13,7 @@ Then we load the package
 ```R
 require(fgsea)
 ```
-
+## If you use Galaxy, see the section [**On Galaxy**](https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/fgsea.md#on-galaxy) to load and read the data
 Then we download gene sets from the EnrichR database (https://maayanlab.cloud/Enrichr/). If you click on `Libraries` you should get to this [page](https://maayanlab.cloud/Enrichr/#libraries).
 
 Now download two databases. Click on the red download symbol on the right.
@@ -107,7 +106,7 @@ read_enrichR_database <- function(path){
 
 We start with the Hallmark DB:
 ```R
-db <- read_enrichR_database(gx_get(**!!Pu the corresponding number for the dataset in your history**)) # here you have to update the path.
+db <- read_enrichR_database(gx_get(**!!Put the corresponding number for the dataset in your history!!**)) # here you have to update the path.
 ```
 In my case the number is **23**
 ![image](https://github.com/user-attachments/assets/08b9864f-1ef5-44e5-904e-d1e40071fb12)
@@ -115,3 +114,4 @@ In my case the number is **23**
 ```R
 db <- read_enrichR_database(gx_get(23))
 ```
+From here on, you can continue with the steps mentioned above for personal computer set up
