@@ -1,4 +1,4 @@
-##If you use Galaxy, see the section **On Galaxy**  towards the end of this page
+## If you use Galaxy, see the section **On Galaxy**  towards the end of this page
 
 # rank-based fgsea analysis (alternative to EnrichR)
 
