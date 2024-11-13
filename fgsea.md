@@ -88,8 +88,9 @@ goi.enr <- res |>
   unique()
 ```
 ## **On Galaxy**
-You already have the datasets on the history, 
-Now go to interactive Rstudio session 
+You already have the datasets on the history.
+Now you can go to interactive Rstudio session and do the following steps 
+
 Here is a function that you can use to load a database in R.
 ```R
 read_enrichR_database <- function(path){
