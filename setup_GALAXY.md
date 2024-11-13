@@ -53,7 +53,7 @@ To load the data needed, type (copy/paste) the following in the beginning of eac
 name_to_be_stored <- readRDS(get_gx(**number associated to the respective dataset in your history**))
 ```R
 # In this case
-data<-readRDS(gx_get(3))
+data <- readRDS(gx_get(3))
 design <- readRDS(gx_get(2))
 gmap <- readRDS(gx_get(1))
 ```
