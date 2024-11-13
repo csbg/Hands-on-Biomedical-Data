@@ -47,10 +47,11 @@ install.packages("package name")
 
 
 
+
 * Now you type in "conda install r-tidyverse" or "conda install bioconductor-limma" etc to install the respective packages.
 ```R
 #type in the Rscript and press `Strg + ENTER`
-library("package name") #to load the packages that are already installed
+require("package name") #to load the packages that are already installed
 ```
 ## Access data
 To load the data needed, type (copy/paste) the following in the beginning of each of your R scripts.
