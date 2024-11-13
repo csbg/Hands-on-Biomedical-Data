@@ -43,7 +43,9 @@ install.packages("package name")
 ```
 * If it doesn't work with install.packages command, change to the Tab "Terminal", next to Console and Background Jobs.
 
-![image](https://github.com/user-attachments/assets/657aa652-dbaa-4c1d-9654-0a198761a6c0)
+![image](https://github.com/user-attachments/assets/11072545-faa7-44fa-a1fd-a95a42f455ba)
+
+
 
 * Now you type in "conda install r-tidyverse" or "conda install bioconductor-limma" etc to install the respective packages.
 ```R
@@ -56,6 +58,19 @@ To load the data needed, type (copy/paste) the following in the beginning of eac
 name_to_be_stored <- readRDS(get_gx(**number associated to the respective dataset in your history**))
 ![image](https://github.com/user-attachments/assets/edb3a8b8-f614-40f2-9940-b68c48ee9e93)
 
+
+```R
+conda install r-tidyverse
+conda install r-pheatmap
+conda install r-enrichR
+conda install r-devtools
+conda install r-knitr
+conda install r-patchwork
+
+conda install bioconductor-limma
+conda install bioconductor-ComplexHeatmap
+conda install bioconductor-gemma.R
+```
 
 ```R
 # In this case
