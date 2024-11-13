@@ -1,5 +1,7 @@
+##If you use Galaxy, see the section **On Galaxy**
+
 # rank-based fgsea analysis (alternative to EnrichR)
-#If you use Galaxy, see below section **On Galaxy**
+
 First we install the `fgsea` package.
 ```R
 if (!require("BiocManager", quietly = TRUE))
