@@ -24,12 +24,12 @@ anymore but the users can still access their data at usegalaxy.eu.
 
 **Step 3**. Click on the Galaxy icon to get back to home. You will now have the data in your history. Notice that each data set in your history has a number.
 
-  ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/ce98f67a-7a33-4401-9103-6d6dcb4d0f63)
-
-
+ ![image](https://github.com/user-attachments/assets/4f676bd4-cbd1-4bd2-8ae2-acb9ad812e4d)
+ 
 **Step 4**. To open Rstudio, on the top-left corner, search for Rstudio
 --> run tool -->open or click on the eye icon
-  ![image](https://github.com/csbg/Hands-on-Biomedical-Data/assets/96147982/e5fc5127-2597-4522-9d57-77f2dadca9dc)
+![image](https://github.com/user-attachments/assets/b2ea7c1a-6f14-459e-a151-9301e5c20903)
+
 
 * Write `print("hello world")` in the R script
 * Press `Strg + ENTER`, then the code should get executed in the console
