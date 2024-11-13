@@ -42,6 +42,9 @@ anymore but the users can still access their data at usegalaxy.eu.
 install.packages("package name")
 ```
 * If it doesn't work with install.packages command, change to the Tab "Terminal", next to Console and Background Jobs.
+
+![image](https://github.com/user-attachments/assets/657aa652-dbaa-4c1d-9654-0a198761a6c0)
+
 * Now you type in "conda install r-tidyverse" or "conda install bioconductor-limma" etc to install the respective packages.
 ```R
 #type in the Rscript and press `Strg + ENTER`
