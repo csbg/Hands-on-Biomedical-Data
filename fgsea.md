@@ -1,4 +1,4 @@
-## If you use Galaxy, see the section [**On Galaxy**](https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/fgsea.md#on-galaxy)  towards the end of this page
+## If you use Galaxy, see the section [**On Galaxy**](https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/fgsea.md#on-galaxy)
 
 # rank-based fgsea analysis (alternative to EnrichR)
 
