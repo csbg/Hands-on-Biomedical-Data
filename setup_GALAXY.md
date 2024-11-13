@@ -51,6 +51,9 @@ library("package name") #to load the packages that are already installed
 To load the data needed, type (copy/paste) the following in the beginning of each of your R scripts.
 
 name_to_be_stored <- readRDS(get_gx(**number associated to the respective dataset in your history**))
+![image](https://github.com/user-attachments/assets/edb3a8b8-f614-40f2-9940-b68c48ee9e93)
+
+
 ```R
 # In this case
 data <- readRDS(gx_get(3))
