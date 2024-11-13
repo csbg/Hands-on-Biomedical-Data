@@ -1,4 +1,4 @@
-##If you use Galaxy, see the section **On Galaxy**
+##If you use Galaxy, see the section **On Galaxy**  towards the end of this page
 
 # rank-based fgsea analysis (alternative to EnrichR)
 
@@ -87,7 +87,7 @@ goi.enr <- res |>
   unlist() |>
   unique()
 ```
-##**On Galaxy**
+## **On Galaxy**
 You already have the datasets on the history, 
 Now go to interactive Rstudio session 
 Here is a function that you can use to load a database in R.
