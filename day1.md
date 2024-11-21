@@ -422,7 +422,9 @@ get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
   select(taxon.Name, taxon.ID, experiment.Accession, experiment.SampleCount)
 ```
 
-The above commands are for `gemma.R` version 2.0.0. The different fields that describe a dataset, for example: `geeq.batchCorrected`, `taxon.Name`, and so on may not work in your versions. If you use an older version, see [here](day1_OldGemma.md) for older syntax. For newer version, see the tutorials for gemma versions [3.0.14](https://bioconductor.org/packages/3.19/bioc/html/gemma.R.html) and [3.2.0](https://bioconductor.org/packages/3.20/bioc/html/gemma.R.html). Click on the vignette for `Accessing curated gene expression data with gemma.R` to see examples how to run this in your version of `gemma.R`.
+The above commands are for `gemma.R` version 2.0.0 and can be different for your version. You can find out the version of gemma.R using the function `sessionInfo()` or `packageVersion("gemma.R")`.
+
+In particular, the different fields that describe a dataset (for example: `geeq.batchCorrected`, `taxon.Name`) may not have the same names in your versions. If you use an older version of `gemma.R`, see [here](day1_OldGemma.md) for older syntax. For newer version, see the vignettes for gemma versions [3.0.14](https://bioconductor.org/packages/3.19/bioc/html/gemma.R.html) and [3.2.0](https://bioconductor.org/packages/3.20/bioc/html/gemma.R.html). Go to the right website and click on the vignette for `Accessing curated gene expression data with gemma.R` to see examples how to run this in your version of `gemma.R`.
 
 Next, pick on dataset and explore the description.
 ```R
