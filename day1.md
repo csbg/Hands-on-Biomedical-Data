@@ -354,7 +354,7 @@ sw |>
   geom_bar(stat="identity")
 ```
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.8:`
-Modify the above plot to add facets with `facet_grid()`. There is a lot of white space. Remove white space by change the `space` and `scales` parameters.
+Modify the above plot to add facets on the columns based on gender using the function `facet_grid()`. There is a lot of white space. Remove white space by change the `space` and `scales` parameters.
 
 
 ## Factors
