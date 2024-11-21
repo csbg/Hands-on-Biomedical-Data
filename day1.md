@@ -415,15 +415,14 @@ require(gemma.R)
 require(tidyverse)
 ```
 
-The following commands are for the current version of `gemma.R`, which is 2.0.0. If you use an older version, see [here](day1_OldGemma.md) for older syntax.
-
-
 First, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
 ```R
 get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
   filter(geeq.batchCorrected == TRUE) |>
   select(taxon.Name, taxon.ID, experiment.Accession, experiment.SampleCount)
 ```
+
+The above commands are for `gemma.R` version 2.0.0. The different fields that describe a dataset, for example: `geeq.batchCorrected`, `taxon.Name`, and so on may not work in your versions. If you use an older version, see [here](day1_OldGemma.md) for older syntax. For newer version, see the tutorials for gemma versions [3.0.14](https://bioconductor.org/packages/3.19/bioc/html/gemma.R.html) and [3.2.0](https://bioconductor.org/packages/3.20/bioc/html/gemma.R.html). Click on the vignette for `Accessing curated gene expression data with gemma.R` to see examples how to run this in your version of `gemma.R`.
 
 Next, pick on dataset and explore the description.
 ```R
