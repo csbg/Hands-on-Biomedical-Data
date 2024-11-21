@@ -415,7 +415,13 @@ require(gemma.R)
 require(tidyverse)
 ```
 
-First, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
+## Explore datasets
+
+In the following, we will look for interesting datasets to use. The code below depends on the gemma.R versions. 
+
+If this fails, you can also identify a relevant dataset by going to the [website](https://gemma.msl.ubc.ca/browse/#/). Then skip this subsection (`explore datasets`) and continue below to obtain the data.
+
+To explore datasets, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
 ```R
 get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
   filter(geeq.batchCorrected == TRUE) |>
@@ -434,7 +440,9 @@ get_datasets(gse)|>
   select(experiment.ShortName, experiment.Name, experiment.ID, experiment.Description)
 ```
 
-Next, have a look at the metadata for this dataset.
+## Download data and metadata
+
+Have a look at the metadata for this dataset.
 ```R
 metadata <- get_dataset_design(gse)
 str(metadata)
