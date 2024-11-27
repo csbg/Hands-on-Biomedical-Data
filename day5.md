@@ -7,6 +7,8 @@
 * The database can also be browsed using this [link](https://gemma.msl.ubc.ca/).
 * Under this [link](https://gemma.msl.ubc.ca/expressionExperiment/showAllExpressionExperiments.html), we can search the available expression datasets.
 * To access datasets with R, see the [Gemma Tutorial on day1](day1.md).
+* Please select datasets with > 10 samples and consider those where you can include interaction effects
+  
 
 <img src="img/Gemma.png" width="100%">
 
@@ -15,6 +17,7 @@
 * Be aware that based on the metadata table of the dataset, you will have to modify the model matrix (`model.matrix`) accordingly to correctly interpret the coefficients (for example, think about batch and interaction coefficients in addition to the main comparisons).
 * Also - make sure you define an appropriate intercept term.
 * While it is more elegant to analyze the full dataset, you can also subset the dataset if it is too large and/or complex.
+  
 
 ## Exercise details:
 
