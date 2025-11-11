@@ -12,6 +12,7 @@ require(enrichR)
 
 Then load the data. 
 ```R
+# update the path if you downloaded to a different folder eg. readRDS("/Downloads/design.RDS")
 data <- readRDS("data.RDS") # update
 metadata <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
