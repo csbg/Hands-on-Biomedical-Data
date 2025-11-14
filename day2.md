@@ -42,7 +42,7 @@ In today's exercise, we will only work with liver fibroblasts (Gp38 positive) th
 * Generate a heatmap of the correlation matrix using the function `Heatmap()`. 
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.2:`
-Provide the heatmap of the correlation matrix. Did or should you remove the diagonal from the correlation matrix heatmap?
+Provide the heatmap of the correlation matrix. Did you (or should you) remove the diagonal from the correlation matrix heatmap?
 
 Note: There are multiple heatmap functions in R:
 * The function `heatmap()` is built-in (not a package that you need to load) but very old and the plots are not as pretty.
@@ -83,7 +83,7 @@ model.matrix(~stimulus, data=metadata)
 * Then make another model matrix, store it in your variable, and make another heatmap to see if it works correctly now.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.3:`
-Provide the heatmap of your final model matrix.
+Provide the heatmap of your final model matrix. Which coefficient from the model matrix compares which groups?
 
 ### Normalize data
 After defining the design matrix, we can use limma voom to normalize the data (by library size and log normalize).
@@ -147,7 +147,7 @@ The plot gets its characteristic shape since those genes that are highly signifi
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.6:` Draw a vulcano plot from the `limmaRes` object using a scatterplot `geom_point`. The point has many thousand points (genes). Can you overcome this overplotting by using transparency (e.g. `alpha=0.3`) or binning (e.g. `geom_hex`)?
 
 ### P-value distribution
-The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model.  Note: The p-value distribution has the original (not log-transformed) p-values on the x-axis.
+The [p-value distribution]("http://varianceexplained.org/statistics/interpreting-pvalue-histogram/") is a good visualization to diagnose potential problems of our model.  Note: The p-value distribution has the original (not log-transformed and also not adjusted) p-values on the x-axis.
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.7:`
 Draw a p-value distribution using `geom_histogram`.

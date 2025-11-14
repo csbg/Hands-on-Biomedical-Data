@@ -1,21 +1,24 @@
 # Evaluation and R Markdown
-* Ideally you can create R Markdown HTML from your R scripts.
+* Ideally you can create **HTML Markdown files** from your **R scripts** (*.R) (note: You can but do not need to make Markdown files *.Rmd). 
 * Save **one R script for each day** to not mix exercises and R sessions from different days. (Only exception is the code below to explore R Markdown (see below).
-* Save your R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* After running R Markdown this will generatethe following HTML files: `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation.
+* Save your R scripts as `prelearning.R`, `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* These R scripts can then be compiled into HTML Markdown files: `prelearning.html`, `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation.
 <!-- * On Ricarda, in order to be able to create HTML files this way, you first have to run `.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")` in your console. -->
-* **On RIcarda, we can re-run your R scripts and do not need HTML files. Please do not run Knitr on Ricarda as it overwhelms the server!**
+<!-- * **On RIcarda, we can re-run your R scripts and do not need HTML files. Please do not run Knitr on Ricarda as it overwhelms the server!** -->
 
 ### R Markdown
-For this course, you will create reports of your R code and session using R Markdown. Create an R script, save it ("Markdown_intro.R"), and then write the following:
+For this course, you will create reports of your R code and session using R Markdown. 
+
+To try this out, create an R script, save it ("Markdown_intro.R"), and then write the following:
 ```R
 a <- 1
 b <- 3
 a + b
 ```
-* Now go to `File > Knit Document` (top right). This will generate a HTML file (this may raise an error). In this case, you can just press "Cancel" and follow the next step.
-* Now go to `Files` (bottom right) and open the HTML file ("Markdown_intro.html") in the Web Browser.
-* Now let's format the markdown a little bit, write the following in your Markdown file and then again generate the HTML file (using `File > Knit Document`).
+* To compile the HTML Markdown file, now go to `File > Knit Document` **or** `File > Compile Report` (this depends on your version of R Studio and R). This will generate (and usually also open and show) a HTML file. If opening the file throws and error, you can just press "Cancel" and follow the next step.
+* Go to `Files` (bottom right) and open the HTML file ("Markdown_intro.html") in the Web Browser. You now have created a Markdown HTML file.
+* Now let's format the Markdown a little bit. Write the comments and code below in your R script file. This will add sections and plots including formatting. Then again generate the HTML file (using `File > Knit Document` or `File > Compile Report`).
+
 ```R
 # This is a "normal" comment inside of code blocks
 str(a)

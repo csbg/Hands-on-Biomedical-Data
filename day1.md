@@ -343,7 +343,7 @@ Plot the distribution of height using the following plots:
 - First use `geom_histogram()` to plot a histogram of the `height`. Note: you only need an `x` aesthetic.
 - Second use `geom_density()`
 - Third use the empirical cumulative distribution function `stat_ecdf()`.
-What happens if you plot `geom_density()` and `stat_ecdf()` on the same plot?
+Should you add the above types of plots in the same plot? Or is it better to show them separately?
 
 Now let's plot the BMI of some individuals:
 ```R

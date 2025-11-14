@@ -58,7 +58,7 @@ model.matrix(~stimulus*organ, data=metadata)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 4.2:`
-Provide the heatmap of the model matrix.
+Provide the heatmap of the model matrix. Which coefficient from the model matrix compares which groups?
 
 ### Normalize data
 Now use limma voom to normalize the data.
@@ -153,7 +153,7 @@ Provide the vulcano plots and p-value distributions in your protocol.
 Now, count the number of genes that are tested `?count`. Then, create a new table `limmaResSig` where you retain only those genes that significantly change between conditions, thus filtering on the `adj.P.Val`. Consider also filtering lowly expressed genes based on the above plots (p-value distribution).
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 4.4:`
-Report the number of tested and significant genes for each comparison. Report the code (should just be a few lines) you use to answer the questions.
+Report the number of tested and significant genes (for each comparison/coefficient). Report the code (should just be a few lines) you use to answer the questions.
 
 ## Visualizing results
 A key element of any statistical analysis is to visualize results (differential genes) to assess whether the statistics obtained match the data. 

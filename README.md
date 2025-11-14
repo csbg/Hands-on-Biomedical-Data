@@ -4,6 +4,12 @@ Practical exercises for the course "Hands-on Biomedical Data - Resources and Ana
 ## Comments up front
 Make sure you read instructions in detail. Especially getting the Setup right.
 
+## Setup
+You can run the practicals on:
+* [Your personal computer](setup_PersonalLaptops.md)(ideal case)
+* [Within Galaxy](setup_GALAXY.md)
+<!-- * [On the PLUS Server RICARDA](setup_RICARDA.md) -->
+
 ## Exercises
 * Day 1: [Basic R programming and visualizations](day1.md)
 * Day 2: [Introduction in differential expression analysis](day2.md)
@@ -11,11 +17,11 @@ Make sure you read instructions in detail. Especially getting the Setup right.
 * Day 4: [Interaction effects](day4.md)
 * Day 5: [Assignment - analyze a dataset of your choosing](day5.md)
 
-## Setup
-You can run the practicals on:
-* [Your personal computer](setup_PersonalLaptops.md)(ideal case)
-* [Within Galaxy](setup_GALAXY.md)
-* [On the PLUS Server RICARDA](setup_RICARDA.md)
+## Instructions
+* Save **one R script for each day** to not mix exercises and R sessions from different days.
+* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
+* While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
+* Submit all files through Blackboard (see deadlines there).
 
 ## Evaluation
 For the evaluation, you will get points based on the exercises indicated like this:
@@ -24,19 +30,9 @@ For the evaluation, you will get points based on the exercises indicated like th
 * The evaluation is based on a protocol that you will prepare.
 * In this protocol your should address all exercises. Each exercise counts for 1 point unless otherwise stated.
 * Usually exercises are just one or two plots. If you are asked to respond to questions, max. 2-3 sentences per exercise should be sufficient.
-* You can should ideally use Markdown (see instructions below) to create the protocol. This contains code and plots together and makes it very easy to track and evaluate your progress.
-* Alternatively, you can copy/paste plots and write answers in Powerpoint, Word or similar (convert and submit a PDF file). In this case, you also have to submit R Scripts which document your code.
-
-## Instructions
-* Save **one R script for each day** to not mix exercises and R sessions from different days.
-* Save the R scripts as `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
-* While you can execute commands from your script in any order, make sure your finally submitted script runs through from top to bottom if started from an empty environment!
-* Submit all files through Blackboard (see deadline there).
-
-## Markdown
-* If you work on your personal computer, you can combine code and answers to questions using Markdown. See the following: [Markdown instructions](markdown.md)
-* If you do use Markdown (on your personal computer), create HTML files using `File > Knit Document` in R. Please **DO NOT** use `File > Knit Document` on Ricarda.
-
+* Submission:
+	* You should ideally submit Markdown (see Markdown instructions](markdown.md)) files to create the protocol. This contains code and plots together and makes it very easy to track and evaluate your progress.
+	* Alternatively, you can copy/paste your plots and write your answers in Word (or Powerpoint), which you then convert and submit as a PDF file. In this case, you **also** have to submit R Scripts which document your code.
 
 ## The example dataset
 
@@ -57,6 +53,6 @@ In this part of the practical, we will study transcriptomics data of structural 
 ## How to get help?
 * Most commands should be explained in this practical.
 * If you do not understand certain functions, type the question mark plus the function name in R, e.g.: "?median".
-* If you need additional commands, Google is your friend. 
+* If you need additional commands, Google/ChatGPT is your friend. Make sure that you understand the code that you submit!
 * Also consult this [list of function names](functions.md), which contains key functions relevant for this course.
 * **Don't forget to raise you hand if lost!**

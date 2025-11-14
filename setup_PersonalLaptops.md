@@ -32,7 +32,9 @@ download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/de
 download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/gmap.RDS", "gmap.RDS")
 ```
 
-Next, make sure that the files are successfully downloaded: The function `stopifnot()` throws and error if the boolean statement is not correct (in which case you do not have the correct files). The package `tools` should be installed already. The function `md5sum()` from `tools` calculates a hash (combination of digits and letters) that summarizes the file. The hashes below are the right ones, so if the code runs through without errors then you have the right files.
+Next, make sure that the files are successfully downloaded: The function `stopifnot()` throws and error if the boolean statement is not correct (in which case you do not have the correct files). The package `tools` should be installed already. The function `md5sum()` from `tools` calculates a hash (combination of digits and letters) that summarizes the file.
+
+The hashes below are the correct ones, so if the code runs through without errors then you have the right files.
 
 ```R
 require(tools)

@@ -1,6 +1,8 @@
 # A more complex example
 In this exercise, we will repeat the analysis from the introductory exercise, but analyze all six stimuli compared to PBS controls.
 
+**NOTE:** In this exercise, make sure to **split the genes between the different stimuli** when reporting numbers of genes, performing, enrichment, etc. It can be interesting to report which gene is regulated by *any* stimulus but ultimately we want to compare the genes affected by *each* stimulus!
+
 ## Setup
 First load packages.
 ```R
@@ -55,7 +57,7 @@ model.matrix(~stimulus, data=metadata)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.2:`
-Provide the heatmap of the model matrix.
+Provide the heatmap of the model matrix. Which coefficient from the model matrix compares which groups?
 
 ### Normalize data
 Now use limma voom to normalize the data.
@@ -115,6 +117,7 @@ A key element of any statistical analysis is to visualize results (differential 
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.5:`
 * Pick one gene from one comparison with significant effects and a large absolute (negative or positive) log fold change from `limmaResSig`.
+* Explain / report your code on how you picked the gene.
 * Now create a table that we can use to plot this gene. To this end, modify the table `metadata` by adding the normalized expression of your gene of interest, taken from `dataVoom$E`, as a new column.
 * Generate a plot, where the x-axis is the stimulus (six stimuli and PBS) and the y-axis is the expression of the gene.
 * Look at the log fold changes for all six stimuli. Do the observed differences on this plot fit to the log fold change?
@@ -180,7 +183,7 @@ Report this plot in your protocol.
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
-Below is a loop over the individual coefficients. Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
+Below is a loop over the individual coefficients (comparisons). Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
 
 As a reminder, this were the instructions from yesterday:
 * First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
