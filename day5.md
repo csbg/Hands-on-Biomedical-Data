@@ -7,6 +7,8 @@
 * The database can also be browsed using this [link](https://gemma.msl.ubc.ca/).
 * Under this [link](https://gemma.msl.ubc.ca/expressionExperiment/showAllExpressionExperiments.html), we can search the available expression datasets.
 * To access datasets with R, see the [Gemma Tutorial on day1](day1.md).
+* Please select datasets with > 10 samples and consider those where you can include interaction effects
+  
 
 <img src="img/Gemma.png" width="100%">
 
@@ -43,3 +45,4 @@ Perform enrichment analysis. Are the results expected biologically (do you see e
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5.7` (3 points)
 Discuss 3 significant genes (or those with large changes) biologically / in the context of the dataset studied. Plot the data for those genes and plot or report their statistics (log fold change and p-value).
+
