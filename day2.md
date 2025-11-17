@@ -212,7 +212,7 @@ msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
 ```R
 MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
 ```
-* Next perform Fisher's exact test enrichment using the following and store the results in the objec `enr.res`.
+* Next perform Fisher's exact test enrichment using the following and store the results in the objec `fisher_tbl`.
 Fisher enrichment
 Fisher's exact test is performed against each pathway in the MSigDB database, 
 ```R
