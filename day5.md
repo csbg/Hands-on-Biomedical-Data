@@ -18,7 +18,7 @@
 * Pick a dataset that is curated and has good quality
 * You need a good number of samples (> 10 total with >= 3 samples per group in each group)
 * One dataset per student (no group activity)
-* Figure out 2-5 interesting comparisons(you can subset the dataset if it is too complicated)
+* Figure out 2-5 interesting comparison (you can subset the dataset if it is too complicated)
 * Perform differential expression analysis
 * Don’t forget basic QC plots (sample correlation, p-value distribution,…)
 * Shortly discuss 1-2 top genes and/or enriched pathways
