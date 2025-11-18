@@ -7,7 +7,7 @@ First load packages.
 require(tidyverse)
 require(limma)
 require(ComplexHeatmap)
-require(enrichR)
+require(msigdbr)
 ```
 
 Then load the data. 
