@@ -10,7 +10,7 @@ require(tidyverse)
 require(limma)
 require(patchwork)
 require(ComplexHeatmap)
-require(enrichR)
+require(msigdbr)
 ```
 
 Load the data.
