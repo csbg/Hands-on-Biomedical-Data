@@ -407,21 +407,16 @@ sw |>
 
 
 # Downloading a dataset
-For this practical, on day 5, you will analyze a gene expression dataset of your choosing using R, based on the examples from days 2-4. In the following, we will use the Gemma.R package that enables us to easily download datasets from GEMMA, a database where datasets have been manually curated.
+For this practical, on day 5, you will analyze a gene expression dataset that you choose in R, based on what you learned in days 2-4. In the following, we will use the GEMMA database, where datasets have been manually curated. 
 
-Let's load the required packages:
-```
-require(gemma.R)
-require(tidyverse)
-```
 
 ## Explore datasets
+Go to the [GEMMA website](https://gemma.msl.ubc.ca/browse/#/) and browse datasets.
 
-In the following, we will look for interesting datasets to use. The code below depends on the gemma.R versions. 
+<!-- 
+In the following, we will look for interesting datasets to use. The code below depends on the gemma.R versions. If this fails, you can also identify a relevant dataset by going to the [website](https://gemma.msl.ubc.ca/browse/#/). Then skip this subsection (`explore datasets`) and continue below to obtain the data.
 
-If this fails, you can also identify a relevant dataset by going to the [website](https://gemma.msl.ubc.ca/browse/#/). Then skip this subsection (`explore datasets`) and continue below to obtain the data.
-
-To explore datasets, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in. 
+To explore datasets, we will look for a dataset of interest. As an example, we will here look for datasets related to neuroblastoma. You can of course look for any type of topic you are interested in.
 ```R
 get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
   filter(geeq.batchCorrected == TRUE) |>
@@ -447,8 +442,15 @@ Use column names accordingly.
 ```R
 get_datasets(gse)|>
 dplyr::select(experiment.shortName, experiment.name, experiment.ID, experiment.description)
-```
+``` -->
+
 ## Download data and metadata
+
+Next, we will use Gemma.R, which enables us to easily download datasets from GEMMA. First, load the required packages:
+```
+require(gemma.R)
+require(tidyverse)
+```
 
 Have a look at the metadata for this dataset.
 ```R
@@ -466,12 +468,14 @@ colnames(e)
 e <- as.data.frame(e)
 ```
 
-The expression data is a data.frame / data.table object. We want to convert this to a matrix.
+The expression data is a data.frame / data.table object. We want to convert this to a matrix. 
+Rownames of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
 ```R
-# row.names of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
 stopifnot(all(row.names(metadata) %in% colnames(e)))
+```
 
-# Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
+Next, let's get only the columns corresponding to sample names, make a matrix, and add gene symbols as row.names.
+```R
 dataMT <- as.matrix(e[,row.names(metadata)])
 str(dataMT)
 row.names(dataMT) <- e$GeneSymbol
@@ -484,9 +488,9 @@ boxplot(dataMT, las=2)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.10:`
-Now, explore another term (other than "neuroblastoma") and another dataset (other than GSE21713). Report the identified dataset (number of samples and conditions) you find in your protocol.
+Now, find another dataset (other than GSE21713). Run the code above for this dataset and then report the identified dataset (number of samples and conditions) you find.
 
-For more details on the final assignment see the [instructions for day 5](day5.md).
+For more details on the final assignment and how to select a dataset, see the [instructions for day 5](day5.md).
 
 
 ## Naming issues?

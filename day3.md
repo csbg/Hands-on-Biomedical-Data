@@ -18,6 +18,7 @@ Load the data.
 data <- readRDS("data.RDS")
 metadata <- readRDS("design.RDS")
 gmap <- readRDS("gmap.RDS")
+MSigDB <- readRDS("MSigDB.rds")
 ```
 
 ## Subset data
@@ -185,38 +186,13 @@ Enrichment analysis help in interpreting long lists of genes. By measuring wheth
 #### Perform enrichment analysis for each coefficient
 Now, we will perform enrichment analysis for all genes significant in each coefficient. 
 
-As a reminder, this were the instructions from yesterday:
-* Filter all genes with `logFC > 0` from the table of significant genes.
-* Store their Ensembl IDs (as a vector) in the object `goi`. Note: this will overwrite the previously defined `goi` object. So if you are going back to the previous exercise, you wil have to again define `goi`.
-* Look at the object `goi` - what does it contain now?
-* Next convert the ENSEMBL IDs to gene symbols `goi <- gmap[goi,]$external_gene_name |> unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices. 
-* Again, look at the object `goi` - what does it contain now?
+As a reminder, look at the [code for enrichmnet analysis from day2](day2.md#enrichment-analysis).
 
-Again, define the background / universe.
-```R
-universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
-universe <- unique(universe[!is.na(universe) & universe != ""])
-```
-
-Specify the database of genesets.
-```R
-msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
-```
-
-Convert to list of genes per pathway format
-```R
-MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
-```
-* Next perform enrichment analysis using the following function and store the results in the objec `fisher_tbl`.
-Fisher's exact test is performed against each pathway in the MSigDB database, 
-
-Now you will run this in a loop, with one iteration for each comparison (coefficient)
-* Note: you will have to use the variable `coefx` INSIDE of the loop to get the right genes for each iteration.
-* Look at the value of `unique(limmaResSig$coef)`
-* Run the loop below once to see what it does. Then you have to edit the code as described to make it work
-
-
-Below is a loop over the individual coefficients (comparisons). Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
+Now you will run this in a loop, with one iteration for each comparison (coefficient).
+* Note: you will have to use the variable `coefx` INSIDE of the loop to get the right genes for each coefficient in each iteration.
+* Look at what `unique(limmaResSig$coef)` returns.
+* Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
+* You will have to edit the code so that the correct `goi` vector is provided in each iteration.
 ``` R
 fisher_list <- list()
 for(coefx in unique(limmaResSig$coef)){
@@ -229,32 +205,32 @@ for(coefx in unique(limmaResSig$coef)){
 	
 	# Add code here to perform enrichment analysis (see yesterday's example)
 	fisher_tbl <- map_df(names(MSigDB), function(pw) {
- 	 pw_genes <- MSigDB[[pw]]
-     sig_genes <- goi
-     overlap <- intersect(sig_genes, pw_genes)
+		pw_genes <- MSigDB[[pw]]
+		sig_genes <- goi
+		overlap <- intersect(sig_genes, pw_genes)
 		a <- length(overlap)
 		b <- length(sig_genes) - a
-  		c <- length(pw_genes) - a
-  		d <- length(universe) - (a+b+c)
+		c <- length(pw_genes) - a
+		d <- length(universe) - (a+b+c)
   
-  	ft <- fisher.test(matrix(c(a,b,c,d),2), alternative = "greater")
+	  	ft <- fisher.test(matrix(c(a,b,c,d),2), alternative = "greater")
   
-  	tibble(
-    	pathway = pw,
-    	pvalue = ft$p.value,
-    	odds_ratio = as.numeric(ft$estimate),
-    	DE_in_pathway = a,
-    	overlapping_genes = paste(overlap, collapse = ",")
-  	)
+	  	tibble(
+	    	pathway = pw,
+	    	pvalue = ft$p.value,
+	    	odds_ratio = as.numeric(ft$estimate),
+	    	DE_in_pathway = a,
+	    	overlapping_genes = paste(overlap, collapse = ",")
+	  	)
 	})
 	fisher_tbl <- fisher_tbl |> mutate(p_adj = p.adjust(pvalue, "BH"))
 
-  # Store results in the list
-  # fisher_list[[coefx]] <- fisher_tbl # JUST UNCOMMENT HERE
+	# Store results in the list
+	fisher_list[[coefx]] <- fisher_tbl
 }
 ```
 
-Finally, we combine the list (each entry is one coefficient) into one long table:
+Finally, we combine the lists (each entry is one coefficient) into one long table:
 ```R
 fisher_tbl <- bind_rows(fisher_list, .id="coef")
 ```
@@ -262,18 +238,16 @@ fisher_tbl <- bind_rows(fisher_list, .id="coef")
 #### Plot enrichments
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.7:`
-Now generate the following plot:
+Now generate a plot like this:
 
 <img width="1880" height="1950" alt="top_10_pathways" src="https://github.com/user-attachments/assets/574d614a-f286-4b1e-90fa-866b6980eaa9" />
 
-
-Note: The plot only includes entries with: p_adj < 0.05 & odds_ratio > 6
 
 #### Plot genes related to the enrichments
 Now we will extract the genes underlying the above enrichments:
 ```
 goi.enr <- fisher_tbl |>
-  filter(p_adj < 0.05 & odds_ratio > 6) |>
+  filter(p_adj < 0.05 & odds_ratio > 5) |>
   pull("overlapping_genes") |>
   str_split(",") |> 
   unlist() |>

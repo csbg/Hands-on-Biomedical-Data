@@ -6,7 +6,7 @@
 * As seen on day 1, the Gemma database contains expression datasets with curated expression and meta-data. 
 * The database can also be browsed using this [link](https://gemma.msl.ubc.ca/).
 * Under this [link](https://gemma.msl.ubc.ca/expressionExperiment/showAllExpressionExperiments.html), we can search the available expression datasets.
-* To access datasets with R, see the [Gemma Tutorial on day1](day1.md).
+* To access datasets with R, see the [Gemma Tutorial on day1](day1.md#downloading-a-dataset).
 * Please select datasets with > 10 samples and consider those where you can include interaction effects
   
 

@@ -16,6 +16,7 @@ Then load the data.
 data <- readRDS("data.RDS") # update
 metadata <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
+MSigDB <- readRDS("MSigDB")# update (Note: this contains lists of pathways and genes)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.1:`
@@ -203,18 +204,10 @@ universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
 
-Specify the database of genesets
+Next perform Fisher's exact test enrichment and store the results in the table `fisher_tbl`. We will use the object `MSigDB`, which we dowloaded at the begginning of the day for the enrichment.
 ```R
-msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
-```
+str(MSigDB) # summarizes this object
 
-Convert to a different format: a list of genes for each pathway / gene set.
-```R
-MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
-```
-
-Next perform Fisher's exact test enrichment and store the results in the table `fisher_tbl`. 
-```R
 fisher_tbl <- map_df(names(MSigDB), function(pw) {
   pw_genes <- MSigDB[[pw]]
   sig_genes <- goi
