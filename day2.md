@@ -7,7 +7,7 @@ First load packages.
 require(tidyverse)
 require(limma)
 require(ComplexHeatmap)
-require(enrichR)
+require(msigdbr)
 ```
 
 Then load the data. 
@@ -193,15 +193,64 @@ Example resulting plot:
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
 * First, filter all genes with `logFC > 0` from the table of significant genes and store their Ensembl IDs (as a vector) in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
 * Note: look at the object `goi` - what does it contain now?
-* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name |> unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices.
+* Next convert the ENSEMBL IDs to gene symbols:
+```R
+goi <- gmap[goi,]$external_gene_name |> unique()
+```
+Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices.
 * Note: look at the object `goi` - what does it contain now?
-* Next perform enrichment analysis using the function `enrichr()` with `databases = c("MSigDB_Hallmark_2020", "GO_Biological_Process_2021")` and store the results in the objec `enr.res`.
-* Note: if you are having trouble with EnrichR and the `enrichr()` function, see [here](fgsea.md) for an alternative approach used rank-based `fgsea` analysis.
-* The `enr.res` object is a list, which contains two entries `enr.res$MSigDB_Hallmark_2020` and `enr.res$GO_Biological_Process_2021`, one for each of the two databases tested.
+* Next prepare the background/universe set
+```R
+universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
+universe <- unique(universe[!is.na(universe) & universe != ""])
+```
+* Specify the database of genesets
+```R
+msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
+```
+*convert to list of genes per pathway format
+```R
+MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
+```
+* Next perform Fisher's exact test enrichment using the following and store the results in the objec `fisher_tbl`.
+Fisher enrichment
+Fisher's exact test is performed against each pathway in the MSigDB database, 
+```R
+fisher_tbl <- map_df(names(MSigDB), function(pw) {
+  pw_genes <- MSigDB[[pw]]
+  sig_genes <- goi
+  overlap <- intersect(sig_genes, pw_genes)
+  a <- length(overlap)
+  b <- length(sig_genes) - a
+  c <- length(pw_genes) - a
+  d <- length(universe) - (a+b+c)
+  
+  ft <- fisher.test(matrix(c(a,b,c,d),2), alternative = "greater")
+  
+  tibble(
+    pathway = pw,
+    pvalue = ft$p.value,
+    odds_ratio = as.numeric(ft$estimate),
+    DE_in_pathway = a,
+    overlapping_genes = paste(overlap, collapse = ",")
+  )
+})
+```
+* Note: Alternative, see [here](fgsea.md) for an alternative approach used rank-based `fgsea` analysis.
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.12:`
-Now visualize the results based on the top 30 significant hits from each database (make a separate plot for each database).
-<img src="03_01_simple/Enrichments.png" width="50%" height="100%">
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) 
+Filter the results based on the top 30 significant hits
+```R
+top_30 <- fisher_tbl %>%
+  mutate(p_adj = p.adjust(pvalue, "BH")) %>%
+  arrange(p_adj) %>%
+  slice_head(n = 30)
+  ```
+`Exercise 2.12:`
+Now visualize the results based on the top 30 significant hits
+<img width="2400" height="1950" alt="enrichment_analysis" src="https://github.com/user-attachments/assets/902ac775-6e67-48d2-99e5-5b6d6bc4f0f4" />
+
 
 ## Final questions
 Answer the questions below by again showing the relevant plots from the exercises above.
