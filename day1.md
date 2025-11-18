@@ -443,6 +443,11 @@ get_datasets(gse)|>
   select(experiment.ShortName, experiment.Name, experiment.ID, experiment.Description)
 ```
 
+  #use column names accordinly
+```R
+get_datasets(gse)|>
+dplyr::select(experiment.shortName, experiment.name, experiment.ID, experiment.description)
+```
 ## Download data and metadata
 
 Have a look at the metadata for this dataset.
