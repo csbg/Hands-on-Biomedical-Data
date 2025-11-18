@@ -190,31 +190,30 @@ Example resulting plot:
 <img src="03_01_simple/Top.genes.names.png" width="50%" height="150%">
 
 ## Enrichment analysis
-Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied. 
-* First, filter all genes with `logFC > 0` from the table of significant genes and store their Ensembl IDs (as a vector) in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
-* Note: look at the object `goi` - what does it contain now?
-* Next convert the ENSEMBL IDs to gene symbols:
-```R
-goi <- gmap[goi,]$external_gene_name |> unique()
-```
-Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices.
-* Note: look at the object `goi` - what does it contain now?
-* Next prepare the background/universe set
+Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
+* Filter all genes with `logFC > 0` from the table of significant genes.
+* Store their Ensembl IDs (as a vector) in the object `goi`. Note: this will overwrite the previously defined `goi` object. So if you are going back to the previous exercise, you wil have to again define `goi`.
+* Look at the object `goi` - what does it contain now?
+* Next convert the ENSEMBL IDs to gene symbols `goi <- gmap[goi,]$external_gene_name |> unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices. 
+* Again, look at the object `goi` - what does it contain now?
+
+Next prepare the background/universe set.
 ```R
 universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
-* Specify the database of genesets
+
+Specify the database of genesets
 ```R
 msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
 ```
-*convert to list of genes per pathway format
+
+Convert to a different format: a list of genes for each pathway / gene set.
 ```R
 MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
 ```
-* Next perform Fisher's exact test enrichment using the following and store the results in the objec `fisher_tbl`.
-Fisher enrichment
-Fisher's exact test is performed against each pathway in the MSigDB database, 
+
+Next perform Fisher's exact test enrichment and store the results in the table `fisher_tbl`. 
 ```R
 fisher_tbl <- map_df(names(MSigDB), function(pw) {
   pw_genes <- MSigDB[[pw]]
@@ -236,18 +235,21 @@ fisher_tbl <- map_df(names(MSigDB), function(pw) {
   )
 })
 ```
-* Note: Alternative, see [here](fgsea.md) for an alternative approach used rank-based `fgsea` analysis.
+<!-- * Note: Alternative, see [here](fgsea.md) for an alternative approach used rank-based `fgsea` analysis. -->
 
+Fisher's exact test is performed for each pathway in the MSigDB database. So we need to correct for multiple testing:
+```R
+fisher_tbl <-  mutate(fisher_tbl, p_adj = p.adjust(pvalue, "BH"))
+```
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) 
 Filter the results based on the top 30 significant hits
 ```R
 top_30 <- fisher_tbl %>%
-  mutate(p_adj = p.adjust(pvalue, "BH")) %>%
   arrange(p_adj) %>%
   slice_head(n = 30)
-  ```
-`Exercise 2.12:`
+```
+
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.12:`
 Now visualize the results based on the top 30 significant hits
 <img width="2400" height="1950" alt="enrichment_analysis" src="https://github.com/user-attachments/assets/902ac775-6e67-48d2-99e5-5b6d6bc4f0f4" />
 

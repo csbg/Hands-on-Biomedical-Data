@@ -183,21 +183,27 @@ Report this plot in your protocol.
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
-Below is a loop over the individual coefficients (comparisons). Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
+Now, we will perform enrichment analysis for all genes significant in each coefficient. 
 
 As a reminder, this were the instructions from yesterday:
-* First, filter all genes with `logFC > 0` from the table of significant genes and store them in the object `goi` (note, this will overwrite the value of this object defined previously - so if you are going back to the previous exercise, you wil have to redefine the object).
-* Next convert the ENSEMBL IDs to gene symbols: `goi <- gmap[goi,]$external_gene_name |> unique()`
-* Next prepare the background/universe set
+* Filter all genes with `logFC > 0` from the table of significant genes.
+* Store their Ensembl IDs (as a vector) in the object `goi`. Note: this will overwrite the previously defined `goi` object. So if you are going back to the previous exercise, you wil have to again define `goi`.
+* Look at the object `goi` - what does it contain now?
+* Next convert the ENSEMBL IDs to gene symbols `goi <- gmap[goi,]$external_gene_name |> unique()`. Note: `gmap` is a `data.frame` with row names, which we here use to access the right rows, the same way we have previously done for matrices. 
+* Again, look at the object `goi` - what does it contain now?
+
+Again, define the background / universe.
 ```R
 universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
-* Specify the database of genesets
+
+Specify the database of genesets.
 ```R
 msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
 ```
-*convert to list of genes per pathway format
+
+Convert to list of genes per pathway format
 ```R
 MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
 ```
@@ -209,6 +215,8 @@ Now you will run this in a loop, with one iteration for each comparison (coeffic
 * Look at the value of `unique(limmaResSig$coef)`
 * Run the loop below once to see what it does. Then you have to edit the code as described to make it work
 
+
+Below is a loop over the individual coefficients (comparisons). Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
 ``` R
 fisher_list <- list()
 for(coefx in unique(limmaResSig$coef)){
