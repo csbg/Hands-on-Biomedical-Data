@@ -18,6 +18,7 @@ Load the data.
 data <- readRDS("data.RDS")
 metadata <- readRDS("design.RDS")
 gmap <- readRDS("gmap.RDS")
+MSigDB <- readRDS("MSigDB.rds")
 ```
 
 ## Subset data
@@ -194,13 +195,7 @@ universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
 * Specify the database of genesets
-```R
-msigdb_mouse <- msigdbr(species = "Mus musculus", category = "H")
-```
-*convert to list of genes per pathway format
-```R
-MSigDB <- split(msigdb_mouse$gene_symbol, msigdb_mouse$gs_name)
-```
+You already downloaded MSigDB 
 * Next perform enrichment analysis using the following function and store the results in the objec `fisher_tbl`.
 Fisher's exact test is performed against each pathway in the MSigDB database, 
 
