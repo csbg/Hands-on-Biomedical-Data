@@ -184,11 +184,9 @@ Report this plot in your protocol.
 Enrichment analysis help in interpreting long lists of genes. By measuring whether certain gene sets are enriched in our list of differential genes (often called hit list), enrichment analysis informs us on the involvement of biological pathways (among others) in the processes studied.
 
 #### Perform enrichment analysis for each coefficient
-Now, we will perform enrichment analysis for all genes significant in each coefficient. 
+Now, we will perform enrichment analysis for all genes significant in each coefficient. As a reminder, look at the [code for enrichmnet analysis from day2](day2.md#enrichment-analysis).
 
-As a reminder, look at the [code for enrichmnet analysis from day2](day2.md#enrichment-analysis).
-
-Now you will run this in a loop, with one iteration for each comparison (coefficient).
+Here, you will run this in a loop, with one iteration for each comparison (coefficient).
 * Note: you will have to use the variable `coefx` INSIDE of the loop to get the right genes for each coefficient in each iteration.
 * Look at what `unique(limmaResSig$coef)` returns.
 * Within each iteration of this loop, we will perform enrichment analysis for all genes significant in each coefficient. 
@@ -198,10 +196,11 @@ fisher_list <- list()
 for(coefx in unique(limmaResSig$coef)){
     
     # What is coefx now?
-    print(coefx)
+    message(coefx)
 
 	# Extract genes of interests (GOI) for a given coefficient (see yesterday's example)
 	# goi <- .... # YOUR INPUT NEEDED HERE (remember to provide gene names using gmap)
+	print(goi)
 	
 	# Add code here to perform enrichment analysis (see yesterday's example)
 	fisher_tbl <- map_df(names(MSigDB), function(pw) {
@@ -224,6 +223,7 @@ for(coefx in unique(limmaResSig$coef)){
 	  	)
 	})
 	fisher_tbl <- fisher_tbl |> mutate(p_adj = p.adjust(pvalue, "BH"))
+	print(head(fisher_tbl))
 
 	# Store results in the list
 	fisher_list[[coefx]] <- fisher_tbl
@@ -232,7 +232,9 @@ for(coefx in unique(limmaResSig$coef)){
 
 Finally, we combine the lists (each entry is one coefficient) into one long table:
 ```R
+str(fisher_list)
 fisher_tbl <- bind_rows(fisher_list, .id="coef")
+head(fisher_tbl)
 ```
 
 #### Plot enrichments
