@@ -220,7 +220,7 @@ starwars
 str(starwars$name)
 ```
 
-Useing `stopifnot()` to see if the results are what we expect. Here we test whether each name occurs only once, if the number of unique names is the same as the number of rows of the table.
+Using `stopifnot()` to see if the results are what we expect. Here we test whether each name occurs only once, if the number of unique names is the same as the number of rows of the table.
 ```R
 stopifnot(length(unique(starwars$name))==nrow(starwars))
 ```
