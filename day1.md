@@ -412,7 +412,27 @@ For this practical, on day 5, you will analyze a gene expression dataset that yo
 
 ## Explore datasets
 Go to the [GEMMA website](https://gemma.msl.ubc.ca/browse/#/) and browse datasets.
-
+#For the new version of gemma, please use this code, update gse <- "dataset number" . Example gse <- "GSE1232"
+```{r}
+metadata <- get_dataset_samples(gse) |>
+  make_design('text') |> 
+  select(-factorValues)
+ 
+head(str(metadata))
+head(metadata)
+with(metadata, table(block, genotype))
+```
+ 
+Download the expression data.
+ 
+```{r}
+e <- get_dataset_processed_expression(gse)
+head(str(e))
+colnames(e)
+e <- as.data.frame(e)
+ 
+```
+ 
 <!-- 
 In the following, we will look for interesting datasets to use. The code below depends on the gemma.R versions. If this fails, you can also identify a relevant dataset by going to the [website](https://gemma.msl.ubc.ca/browse/#/). Then skip this subsection (`explore datasets`) and continue below to obtain the data.
 
@@ -421,6 +441,7 @@ To explore datasets, we will look for a dataset of interest. As an example, we w
 get_datasets("neuroblastoma", limit = 100, taxa = "human") |>
   filter(geeq.batchCorrected == TRUE) |>
   select(taxon.Name, taxon.ID, experiment.Accession, experiment.SampleCount)
+
 ```
 
 The above commands are for `gemma.R` version 2.0.0 and can be different for your version. You can find out the version of gemma.R using the function `sessionInfo()` or `packageVersion("gemma.R")`. If you run the following command, it will tell you the column names (Gemma fields) in your version. You can then use the right ones instead of `taxon.Name`, `taxon.IDF`, `experiment.Accession`, and `experiment.SampleCount` above.
