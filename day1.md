@@ -413,25 +413,7 @@ For this practical, on day 5, you will analyze a gene expression dataset that yo
 ## Explore datasets
 Go to the [GEMMA website](https://gemma.msl.ubc.ca/browse/#/) and browse datasets.
 #For the new version of gemma, please use this code, update gse <- "dataset number" . Example gse <- "GSE1232"
-```{r}
-metadata <- get_dataset_samples(gse) |>
-  make_design('text') |> 
-  select(-factorValues)
- 
-head(str(metadata))
-head(metadata)
-with(metadata, table(block, genotype))
-```
- 
-Download the expression data.
- 
-```{r}
-e <- get_dataset_processed_expression(gse)
-head(str(e))
-colnames(e)
-e <- as.data.frame(e)
- 
-```
+
  
 <!-- 
 In the following, we will look for interesting datasets to use. The code below depends on the gemma.R versions. If this fails, you can also identify a relevant dataset by going to the [website](https://gemma.msl.ubc.ca/browse/#/). Then skip this subsection (`explore datasets`) and continue below to obtain the data.
@@ -473,7 +455,7 @@ require(gemma.R)
 require(tidyverse)
 ```
 
-Have a look at the metadata for this dataset.
+Have a look at the metadata for this dataset. store the dataset number in gse. Example gse <- "GSE12345"
 ```R
 metadata <- get_dataset_design(gse)
 str(metadata)
@@ -488,7 +470,26 @@ str(e)
 colnames(e)
 e <- as.data.frame(e)
 ```
-
+If the above functions do not work,  please try the following block as you might have the recent gemma version where the functions are slightly updated
+```{r}
+metadata <- get_dataset_samples(gse) |>
+  make_design('text') |> 
+  select(-factorValues)
+ 
+head(str(metadata))
+head(metadata)
+with(metadata, table(block, genotype))
+```
+ 
+Download the expression data.
+ 
+```{r}
+e <- get_dataset_processed_expression(gse)
+head(str(e))
+colnames(e)
+e <- as.data.frame(e)
+ 
+```
 The expression data is a data.frame / data.table object. We want to convert this to a matrix. 
 Rownames of the metadata table are the sample names. Here we check whether they are all present in the expression matrix.
 ```R
