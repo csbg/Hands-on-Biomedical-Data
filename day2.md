@@ -16,8 +16,9 @@ Then load the data.
 data <- readRDS("data.RDS") # update
 metadata <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
+```
 Either download the MSigDB.rds file manually (https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB.rds)or using the following code
-
+```R
 download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/MSigDB.rds", "MSigDB.rds")
 MSigDB <- readRDS("MSigDB.rds")# update (Note: this contains lists of pathways and genes)
 ```
