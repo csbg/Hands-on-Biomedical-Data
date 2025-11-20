@@ -17,11 +17,7 @@ data <- readRDS("data.RDS") # update
 metadata <- readRDS("design.RDS") # update
 gmap <- readRDS("gmap.RDS") # update
 ```
-Either download the MSigDB.rds file manually (https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB.rds)or using the following code
-```R
-download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/MSigDB.rds", "MSigDB.rds")
-MSigDB <- readRDS("MSigDB.rds")# update (Note: this contains lists of pathways and genes)
-```
+
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.1:`
 For all three objects above, answer the following questions:
@@ -29,7 +25,11 @@ For all three objects above, answer the following questions:
 * How many rows and columns are this object?
 * What information is contained in rows and columns?
 Remember functions: `str`, `head`, `dim`, and similar.
-
+Either download the MSigDB.rds file manually (https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB.rds)or using the following code
+```R
+download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/MSigDB.rds", "MSigDB.rds")
+MSigDB <- readRDS("MSigDB.rds")# update (Note: this contains lists of pathways and genes)
+```
 ## Subset data
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
 * Filter the metadata table to the samples described above. 
