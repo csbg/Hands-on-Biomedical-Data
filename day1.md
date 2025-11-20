@@ -449,14 +449,16 @@ dplyr::select(experiment.shortName, experiment.name, experiment.ID, experiment.d
 
 ## Download data and metadata
 
-Next, we will use Gemma.R, which enables us to easily download datasets from GEMMA. First, load the required packages:
-```
+Next, we will use Gemma.R, which enables us to easily download datasets from GEMMA. `gemma.R` is a package that enables us to download data and metadata for many expression datasets. Unfortunately, it is not as well developed as tidyverse and ggplot2, it may thus be a bit difficult to use. Ask for help if needed and - if `gemma.R` doesn't work - answer the finale exercise from today based on what you can do on the GEMMA website.
+
+First, load the required packages:
+```R
 require(gemma.R)
 require(tidyverse)
 ```
 
 Store the dataset number in gse. Here we will use the following example:
-```{R}
+```R
 gse <- "GSE21713"
 ```
 
@@ -468,19 +470,19 @@ metadata <- get_dataset_samples(gse) |>
 ```
 
 If the above function does not work, try the following from an older gemma version.
-```{r}
+```R
 metadata <- get_dataset_design(gse)
 ```
 
 Now, let's explore this metadata.
-```{r}
+```R
 str(metadata)
 head(metadata)
 with(metadata, table(block, genotype))
 ```
 
 Download the expression data.
-```{r}
+```R
 e <- get_dataset_processed_expression(gse)
 str(e)
 colnames(e)
@@ -506,9 +508,9 @@ boxplot(dataMT, las=2)
 ```
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.10:`
-Now, find another dataset (other than GSE21713). Run the code above for this dataset and then report the identified dataset (number of samples and conditions) you find.
+Now, find another dataset (other than GSE21713). Try to run the code above for this dataset and then report the identified dataset (number of samples and conditions) you find. If you are having issues with `gemma.R`, report only the dataset and conditions you found by *browsing the GEMMA website*.
 
-For more details on the final assignment and how to select a dataset, see the [instructions for day 5](day5.md).
+Ultimately, you will download a dataset and analyze in the final assignment on [day 5](day5.md). If `gemma.R` proves difficult here, then ask one of your colleagues to download expression data and metadata for you.
 
 
 ## Naming issues?
