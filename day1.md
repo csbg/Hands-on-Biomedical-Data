@@ -455,9 +455,9 @@ require(gemma.R)
 require(tidyverse)
 ```
 
-Store the dataset number in gse. For example:
+Store the dataset number in gse. Here we will use the following example:
 ```{R}
-gse <- "GSE12345"
+gse <- "GSE21713"
 ```
 
 Now, download the metadata for this dataset. 
@@ -476,7 +476,7 @@ Now, let's explore this metadata.
 ```{r}
 str(metadata)
 head(metadata)
-with(metadata, table(batch, genotype))
+with(metadata, table(block, genotype))
 ```
 
 Download the expression data.
