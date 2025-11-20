@@ -25,10 +25,6 @@ For all three objects above, answer the following questions:
 * How many rows and columns are this object?
 * What information is contained in rows and columns?
 Remember functions: `str`, `head`, `dim`, and similar.
-Either download the MSigDB.rds file manually (https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB.rds)or using the following code
-```R
-download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/MSigDB.rds", "MSigDB.rds")
-MSigDB <- readRDS("MSigDB.rds")# update (Note: this contains lists of pathways and genes)
 ```
 ## Subset data
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
@@ -208,7 +204,12 @@ universe <- unique(gmap$external_gene_name)
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
 
-Next perform Fisher's exact test enrichment and store the results in the table `fisher_tbl`. We will use the object `MSigDB`, which we dowloaded at the begginning of the day for the enrichment.
+Next perform Fisher's exact test enrichment and store the results in the table `fisher_tbl`. We will use the object `MSigDB` for the enrichment.
+
+Either download the MSigDB.rds file manually (https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB.rds)or using the following code
+```R
+download.file("https://github.com/csbg/Hands-on-Biomedical-Data/raw/main/data/MSigDB.rds", "MSigDB.rds")
+MSigDB <- readRDS("MSigDB.rds")# update (Note: this contains lists of pathways and genes)
 ```R
 str(MSigDB) # summarizes this object
 
