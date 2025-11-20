@@ -204,7 +204,7 @@ Enrichment analysis help in interpreting long lists of genes. By measuring wheth
 
 Next prepare the background/universe set.
 ```R
-universe <- gmap$gene_unique[match(limmaRes$ensg, rownames(gmap))] |> unique()
+universe <- unique(gmap$external_gene_name)
 universe <- unique(universe[!is.na(universe) & universe != ""])
 ```
 
