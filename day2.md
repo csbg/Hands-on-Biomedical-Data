@@ -19,7 +19,9 @@ gmap <- readRDS("gmap.RDS") # update
 ```
 
 
-![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 2.1:`
+![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) 
+
+`Exercise 2.1:`
 For all three objects above, answer the following questions:
 * What type of object is it?
 * How many rows and columns are this object?
