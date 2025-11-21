@@ -27,7 +27,8 @@ For all three objects above, answer the following questions:
 * How many rows and columns are this object?
 * What information is contained in rows and columns?
 Remember functions: `str`, `head`, `dim`, and similar.
-```
+
+
 ## Subset data
 In today's exercise, we will only work with liver fibroblasts (Gp38 positive) that were treated with interferon alpha, and compare them to those cultivated only in phosphate buffered saline (PBS). To subset the dataset accordingly we need the following steps:
 * Filter the metadata table to the samples described above. 
