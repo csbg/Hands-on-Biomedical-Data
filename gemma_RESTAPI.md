@@ -3,8 +3,8 @@
 GEMMA provides approaches to download data and metadata for any dataset from the webbrowser.
 This is called [representational state transfer (REST) application programming interface (API)](https://gemma.msl.ubc.ca/resources/restapidocs/#/).
 As part of this, we will create URLs (Uniform Resource Locator). For example, for the dataset `GSE2018`:
-* This URL downloads the design (metadata): [https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/design](https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/design).
-* This URL downloads the expression data: [https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/data/processed](https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/data/processed).
+* This URL downloads the design (metadata): `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/design`
+* This URL downloads the expression data: `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/data/processed`
 
 ## Setup
 
@@ -38,7 +38,7 @@ response <- GET(url.metadata)
 writeBin(content(response, "raw"), paste0(gse, "_metadata.tsv"))
 ```
 
-Download data
+Download data of the URL `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/data/processed`
 ```{r}
 url.data <- paste(gemma.url, gse, "data/processed", sep="/")
 response <- GET(url.data)
@@ -47,7 +47,7 @@ writeBin(content(response, "raw"), paste0(gse, "_data.tsv"))
 
 ## Parse data
 
-metadata ("obs" in AnnData)
+First the metadata ("obs" in AnnData).
 ```{r}
 metadata <- read_tsv(paste0(gse, "_metadata.tsv"), comment = "#")
 head(metadata)
@@ -56,7 +56,7 @@ metadata <- metadata |>
 head(metadata)
 ```
 
-data
+Next the data itself.
 ```{r}
 data <- read_tsv(paste0(gse, "_data.tsv"), comment = "#")
 str(data)
