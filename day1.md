@@ -451,6 +451,8 @@ dplyr::select(experiment.shortName, experiment.name, experiment.ID, experiment.d
 
 Next, we will use Gemma.R, which enables us to easily download datasets from GEMMA. `gemma.R` is a package that enables us to download data and metadata for many expression datasets. Unfortunately, it is not as well developed as tidyverse and ggplot2, it may thus be a bit difficult to use. Ask for help if needed and - if `gemma.R` doesn't work - answer the finale exercise from today based on what you can do on the GEMMA website.
 
+Note: *If you have problems with Gemma.R, use the [REST-API](gemma_RESTAPI.md)*.
+
 First, load the required packages:
 ```R
 require(gemma.R)

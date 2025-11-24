@@ -82,6 +82,15 @@ The data has weird sample names. We will clean those.
 ```{r}
 colnames(data)
 colnames(data) <- gsub("^.+?(GSM\\d+).+$", "\\1", colnames(data))
+```
+
+Now we check, whether we have the same names in `data` and `metadata`:
+```{r}
 stopifnot(setequal(colnames(data), row.names(metadata)))
+```
+
+And finally, we order the columns in data according to the metadata. This ensures the same samples in both and the same order.
+```{r}
 data <- data[,row.names(metadata)]
 ```
+
