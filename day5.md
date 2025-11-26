@@ -37,7 +37,9 @@ Report your model matrix (heatmap) and describe each coefficient in terms of whi
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5.4` (3 points)
 Provide your vulcano plot and p-value distribution. Do you see significant differences? In which conditions (if you have many). How many significant genes do you find?
 If you used a human dataset, update your MSigDB by converting them to upper case(human genes) using the following code
+```R
 MSigDB <- lapply(MSigDB, toupper)
+```
 ALTERNATIVELY use the following file for the database instead of the one for mouse which you used in the previous days.
 https://github.com/csbg/Hands-on-Biomedical-Data/blob/main/data/MSigDB_human.rds
 
