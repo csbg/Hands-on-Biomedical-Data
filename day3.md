@@ -241,6 +241,8 @@ head(fisher_tbl)
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 3.7:`
 Now generate a plot like this:
+Hint use ```R group_by ``` 
+to filter top 10 pathways based on most significant(lowest p-value) per coef.
 
 <img width="1880" height="1950" alt="top_10_pathways" src="https://github.com/user-attachments/assets/574d614a-f286-4b1e-90fa-866b6980eaa9" />
 

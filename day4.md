@@ -11,7 +11,7 @@ require(tidyverse)
 require(limma)
 require(patchwork)
 require(ComplexHeatmap)
-require(enrichR)
+
 ```
 
 Load the data.
