@@ -45,16 +45,21 @@ response <- GET(url.data)
 writeBin(content(response, "raw"), paste0(gse, "_data.tsv"))
 ```
 
-## Parse data
+## Parse metadata
 
 First the metadata ("obs" in AnnData).
 ```{r}
 metadata <- read_tsv(paste0(gse, "_metadata.tsv"), comment = "#")
 head(metadata)
-metadata <- metadata |> 
-  column_to_rownames("ExternalID")
-head(metadata)
 ```
+
+Summarize the experiment
+```{r}
+metadata |> 
+  count(diseaseState, batch)
+```
+
+## Parse data
 
 Next the data itself.
 ```{r}
@@ -78,13 +83,25 @@ data <- data |>
 str(data)
 ```
 
-The data has weird sample names. We will clean those.
+## Map metadata to data
+
+Check if the names the same in metadata and data
 ```{r}
+row.names(metadata)
 colnames(data)
-colnames(data) <- gsub("^.+?(GSM\\d+).+$", "\\1", colnames(data))
+metadata$Bioassay
+setdiff(colnames(data), metadata$Bioassay)
 ```
 
-Now we check, whether we have the same names in `data` and `metadata`:
+Let's make some names that work in both
+```{r}
+metadata <- metadata |> 
+   column_to_rownames("ExternalID")
+colnames(data) <- gsub("^.+?(GSM\\d+).+$", "\\1", colnames(data))
+setdiff(colnames(data), row.names(metadata))
+```
+
+Make sure this worked out.
 ```{r}
 stopifnot(setequal(colnames(data), row.names(metadata)))
 ```
@@ -94,3 +111,27 @@ And finally, we order the columns in data according to the metadata. This ensure
 data <- data[,row.names(metadata)]
 ```
 
+## Make nicer sample names
+
+The sample names above are not informative. Here we create our own sample names.
+```{r}
+metadata <- metadata |> 
+  mutate(sample_name = make.unique(diseaseState)) |> 
+  mutate(sample_name = str_replace(sample_name, "reference_subject_role", "ref")) |> 
+  mutate(sample_name = str_replace(sample_name, "disease_related_to_solid_organ_transplantation", "disease")) |> 
+  remove_rownames() |> 
+  column_to_rownames("sample_name")
+```
+
+Change data sample names (in columns)
+```{r}
+colnames(data) <- row.names(metadata)
+```
+
+## Convert MSigDB to human DB
+
+This is needed if you work with human gene symbols (upper case)
+```{r}
+msidgdb <- readRDS("MSigDB.rds")
+msidgdb <- lapply(msidgdb, toupper)
+```
