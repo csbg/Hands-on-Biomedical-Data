@@ -7,7 +7,7 @@ Make sure you read instructions in detail. Especially getting the Setup right.
 ## Setup
 You can run the practicals on:
 * [Your personal computer](setup_PersonalLaptops.md)(ideal case)
-* [Within Galaxy](setup_GALAXY.md)
+  <!-- * [Within Galaxy](setup_GALAXY.md)
 <!-- * [On the PLUS Server RICARDA](setup_RICARDA.md) -->
 
 ## Exercises
