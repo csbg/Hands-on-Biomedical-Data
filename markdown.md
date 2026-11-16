@@ -3,8 +3,6 @@
 * Save **one R script for each day** to not mix exercises and R sessions from different days. (Only exception is the code below to explore R Markdown (see below).
 * Save your R scripts as `prelearning.R`, `day1.R`, `day2.R`, `day3.R`, `day4.R`, and `day5.R`.
 * These R scripts can then be compiled into HTML Markdown files: `prelearning.html`, `day1.html`, `day2.html`, `day3.html`, `day4.html`, and `day5.html`. We will collect these files from the server (your user's home directory) and use them for the evaluation.
-<!-- * On Ricarda, in order to be able to create HTML files this way, you first have to run `.libPaths("/home/handson/R/x86_64-pc-linux-gnu-library/4.0/")` in your console. -->
-<!-- * **On RIcarda, we can re-run your R scripts and do not need HTML files. Please do not run Knitr on Ricarda as it overwhelms the server!** -->
 
 ### R Markdown
 For this course, you will create reports of your R code and session using R Markdown. 

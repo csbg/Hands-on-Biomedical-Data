@@ -6,6 +6,8 @@ As part of this, we will create URLs (Uniform Resource Locator). For example, fo
 * This URL downloads the design (metadata): `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/design`
 * This URL downloads the expression data: `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/data/processed`
 
+Note: You can use these URLs in your web browser but to obtain the data in the correct format, we will use R to downlad the files (see below).
+
 ## Setup
 
 Install packages
@@ -24,17 +26,15 @@ library(tidyverse)
 Define urls
 ```{r} 
 gemma.url <- "https://gemma.msl.ubc.ca/rest/v2/datasets"
-gse <- "GSE2018"
+gse <- "GSE21713"
 ```
 
 ## Download
 
-If this doesn't work it can be skipped by using the web browser instead.
-
 Download metadata of the URL `https://gemma.msl.ubc.ca/rest/v2/datasets/GSE2018/design`.
 ```{r}
 url.metadata <- paste(gemma.url, gse, "design", sep="/")
-response <- GET(url.metadata)
+response <- GET(url.metadata, add_headers(Accept = "text/tab-separated-values"))
 writeBin(content(response, "raw"), paste0(gse, "_metadata.tsv"))
 ```
 
@@ -56,7 +56,7 @@ head(metadata)
 Summarize the experiment
 ```{r}
 metadata |> 
-  count(diseaseState, batch)
+  count(genotype, batch)
 ```
 
 ## Parse data
@@ -90,15 +90,21 @@ Check if the names the same in metadata and data
 row.names(metadata)
 colnames(data)
 metadata$Bioassay
-setdiff(colnames(data), metadata$Bioassay)
+setdiff(colnames(data), metadata$Bioassay) # checking that all sample names in the data are also in the metadata
 ```
 
-Let's make some names that work in both
+Let's make some names that work in both.
 ```{r}
 metadata <- metadata |> 
-   column_to_rownames("ExternalID")
-colnames(data) <- gsub("^.+?(GSM\\d+).+$", "\\1", colnames(data))
-setdiff(colnames(data), row.names(metadata))
+   mutate(ID = gsub("^.+(Biomat_\\d+).+$", "\\1", Bioassay)) |> # extracts the commmon name from both
+   remove_rownames() |>
+   column_to_rownames("ID") # First for the metadata
+print(row.names(metadata))
+
+colnames(data) <- gsub("^.+(Biomat_\\d+).+$", "\\1", colnames(data)) # Then for the data
+colnames(data)
+
+setdiff(colnames(data), row.names(metadata)) # checking again
 ```
 
 Make sure this worked out.
@@ -116,11 +122,14 @@ data <- data[,row.names(metadata)]
 The sample names above are not informative. Here we create our own sample names.
 ```{r}
 metadata <- metadata |> 
-  mutate(sample_name = make.unique(diseaseState)) |> 
-  mutate(sample_name = str_replace(sample_name, "reference_subject_role", "ref")) |> 
-  mutate(sample_name = str_replace(sample_name, "disease_related_to_solid_organ_transplantation", "disease")) |> 
-  remove_rownames() |> 
-  column_to_rownames("sample_name")
+  mutate(genotype2 = genotype) |> 
+  mutate(genotype2 = str_replace(genotype2, "MYCN.+", "MYCN")) |> 
+  mutate(sample_name = str_replace(genotype2, "wild.+", "WT")) |> 
+  mutate(sample_name = make.unique(paste0(genotype2, "_", batch))) |> 
+  mutate(sample_name = str_replace(sample_name, "wild type genotype", "WT")) |> 
+  remove_rownames() |>
+  mutate(ID = sample_name) |> 
+  column_to_rownames("ID")
 ```
 
 Change data sample names (in columns)
@@ -128,10 +137,10 @@ Change data sample names (in columns)
 colnames(data) <- row.names(metadata)
 ```
 
-## Convert MSigDB to human DB
-
-This is needed if you work with human gene symbols (upper case)
+## Use readable gene names
 ```{r}
-msidgdb <- readRDS("MSigDB.rds")
-msidgdb <- lapply(msidgdb, toupper)
+gmap <- gmap  |> 
+  mutate(GeneSymbol_u = make.unique(GeneSymbol))   |> 
+  column_to_rownames("Probe")
+row.names(data) <- gmap[row.names(data), "GeneSymbol_u"]
 ```
