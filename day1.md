@@ -431,7 +431,7 @@ boxplot(data, las=2) # look at the distribution of expression values
 
 ## Explore another dataset
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 1.10:`
-Now, find another dataset (other than GSE21713). Try to run the code above for this dataset and then report the identified dataset (number of samples and conditions) you find. If you are having issues with `gemma.R`, report only the dataset and conditions you found by *browsing the GEMMA website*.
+Now, find another dataset (other than GSE21713). Try to run the code above for this dataset and then report the identified dataset (number of samples and conditions) you find. 
 
-Ultimately, you will download a dataset and analyze in the final assignment on [day 5](day5.md). If `gemma.R` proves difficult here, then ask one of your colleagues to download expression data and metadata for you.
+Ultimately, you will download a dataset and analyze in the final assignment on [day 5](day5.md).
 
