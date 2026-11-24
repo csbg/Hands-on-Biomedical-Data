@@ -91,7 +91,7 @@ model.matrix(~stimulus, data=metadata)
 Provide the heatmap of your final model matrix. Which coefficient from the model matrix compares which groups?
 
 ### Normalize data
-After defining the design matrix, we can use limma voom to normalize the data (by library size and log normalize).
+After defining the design matrix, we use limma-voom to normalize the count data (by library size and log normalize). *Note: This is required if the data are (read) counts.*
 ```R
 dataVoom <- voom(data, design=your_model_matrix, plot = TRUE) # insert your model matrix
 ```
