@@ -45,6 +45,8 @@ response <- GET(url.data)
 writeBin(content(response, "raw"), paste0(gse, "_data.tsv"))
 ```
 
+**Note:** This will download "processed" data, i.e. they are not counts and already normalized to log2CPM values.
+
 ## Parse metadata
 
 First the metadata ("obs" in AnnData).
