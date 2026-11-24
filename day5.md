@@ -6,9 +6,7 @@
 * As seen on day 1, the Gemma database contains expression datasets with curated expression and meta-data. 
 * The database can also be browsed using this [link](https://gemma.msl.ubc.ca/).
 * Under this [link](https://gemma.msl.ubc.ca/expressionExperiment/showAllExpressionExperiments.html), we can search the available expression datasets.
-* To access datasets with R, see the [Gemma Tutorial on day1](day1.md#downloading-a-dataset).
-* Please select datasets with > 10 samples and consider those where you can include interaction effects
-  
+* To access datasets with R, see the [Gemma Tutorial on day1](day1.md#downloading-a-dataset).  
 
 <img src="img/Gemma.png" width="100%">
 
@@ -26,7 +24,7 @@
 ## Exercise details:
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5.1` (2 point)
-How many samples do you have. What are the conditions? Will youfilter the dataset and focus on a subset of data?
+How many samples do you have. What are the conditions? Will you filter the dataset and focus on a subset of data? What range are the expression values? Are they counts or are they already normalized?
 
 ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `Exercise 5.2` (3 points)
 Plot correlation heatmaps and MDS plots. Discuss the signal to noise ratio.
